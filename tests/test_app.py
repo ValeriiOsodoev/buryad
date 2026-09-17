@@ -12,6 +12,14 @@ def new_email(prefix: str) -> str:
     return f"{prefix}-{uuid4().hex}@example.com"
 
 
+def auth_payload(prefix: str, display_name: str) -> dict[str, str]:
+    return {
+        "email": new_email(prefix),
+        "password": "correct-horse",
+        "display_name": display_name,
+    }
+
+
 def test_healthz():
     with TestClient(app) as client:
         response = client.get("/healthz")
@@ -37,13 +45,11 @@ def test_registered_user_can_persist_progress():
         )
         assert response.status_code == 200
         assert client.get("/api/me").json()["user"]["email"] == email
-
         saved = client.post(
             "/api/progress",
             json={"exercise_id": "core-1", "correct": True, "answer": "Тиимэ, һайн"},
         )
         assert saved.status_code == 200
-
         progress = client.get("/api/progress")
         assert progress.status_code == 200
         assert progress.json()["items"][0]["exercise_id"] == "core-1"
@@ -52,10 +58,7 @@ def test_registered_user_can_persist_progress():
 
 def test_progress_is_isolated_between_users():
     with TestClient(app, base_url="https://testserver") as first:
-        first.post(
-            "/api/auth/register",
-            json={"email": new_email("first"), "password": "correct-horse", "display_name": "A"},
-        )
+        first.post("/api/auth/register", json=auth_payload("first", "A"))
         first.post(
             "/api/progress",
             json={"exercise_id": "private-progress", "correct": True, "answer": "Һайн"},
@@ -64,24 +67,50 @@ def test_progress_is_isolated_between_users():
             item["exercise_id"] == "private-progress"
             for item in first.get("/api/progress").json()["items"]
         )
-
     with TestClient(app, base_url="https://testserver") as second:
-        second.post(
-            "/api/auth/register",
-            json={"email": new_email("second"), "password": "correct-horse", "display_name": "B"},
-        )
+        second.post("/api/auth/register", json=auth_payload("second", "B"))
         assert all(
             item["exercise_id"] != "private-progress"
             for item in second.get("/api/progress").json()["items"]
         )
 
 
+def test_guest_progress_merge_is_scoped_and_idempotent():
+    payload = {
+        "items": [
+            {
+                "exercise_id": "guest-1",
+                "attempts": 3,
+                "correct": 2,
+                "streak": 2,
+                "last_answer": "Һайн",
+            }
+        ]
+    }
+    with TestClient(app, base_url="https://testserver") as first:
+        first.post("/api/auth/register", json=auth_payload("merge", "A"))
+        assert first.post("/api/progress/merge", json=payload).status_code == 200
+        assert first.post("/api/progress/merge", json=payload).status_code == 200
+        item = next(
+            item
+            for item in first.get("/api/progress").json()["items"]
+            if item["exercise_id"] == "guest-1"
+        )
+        assert item["attempts"] == 3
+        assert item["correct"] == 2
+        assert item["last_answer"] == "Һайн"
+
+    with TestClient(app, base_url="https://testserver") as second:
+        second.post("/api/auth/register", json=auth_payload("merge-other", "B"))
+        assert all(
+            item["exercise_id"] != "guest-1"
+            for item in second.get("/api/progress").json()["items"]
+        )
+
+
 def test_logout_invalidates_session():
     with TestClient(app, base_url="https://testserver") as client:
-        client.post(
-            "/api/auth/register",
-            json={"email": new_email("logout"), "password": "correct-horse", "display_name": "A"},
-        )
+        client.post("/api/auth/register", json=auth_payload("logout", "A"))
         assert client.get("/api/me").status_code == 200
         assert client.post("/api/auth/logout").status_code == 200
         assert client.get("/api/me").status_code == 401

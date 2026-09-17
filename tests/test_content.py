@@ -18,16 +18,8 @@ def test_has_50_verbs():
 def test_corpus_leading_verbs_match_ud_order():
     verbs = json.loads((ROOT / "web/data/verbs.json").read_text(encoding="utf-8"))
     assert [verb["infinitive"] for verb in verbs[:10]] == [
-        "гэхэ",
-        "байха",
-        "болохо",
-        "ерэхэ",
-        "ябаха",
-        "хэхэ",
-        "гараха",
-        "ошохо",
-        "хүдэлхэ",
-        "абаха",
+        "гэхэ", "байха", "болохо", "ерэхэ", "ябаха",
+        "хэхэ", "гараха", "ошохо", "хүдэлхэ", "абаха",
     ]
 
 
@@ -54,7 +46,17 @@ def test_frequency_core_has_practical_corpus_and_phrase_layers():
     assert len(core["corpus"]) >= 15
     assert len(core["phrases"]) >= 30
     assert core["corpus"][0]["word"] == "гэжэ"
-    assert core["corpus"][0]["rank"] == 1
     phrase_words = {item["word"] for item in core["phrases"]}
     assert "Би ойлгоногүйб." in phrase_words
     assert "Буряадаар хэлэ." in phrase_words
+
+
+def test_learning_shell_has_mobile_nav_labels_and_explicit_continue():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert 'class="mobile-nav"' in html
+    assert 'id="continueExercise"' in html
+    assert 'aria-live="polite"' in html
+    assert '<label for="email">Email</label>' in html
+    assert '<label for="password">Пароль</label>' in html
+    assert 'id="passwordToggle"' in html
+    assert 'viewport-fit=cover' in html

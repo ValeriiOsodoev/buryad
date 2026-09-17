@@ -1,0 +1,11 @@
+{
+  "name": "buryad",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test tests/e2e.spec.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0"
+  }
+}
