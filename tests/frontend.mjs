@@ -96,10 +96,11 @@ const courseProgress = {
   'course:p2:recall': {attempts:2,correct:2,streak:2,next_review_at:NOW-1,status:'learning'},
 };
 const courseSession = buildCourseSession(sampleCourse, courseProgress, NOW, 4);
+assert.equal(courseSession.length, 4);
 assert.equal(courseSession[0].phrase.id, 'p1');
 assert.equal(courseSession[1].phrase.id, 'p2');
-assert.equal(courseSession[2].phrase.id, 'p3');
-assert.equal(courseSession.length, 4);
+assert.equal(courseSession[2].mode, 'meaning');
+assert.equal(courseSession[3].phrase.id, 'p3');
 
 const pp = phraseProgress(flat[0], {
   'course:p1:recall': {attempts:5,status:'mastered'},
@@ -143,5 +144,6 @@ assert.equal(withoutAudio.some((task) => task.mode === 'dictation'), false);
 const withAudio = buildCourseSession(sampleCourse, {'course:p1:recall':{attempts:1}}, NOW, 10, 'intro', audioMap);
 assert.equal(withAudio.some((task) => task.mode === 'dictation'), true);
 assert.equal(withAudio.some((task) => task.mode === 'audio-response'), true);
+assert.equal(withAudio.filter((task) => task.mode !== 'recall').length >= 1, true);
 
 console.log('frontend learning, course and audio tests: ok');
