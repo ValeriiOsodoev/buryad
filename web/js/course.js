@@ -88,6 +88,34 @@ function priorityBucket(phrase, progress, nowMs) {
   return 3;
 }
 
+function mixTasks(recall, supplemental, limit) {
+  const max = Math.max(1, limit);
+  if (!supplemental.length || max === 1) return recall.slice(0, max);
+
+  const supplementalSlots = Math.min(
+    supplemental.length,
+    Math.max(1, Math.floor(max * 0.3)),
+  );
+  const recallSlots = Math.max(1, max - supplementalSlots);
+  const recallPart = recall.slice(0, recallSlots);
+  const supplementalPart = supplemental.slice(0, supplementalSlots);
+  const out = [];
+  let recallIndex = 0;
+  let supplementalIndex = 0;
+
+  while (out.length < max && (recallIndex < recallPart.length || supplementalIndex < supplementalPart.length)) {
+    for (let i = 0; i < 2 && recallIndex < recallPart.length && out.length < max; i += 1) {
+      out.push(recallPart[recallIndex]);
+      recallIndex += 1;
+    }
+    if (supplementalIndex < supplementalPart.length && out.length < max) {
+      out.push(supplementalPart[supplementalIndex]);
+      supplementalIndex += 1;
+    }
+  }
+  return out;
+}
+
 export function buildCourseSession(
   course,
   progress = {},
@@ -121,8 +149,7 @@ export function buildCourseSession(
     }
   }
 
-  const out = [...recall, ...supplemental];
-  return out.slice(0, Math.max(1, limit));
+  return mixTasks(recall, supplemental, limit);
 }
 
 export function phraseProgress(phrase, progress = {}) {
