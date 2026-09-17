@@ -27,8 +27,8 @@ export function mergeProgress(local = {}, remote = {}) {
     out[id] = {
       ...remoteItem,
       ...newest,
-      attempts: Number(localItem.attempts || 0) + Number(remoteItem.attempts || 0),
-      correct: Number(localItem.correct || 0) + Number(remoteItem.correct || 0),
+      attempts: Math.max(Number(localItem.attempts || 0), Number(remoteItem.attempts || 0)),
+      correct: Math.max(Number(localItem.correct || 0), Number(remoteItem.correct || 0)),
       streak: Math.max(Number(localItem.streak || 0), Number(remoteItem.streak || 0)),
       review_step: Math.max(Number(localItem.review_step ?? -1), Number(remoteItem.review_step ?? -1)),
       next_review_at: Math.min(
