@@ -43,7 +43,7 @@ try {
     await page.screenshot({path:`${outDir}/${item.name}-home.png`, fullPage:false});
 
     await page.locator('#course').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(300);
+    await waitForReady(page);
     await page.screenshot({path:`${outDir}/${item.name}-course.png`, fullPage:false});
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
