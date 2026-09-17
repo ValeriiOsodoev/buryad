@@ -12,6 +12,12 @@ import {
   phraseProgress,
   taskId,
 } from '../web/js/course.js';
+import {
+  audioTaskCandidates,
+  hasVerifiedAudio,
+  makeAudioTask,
+  selectBuryatVoice,
+} from '../web/js/audio.js';
 
 assert.equal(normalizeBuryat(' МҮНӨӨ! '), 'муноо');
 assert.equal(normalizeBuryat('hайн'), 'һайн');
@@ -109,4 +115,21 @@ assert.equal(mp.total, 3);
 assert.equal(mp.learned, 1);
 assert.equal(mp.percent, 33);
 
-console.log('frontend learning and course tests: ok');
+assert.equal(selectBuryatVoice([{lang:'ru-RU'},{lang:'kk-KZ'},{lang:'mn-MN'}]), null);
+assert.equal(selectBuryatVoice([{name:'Native Buryat',lang:'bxr-RU'}])?.name, 'Native Buryat');
+assert.equal(selectBuryatVoice([{name:'Buryat',lang:'BXR'}])?.name, 'Buryat');
+const audioMap = {
+  p1:{src:'/assets/audio/phrases/p1.ogg',speaker:'Native',source:'Studio',verified:true},
+  p2:{src:'/assets/audio/phrases/p2.ogg',speaker:'Unknown',source:'Draft',verified:false},
+};
+assert.equal(hasVerifiedAudio(audioMap, 'p1'), true);
+assert.equal(hasVerifiedAudio(audioMap, 'p2'), false);
+assert.equal(hasVerifiedAudio(audioMap, 'missing'), false);
+assert.equal(makeAudioTask(flat[0], 'dictation', audioMap.p1)?.id, 'course:p1:dictation');
+assert.equal(makeAudioTask(flat[1], 'dictation', audioMap.p2), null);
+assert.deepEqual(audioTaskCandidates(flat[0], {}, audioMap), []);
+const audioCandidates = audioTaskCandidates(flat[0], {'course:p1:recall':{attempts:1}}, audioMap);
+assert.equal(audioCandidates[0].mode, 'dictation');
+assert.equal(audioCandidates[1].mode, 'audio-response');
+
+console.log('frontend learning, course and audio tests: ok');
