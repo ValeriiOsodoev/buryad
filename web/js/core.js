@@ -2,13 +2,13 @@ const grid = document.querySelector('#coreGrid');
 const search = document.querySelector('#coreSearch');
 const tabs = [...document.querySelectorAll('[data-core-mode]')];
 
-let data = {everyday: [], corpus: []};
+let data = {everyday: [], corpus: [], phrases: []};
 let mode = 'everyday';
 
 function render() {
   if (!grid) return;
   const query = (search?.value || '').toLowerCase().trim();
-  const items = data[mode].filter((item) => {
+  const items = (data[mode] || []).filter((item) => {
     const haystack = `${item.word} ${item.ru} ${item.note || ''}`.toLowerCase();
     return !query || haystack.includes(query);
   });
