@@ -1,4 +1,5 @@
 import {api} from './api.js';
+import {conjugate, PERSON_LABELS} from './conjugate.js';
 import {answerMatches, similarity} from './normalize.js';
 
 const $ = (q) => document.querySelector(q);
@@ -12,15 +13,6 @@ const state = {
   user: null,
   registerMode: false,
 };
-const personLabels = [
-  ['1sg', 'би'],
-  ['2sg', 'ши'],
-  ['3sg', 'тэрэ'],
-  ['1pl', 'бидэ'],
-  ['2pl', 'та'],
-  ['3pl', 'тэдэ'],
-];
-const endings = {'1sg': 'б', '2sg': 'ш', '3sg': '', '1pl': 'бди', '2pl': 'т', '3pl': 'д'};
 
 async function loadData() {
   [state.lessons, state.verbs, state.videos] = await Promise.all([
@@ -137,12 +129,6 @@ $('#dontKnow').onclick = () => {
   record(exercise.id, false, '');
 };
 
-function conjugate(verb, tense, negative, person) {
-  const base = verb[tense];
-  if (!negative) return base + endings[person];
-  return `${base}гүй${endings[person]}`;
-}
-
 function renderVerbs() {
   const query = $('#verbSearch').value?.toLowerCase() || '';
   const tense = $('#verbTense').value || 'present';
@@ -153,7 +139,7 @@ function renderVerbs() {
   $('#verbGrid').innerHTML = rows
     .map(
       (verb) =>
-        `<article class="verb-card"><div class="verb-head"><div><small>#${verb.rank}</small><h3>${verb.infinitive}</h3><small>${verb.ru}</small></div><span class="tag">${verb.imperative}!</span></div><div class="conj">${personLabels.map(([person, label]) => `<div><b>${label}</b>${conjugate(verb, tense, negative, person)}</div>`).join('')}</div></article>`,
+        `<article class="verb-card"><div class="verb-head"><div><small>#${verb.rank}</small><h3>${verb.infinitive}</h3><small>${verb.ru}</small></div><span class="tag">${verb.imperative}!</span></div><div class="conj">${PERSON_LABELS.map(([person, label]) => `<div><b>${label}</b>${conjugate(verb, tense, negative, person)}</div>`).join('')}</div></article>`,
     )
     .join('');
 }
