@@ -16,7 +16,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -29,30 +29,38 @@ jobs:
         with:
           node-version: '22'
       - name: Install test dependencies
-        run: pip install -r requirements-dev.txt
+        run: |
+          pip install -r requirements-dev.txt
+          npm install --ignore-scripts
+          npx playwright install --with-deps chromium
       - name: Lint Python
         run: ruff check app tests
       - name: Run backend and content tests
         run: pytest -q
-      - name: Run frontend normalization tests
+      - name: Run frontend unit tests
         run: node tests/frontend.mjs
       - name: Validate static data and shell
         run: |
           python -m json.tool web/data/verbs.json >/dev/null
           python -m json.tool web/data/lessons.json >/dev/null
           python -m json.tool web/data/videos.json >/dev/null
+          python -m json.tool web/data/core.json >/dev/null
           bash -n deploy/deploy.sh deploy/install_ingress.sh
       - name: Build exact release image
         run: docker build -t "buryad-app:$GITHUB_SHA" .
-      - name: Smoke test image
+      - name: Smoke and responsive browser test image
+        env:
+          E2E_BASE_URL: http://127.0.0.1:18128
         run: |
+          set -euo pipefail
+          trap 'docker rm -f buryad-smoke >/dev/null 2>&1 || true' EXIT
           docker run -d --name buryad-smoke -p 127.0.0.1:18128:8080 "buryad-app:$GITHUB_SHA"
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:18128/healthz; then break; fi
             sleep 1
           done
           curl -fsS http://127.0.0.1:18128/healthz
-          docker rm -f buryad-smoke
+          npm run test:e2e
       - name: Package tested release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
@@ -106,4 +114,6 @@ jobs:
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "cd /home/ubuntu/buryad/releases/$GITHUB_SHA && bash deploy.sh $GITHUB_SHA"
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "bash /home/ubuntu/buryad/releases/$GITHUB_SHA/install_ingress.sh /home/ubuntu/buryad/releases/$GITHUB_SHA/nginx.conf"
       - name: Verify public endpoint
-        run: curl --fail --retry 10 --retry-delay 3 --max-time 15 https://buryad.buuzoed.dev/healthz
+        run: |
+          curl --fail --retry 10 --retry-delay 3 --max-time 15 https://buryad.buuzoed.dev/healthz
+          curl --fail --retry 5 --retry-delay 2 --max-time 15 https://buryad.buuzoed.dev/ >/dev/null
