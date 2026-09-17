@@ -19,8 +19,9 @@ function russianMatches(answer, expected) {
   return a === b || similarity(a, b) >= 72;
 }
 
-export function createCourseController({course, progress, record}) {
+export function createCourseController({course, getProgress, record}) {
   const $ = (q) => document.querySelector(q);
+  const progress = () => getProgress?.() || {};
   const state = {
     moduleId: null,
     session: [],
@@ -30,7 +31,7 @@ export function createCourseController({course, progress, record}) {
   };
 
   function recommendedModule() {
-    return course.find((module) => moduleProgress(module, progress).percent < 100) || course[0];
+    return course.find((module) => moduleProgress(module, progress()).percent < 100) || course[0];
   }
 
   function currentModule() {
@@ -40,7 +41,7 @@ export function createCourseController({course, progress, record}) {
   function rebuild(moduleId = state.moduleId) {
     const module = course.find((item) => item.id === moduleId) || recommendedModule();
     state.moduleId = module.id;
-    state.session = buildCourseSession(course, progress, Date.now(), 10, module.id);
+    state.session = buildCourseSession(course, progress(), Date.now(), 10, module.id);
     state.index = 0;
     state.answered = false;
     state.hintLevel = 0;
@@ -54,7 +55,7 @@ export function createCourseController({course, progress, record}) {
   function renderModules() {
     const active = currentModule();
     $('#courseModuleList').innerHTML = course.map((module, index) => {
-      const p = moduleProgress(module, progress);
+      const p = moduleProgress(module, progress());
       return `<button type="button" class="course-module-button ${module.id === active.id ? 'active' : ''}" data-course-module="${esc(module.id)}">
         <span class="course-module-number">${String(index + 1).padStart(2, '0')}</span>
         <span class="course-module-copy"><strong>${esc(module.title)}</strong><small>${p.learned}/${p.total} · ${p.percent}%</small></span>
@@ -66,7 +67,7 @@ export function createCourseController({course, progress, record}) {
     });
 
     $('#courseModuleSelect').innerHTML = course.map((module, index) => {
-      const p = moduleProgress(module, progress);
+      const p = moduleProgress(module, progress());
       return `<option value="${esc(module.id)}" ${module.id === active.id ? 'selected' : ''}>${index + 1}. ${esc(module.title)} · ${p.percent}%</option>`;
     }).join('');
     $('#courseModuleSelect').value = active.id;
@@ -82,6 +83,7 @@ export function createCourseController({course, progress, record}) {
     $('#courseHint').textContent = '';
     $('#courseCheck').classList.remove('hidden');
     $('#courseHelp').classList.remove('hidden');
+    $('#courseHelp').textContent = 'Подсказка';
     $('#courseContinue').classList.add('hidden');
     state.answered = false;
     state.hintLevel = 0;
@@ -90,6 +92,7 @@ export function createCourseController({course, progress, record}) {
   function renderTask() {
     const task = currentTask();
     const module = currentModule();
+    $('#courseSessionMessage').textContent = '';
     if (!task) {
       $('#coursePrompt').textContent = 'Модуль пройден на сегодня.';
       $('#coursePromptBxr').classList.add('hidden');
@@ -154,12 +157,25 @@ export function createCourseController({course, progress, record}) {
     await record(task, correct, answer);
     showFeedback(correct, task);
     renderModules();
+    renderOverview();
   }
 
   async function help() {
     const task = currentTask();
     if (!task || state.answered) return;
-    const hint = nextHint(task, state.hintLevel);
+    if (task.mode === 'meaning' && state.hintLevel >= 1) {
+      state.hintLevel = 2;
+      $('#courseHint').className = 'course-hint revealed';
+      $('#courseHint').textContent = task.answers[0];
+      await record(task, false, '');
+      showFeedback(false, task, true);
+      renderModules();
+      renderOverview();
+      return;
+    }
+    const hint = task.mode === 'meaning' && state.hintLevel === 0
+      ? {level: 1, text: (task.new || []).map(([, ru]) => ru).filter(Boolean).join(' · ') || 'Вспомни общий смысл фразы.', revealed: false}
+      : nextHint(task, state.hintLevel);
     state.hintLevel = hint.level;
     $('#courseHint').className = `course-hint ${hint.revealed ? 'revealed' : ''}`;
     $('#courseHint').textContent = hint.text;
@@ -168,6 +184,7 @@ export function createCourseController({course, progress, record}) {
       await record(task, false, '');
       showFeedback(false, task, true);
       renderModules();
+      renderOverview();
     }
   }
 
@@ -186,7 +203,7 @@ export function createCourseController({course, progress, record}) {
   }
 
   function renderOverview() {
-    const learned = course.reduce((sum, module) => sum + moduleProgress(module, progress).learned, 0);
+    const learned = course.reduce((sum, module) => sum + moduleProgress(module, progress()).learned, 0);
     const total = course.reduce((sum, module) => sum + module.phrases.length, 0);
     $('#courseOverall').textContent = `${learned} из ${total} фраз закреплено`;
   }
