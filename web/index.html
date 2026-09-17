@@ -50,14 +50,19 @@
     </section>
 
     <section class="panel" id="verbs">
-      <div class="section-head"><div><span>02</span><h2>50 глаголов</h2></div><p>Частотность + бытовая полезность. Три базовых времени, лица и отрицание.</p></div>
+      <div class="section-head"><div><span>02</span><h2>50 глаголов</h2></div><p>Частотность + бытовая полезность. Лица, отрицание и четыре формы времени.</p></div>
       <div class="verb-toolbar">
         <input id="verbSearch" type="search" placeholder="Найти: идти, мэдэхэ, понимать…">
-        <select id="verbTense"><option value="present">Сейчас</option><option value="past">Прошлое</option><option value="future">Будущее</option></select>
+        <select id="verbTense">
+          <option value="present">Сейчас · -на/-нэ/-но</option>
+          <option value="resultative">Прошлое разговорное · -аа/-ээ/-оо/-өө</option>
+          <option value="simplePast">Прошлое нейтральное · -ба/-бэ/-бо</option>
+          <option value="future">Будущее · -ха/-хэ/-хо</option>
+        </select>
         <label><input id="verbNegative" type="checkbox"> отрицание</label>
       </div>
       <div id="verbGrid" class="verb-grid"></div>
-      <p class="source-note">Формы курса — учебные формы литературного бурятского с разговорными пометками. Простые времена: -на/-нэ/-но, -аа/-ээ/-оо и -ха/-хэ/-хо; личные частицы добавляются поверх временной формы.</p>
+      <p class="source-note">Для разговора курс в первую очередь тренирует результативное прошлое: <b>ерээб, ойлгоош, ябаа</b>. Отдельно можно посмотреть нейтральное прошедшее на <b>-ба/-бэ/-бо</b>: <b>ерэбэ, уншаба</b>. В отрицательном прошлом используется естественная форма на <b>-гүй</b>: <b>ерээгүйб, ойлгоогүйш</b>.</p>
     </section>
 
     <section class="panel" id="video">
