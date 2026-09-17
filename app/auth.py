@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import secrets
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
@@ -35,7 +35,7 @@ def token_hash(token: str) -> str:
 
 def create_session(db: Session, user: User, response: Response) -> None:
     raw = secrets.token_urlsafe(32)
-    expires = datetime.now(timezone.utc) + timedelta(days=SESSION_DAYS)
+    expires = datetime.now(UTC) + timedelta(days=SESSION_DAYS)
     db.add(UserSession(user_id=user.id, token_hash=token_hash(raw), expires_at=expires))
     db.commit()
     response.set_cookie(
@@ -58,8 +58,11 @@ def get_current_user(
     db: Session = Depends(get_db),
 ) -> User:
     if not session_token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required")
-    now = datetime.now(timezone.utc)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required",
+        )
+    now = datetime.now(UTC)
     stmt = (
         select(User)
         .join(UserSession, UserSession.user_id == User.id)
