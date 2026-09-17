@@ -149,7 +149,14 @@ def save_progress(
         )
     )
     if not row:
-        row = ExerciseProgress(user_id=user.id, exercise_id=payload.exercise_id)
+        row = ExerciseProgress(
+            user_id=user.id,
+            exercise_id=payload.exercise_id,
+            attempts=0,
+            correct=0,
+            streak=0,
+            status="learning",
+        )
         db.add(row)
     row.attempts += 1
     row.correct += int(payload.correct)
