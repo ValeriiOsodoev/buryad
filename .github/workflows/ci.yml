@@ -45,6 +45,7 @@ jobs:
           python -m json.tool web/data/lessons.json >/dev/null
           python -m json.tool web/data/videos.json >/dev/null
           python -m json.tool web/data/core.json >/dev/null
+          python -m json.tool web/data/course.json >/dev/null
           bash -n deploy/deploy.sh deploy/install_ingress.sh
       - name: Build exact release image
         run: docker build -t "buryad-app:$GITHUB_SHA" .

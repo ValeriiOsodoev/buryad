@@ -3,6 +3,15 @@ import {conjugate, simplePast} from '../web/js/conjugate.js';
 import {answerMatches, normalizeBuryat, similarity} from '../web/js/normalize.js';
 import {mergeProgress, nextReview} from '../web/js/progress.js';
 import {buildSession} from '../web/js/session.js';
+import {
+  buildCourseSession,
+  flattenCourse,
+  makeTask,
+  moduleProgress,
+  nextHint,
+  phraseProgress,
+  taskId,
+} from '../web/js/course.js';
 
 assert.equal(normalizeBuryat(' МҮНӨӨ! '), 'муноо');
 assert.equal(normalizeBuryat('hайн'), 'һайн');
@@ -53,4 +62,51 @@ assert.equal(session[0].id, 'weak');
 assert.equal(session[1].id, 'due');
 assert.equal(session[2].id, 'new');
 
-console.log('frontend learning tests: ok');
+const sampleCourse = [{
+  id:'intro',title:'Знакомство',description:'',phrases:[
+    {id:'p1',ru:'Да.',bxr:'Тиимэ.',alternatives:[],new:[['тиимэ','да']],hint:'тиимэ',skeleton:'Т____.',dialogue:{promptRu:'Ты согласен.'}},
+    {id:'p2',ru:'Я дома.',bxr:'Би гэртээ.',alternatives:[],new:[],hint:'гэртээ',skeleton:'Би ____.',dialogue:{promptRu:'Где ты?'}},
+    {id:'p3',ru:'Спасибо.',bxr:'Баярлаа.',alternatives:[],new:[],hint:'баярлаа',skeleton:'____.'},
+  ],
+}];
+const flat = flattenCourse(sampleCourse);
+assert.equal(flat.length, 3);
+assert.equal(flat[0].moduleId, 'intro');
+assert.equal(taskId('p1','recall'), 'course:p1:recall');
+const recallTask = makeTask(flat[0], 'recall');
+assert.equal(recallTask.id, 'course:p1:recall');
+assert.equal(recallTask.prompt, 'Да.');
+assert.deepEqual(recallTask.answers, ['Тиимэ.']);
+const meaningTask = makeTask(flat[0], 'meaning');
+assert.equal(meaningTask.prompt, 'Тиимэ.');
+assert.deepEqual(meaningTask.answers, ['Да.']);
+assert.equal(nextHint(recallTask, 0).text, 'тиимэ');
+assert.equal(nextHint(recallTask, 1).text, 'Т____.');
+assert.equal(nextHint(recallTask, 2).revealed, true);
+assert.equal(nextHint(recallTask, 2).text, 'Тиимэ.');
+
+const courseProgress = {
+  'course:p1:recall': {attempts:4,correct:1,streak:0,next_review_at:NOW+999999,status:'learning'},
+  'course:p2:recall': {attempts:2,correct:2,streak:2,next_review_at:NOW-1,status:'learning'},
+};
+const courseSession = buildCourseSession(sampleCourse, courseProgress, NOW, 4);
+assert.equal(courseSession[0].phrase.id, 'p1');
+assert.equal(courseSession[1].phrase.id, 'p2');
+assert.equal(courseSession[2].phrase.id, 'p3');
+assert.equal(courseSession.length, 4);
+
+const pp = phraseProgress(flat[0], {
+  'course:p1:recall': {attempts:5,status:'mastered'},
+  'course:p1:dialogue': {attempts:1,status:'learning'},
+});
+assert.equal(pp.mastered, true);
+assert.equal(pp.contextAttempted, true);
+const mp = moduleProgress(sampleCourse[0], {
+  'course:p1:recall': {attempts:5,status:'mastered'},
+  'course:p1:dialogue': {attempts:1,status:'learning'},
+});
+assert.equal(mp.total, 3);
+assert.equal(mp.learned, 1);
+assert.equal(mp.percent, 33);
+
+console.log('frontend learning and course tests: ok');

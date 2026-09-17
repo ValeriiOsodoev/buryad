@@ -3,9 +3,12 @@ import {conjugate, PERSON_LABELS} from './conjugate.js';
 import {answerMatches, similarity} from './normalize.js';
 import {nextReview} from './progress.js';
 import {buildSession} from './session.js';
+import {createCourseController} from './course-ui.js';
+import {flattenCourse, taskId} from './course.js';
 
 const $ = (q) => document.querySelector(q);
 const state = {
+  course: [],
   lessons: [],
   verbs: [],
   videos: [],
@@ -17,6 +20,7 @@ const state = {
   answered: false,
   expandedVerb: null,
   videoIndex: 0,
+  courseController: null,
 };
 
 const escapeHtml = (value = '') => String(value)
@@ -39,11 +43,7 @@ function hydrateRemote(item) {
   const updated = Date.parse(item.updated_at || '') || Date.now();
   const step = Math.max(-1, Math.min(5, Number(item.streak || 0) - 1));
   const delays = [10*60_000, 86400_000, 3*86400_000, 7*86400_000, 21*86400_000, 45*86400_000];
-  return {
-    ...item,
-    review_step: step,
-    next_review_at: updated + delays[Math.max(0, step)],
-  };
+  return {...item, review_step:step, next_review_at:updated + delays[Math.max(0, step)]};
 }
 
 async function loadRemoteProgress() {
@@ -57,18 +57,19 @@ async function mergeGuestProgress() {
     .filter(([, item]) => Number(item.attempts || 0) > 0)
     .map(([exercise_id, item]) => ({
       exercise_id,
-      attempts: Number(item.attempts || 0),
-      correct: Number(item.correct || 0),
-      streak: Number(item.streak || 0),
-      last_answer: item.last_answer || '',
+      attempts:Number(item.attempts || 0),
+      correct:Number(item.correct || 0),
+      streak:Number(item.streak || 0),
+      last_answer:item.last_answer || '',
     }));
   if (!items.length) return;
-  await api('/api/progress/merge', {method:'POST', body:JSON.stringify({items})});
+  await api('/api/progress/merge',{method:'POST',body:JSON.stringify({items})});
   localStorage.removeItem('buryad.progress');
 }
 
 async function loadData() {
-  [state.lessons, state.verbs, state.videos] = await Promise.all([
+  [state.course, state.lessons, state.verbs, state.videos] = await Promise.all([
+    fetch('/assets/data/course.json').then((r) => r.json()),
     fetch('/assets/data/lessons.json').then((r) => r.json()),
     fetch('/assets/data/verbs.json').then((r) => r.json()),
     fetch('/assets/data/videos.json').then((r) => r.json()),
@@ -82,16 +83,21 @@ async function loadData() {
     state.progress = localProgress();
   }
   rebuildSession();
+  state.courseController = createCourseController({
+    course:state.course,
+    getProgress:() => state.progress,
+    record,
+  });
   renderAll();
 }
 
 function allExercises() {
-  return state.lessons.flatMap((lesson) => lesson.exercises.map((exercise) => ({...exercise, lessonTitle:lesson.title, lessonId:lesson.id})));
+  return state.lessons.flatMap((lesson) => lesson.exercises.map((exercise) => ({...exercise,lessonTitle:lesson.title,lessonId:lesson.id})));
 }
 
 function rebuildSession() {
-  state.session = buildSession(state.lessons, state.progress, Date.now(), 10);
-  if (!state.session.length) state.session = allExercises().slice(0, 10);
+  state.session = buildSession(state.lessons,state.progress,Date.now(),10);
+  if (!state.session.length) state.session = allExercises().slice(0,10);
   state.sessionIndex = 0;
   state.answered = false;
 }
@@ -102,7 +108,7 @@ function currentExercise() {
 
 async function record(exercise, correct, answer) {
   const existing = state.progress[exercise.id] || {attempts:0,correct:0,streak:0,status:'learning'};
-  const scheduled = nextReview(existing, correct, Date.now());
+  const scheduled = nextReview(existing,correct,Date.now());
   const current = {
     ...scheduled,
     attempts:Number(existing.attempts || 0) + 1,
@@ -114,17 +120,18 @@ async function record(exercise, correct, answer) {
   saveLocal();
   if (state.user) {
     try {
-      const remote = await api('/api/progress', {
+      const remote = await api('/api/progress',{
         method:'POST',
-        body:JSON.stringify({exercise_id:exercise.id, correct, answer}),
+        body:JSON.stringify({exercise_id:exercise.id,correct,answer}),
       });
       current.status = remote.status;
       current.streak = remote.streak;
     } catch {
-      // Keep the in-memory attempt visible; the next online attempt will refresh server state.
+      // Keep current in memory; a later successful session refreshes server state.
     }
   }
   renderStats();
+  state.courseController?.renderProgress();
 }
 
 function renderAll() {
@@ -134,6 +141,7 @@ function renderAll() {
   renderVideo();
   renderStats();
   renderAuth();
+  state.courseController?.renderProgress();
 }
 
 function renderLessons() {
@@ -165,7 +173,7 @@ function renderExercise() {
   $('#exerciseTag').textContent = exercise.lessonTitle || 'Бытовая речь';
   $('#exercisePrompt').textContent = exercise.ru;
   $('#exerciseState').textContent = 'Вспомни';
-  $('#newWords').innerHTML = (exercise.new || []).map(([buryat, ru]) => `<span class="word-chip"><b>${escapeHtml(buryat)}</b> — ${escapeHtml(ru)}</span>`).join('');
+  $('#newWords').innerHTML = (exercise.new || []).map(([buryat,ru]) => `<span class="word-chip"><b>${escapeHtml(buryat)}</b> — ${escapeHtml(ru)}</span>`).join('');
   $('#answerInput').value = '';
   $('#answerInput').disabled = false;
   $('#feedback').className = 'feedback hidden';
@@ -174,7 +182,7 @@ function renderExercise() {
   $('#dontKnow').classList.remove('hidden');
   $('#continueExercise').classList.add('hidden');
   state.answered = false;
-  const total = Math.max(1, state.session.length);
+  const total = Math.max(1,state.session.length);
   $('#sessionCounter').textContent = `${state.sessionIndex + 1} / ${total}`;
   $('#sessionProgressBar').style.width = `${Math.round(((state.sessionIndex + 1) / total) * 100)}%`;
 }
@@ -201,9 +209,9 @@ async function checkCurrent() {
     $('#feedback').textContent = 'Сначала напиши вариант или нажми «Не помню».';
     return;
   }
-  const correct = answerMatches(answer, exercise.answers);
-  await record(exercise, correct, answer);
-  showFeedback(correct, exercise);
+  const correct = answerMatches(answer,exercise.answers);
+  await record(exercise,correct,answer);
+  showFeedback(correct,exercise);
 }
 
 function nextExercise() {
@@ -221,10 +229,10 @@ $('#checkAnswer').onclick = checkCurrent;
 $('#continueExercise').onclick = nextExercise;
 $('#dontKnow').onclick = async () => {
   const exercise = currentExercise();
-  await record(exercise, false, '');
-  showFeedback(false, exercise);
+  await record(exercise,false,'');
+  showFeedback(false,exercise);
 };
-$('#answerInput').addEventListener('keydown', (event) => {
+$('#answerInput').addEventListener('keydown',(event) => {
   if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
     state.answered ? nextExercise() : checkCurrent();
@@ -244,10 +252,7 @@ function renderVerbs() {
         <div class="verb-title"><span class="verb-rank">#${verb.rank}</span><strong>${escapeHtml(verb.infinitive)}</strong><span>${escapeHtml(verb.ru)}</span></div>
         <span class="verb-chevron" aria-hidden="true">⌄</span>
       </button>
-      <div class="verb-detail">
-        <div class="verb-meta"><span class="word-chip">Повелительное: <b>${escapeHtml(verb.imperative)}!</b></span></div>
-        <div class="conj">${PERSON_LABELS.map(([person,label]) => `<div><b>${escapeHtml(label)}</b>${escapeHtml(conjugate(verb,tense,negative,person))}</div>`).join('')}</div>
-      </div>
+      <div class="verb-detail"><div class="verb-meta"><span class="word-chip">Повелительное: <b>${escapeHtml(verb.imperative)}!</b></span></div><div class="conj">${PERSON_LABELS.map(([person,label]) => `<div><b>${escapeHtml(label)}</b>${escapeHtml(conjugate(verb,tense,negative,person))}</div>`).join('')}</div></div>
     </article>`;
   }).join('');
   document.querySelectorAll('[data-verb]').forEach((button) => {
@@ -258,7 +263,7 @@ function renderVerbs() {
     };
   });
 }
-['verbSearch','verbTense','verbNegative'].forEach((id) => $(`#${id}`).addEventListener('input', renderVerbs));
+['verbSearch','verbTense','verbNegative'].forEach((id) => $(`#${id}`).addEventListener('input',renderVerbs));
 
 function renderVideo() {
   const video = state.videos[state.videoIndex];
@@ -267,21 +272,12 @@ function renderVideo() {
   $('#videoPrev').disabled = state.videoIndex === 0;
   $('#videoNext').disabled = state.videoIndex === state.videos.length - 1;
   const saved = localStorage.getItem(`buryad.video.${video.id}`) || '';
-  $('#videoGrid').innerHTML = `<article class="video-card">
-    <div class="tag">${escapeHtml(video.source)}</div>
-    <h3>${escapeHtml(video.title)}</h3>
-    <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0" title="${escapeHtml(video.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-    <p>${escapeHtml(video.instruction)}</p>
-    <label class="field-label" for="activeVideoAnswer">Что услышал?</label>
-    <textarea id="activeVideoAnswer" rows="4" spellcheck="false" placeholder="Запиши фразу максимально дословно">${escapeHtml(saved)}</textarea>
-    <div class="video-actions"><button class="primary" id="saveVideoAttempt" type="button">Сохранить попытку</button></div>
-    <div class="video-result" id="activeVideoResult" role="status" aria-live="polite"></div>
-  </article>`;
+  $('#videoGrid').innerHTML = `<article class="video-card"><div class="tag">${escapeHtml(video.source)}</div><h3>${escapeHtml(video.title)}</h3><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0" title="${escapeHtml(video.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p>${escapeHtml(video.instruction)}</p><label class="field-label" for="activeVideoAnswer">Что услышал?</label><textarea id="activeVideoAnswer" rows="4" spellcheck="false" placeholder="Запиши фразу максимально дословно">${escapeHtml(saved)}</textarea><div class="video-actions"><button class="primary" id="saveVideoAttempt" type="button">Сохранить попытку</button></div><div class="video-result" id="activeVideoResult" role="status" aria-live="polite"></div></article>`;
   $('#saveVideoAttempt').onclick = async () => {
     const answer = $('#activeVideoAnswer').value.trim();
     if (!answer) { $('#activeVideoResult').textContent = 'Сначала запиши то, что удалось услышать.'; return; }
-    const score = video.reference ? similarity(answer, video.reference) : 0;
-    localStorage.setItem(`buryad.video.${video.id}`, answer);
+    const score = video.reference ? similarity(answer,video.reference) : 0;
+    localStorage.setItem(`buryad.video.${video.id}`,answer);
     if (state.user) {
       try { await api('/api/video-attempts',{method:'POST',body:JSON.stringify({video_id:video.id,answer,score})}); } catch {}
     }
@@ -293,25 +289,33 @@ function renderVideo() {
 $('#videoPrev').onclick = () => { if (state.videoIndex > 0) { state.videoIndex -= 1; renderVideo(); } };
 $('#videoNext').onclick = () => { if (state.videoIndex < state.videos.length - 1) { state.videoIndex += 1; renderVideo(); } };
 
+function progressLabels() {
+  const labels = Object.fromEntries(allExercises().map((exercise) => [exercise.id,exercise.ru]));
+  for (const phrase of flattenCourse(state.course)) {
+    for (const mode of ['recall','meaning','dialogue']) labels[taskId(phrase.id,mode)] = phrase.ru;
+  }
+  return labels;
+}
+
 function renderStats() {
   const now = Date.now();
   const items = Object.entries(state.progress);
-  const attempts = items.reduce((sum,[,item]) => sum + Number(item.attempts || 0), 0);
-  const correct = items.reduce((sum,[,item]) => sum + Number(item.correct || 0), 0);
+  const attempts = items.reduce((sum,[,item]) => sum + Number(item.attempts || 0),0);
+  const correct = items.reduce((sum,[,item]) => sum + Number(item.correct || 0),0);
   const mastered = items.filter(([,item]) => item.status === 'mastered' || Number(item.review_step || -1) >= 4).length;
   const due = items.filter(([,item]) => Number(item.next_review_at || Number.MAX_SAFE_INTEGER) <= now).length;
-  const best = Math.max(0, ...items.map(([,item]) => Number(item.streak || 0)));
+  const best = Math.max(0,...items.map(([,item]) => Number(item.streak || 0)));
   $('#metricMastered').textContent = mastered;
   $('#metricDue').textContent = due;
   $('#metricAccuracy').textContent = attempts ? `${Math.round(correct / attempts * 100)}%` : '0%';
   $('#metricStreak').textContent = best;
-  $('#heroStats').textContent = attempts ? `${mastered} освоено · ${due} пора повторить` : '0 освоено · начни первую сессию';
-  const exerciseMap = Object.fromEntries(allExercises().map((exercise) => [exercise.id,exercise]));
+  $('#heroStats').textContent = attempts ? `${mastered} заданий освоено · ${due} пора повторить` : '0 освоено · начни первую сессию';
+  const labels = progressLabels();
   const weak = items
     .filter(([,item]) => Number(item.attempts || 0) >= 2 && Number(item.correct || 0) / Math.max(1,Number(item.attempts || 0)) < .6)
     .slice(0,8);
   $('#weakItems').innerHTML = weak.length
-    ? weak.map(([id]) => `<span class="weak-chip">${escapeHtml(exerciseMap[id]?.ru || id)}</span>`).join('')
+    ? weak.map(([id]) => `<span class="weak-chip">${escapeHtml(labels[id] || id)}</span>`).join('')
     : 'Пока явных слабых мест нет.';
 }
 
@@ -336,7 +340,7 @@ function renderAuth() {
 function openAuth() {
   $('#authError').textContent = '';
   $('#authDialog').showModal();
-  setTimeout(() => $('#email').focus(), 0);
+  setTimeout(() => $('#email').focus(),0);
 }
 
 async function accountAction() {
@@ -345,24 +349,25 @@ async function accountAction() {
   state.user = null;
   state.progress = localProgress();
   rebuildSession();
+  state.courseController?.rebuild();
   renderAll();
 }
 $('#authButton').onclick = accountAction;
 $('#profileAuthButton').onclick = accountAction;
 $('#authClose').onclick = () => $('#authDialog').close();
-$('#authDialog').addEventListener('click', (event) => { if (event.target === $('#authDialog')) $('#authDialog').close(); });
+$('#authDialog').addEventListener('click',(event) => { if (event.target === $('#authDialog')) $('#authDialog').close(); });
 $('#passwordToggle').onclick = () => {
   const input = $('#password');
   const visible = input.type === 'text';
   input.type = visible ? 'password' : 'text';
   $('#passwordToggle').textContent = visible ? 'Показать' : 'Скрыть';
-  $('#passwordToggle').setAttribute('aria-label', visible ? 'Показать пароль' : 'Скрыть пароль');
+  $('#passwordToggle').setAttribute('aria-label',visible ? 'Показать пароль' : 'Скрыть пароль');
 };
 $('#authSwitch').onclick = () => {
   state.registerMode = !state.registerMode;
   $('#authTitle').textContent = state.registerMode ? 'Регистрация' : 'Вход';
   $('#authSubmit').textContent = state.registerMode ? 'Создать аккаунт' : 'Войти';
-  $('#displayNameField').classList.toggle('hidden', !state.registerMode);
+  $('#displayNameField').classList.toggle('hidden',!state.registerMode);
   $('#password').autocomplete = state.registerMode ? 'new-password' : 'current-password';
   $('#authSwitch').textContent = state.registerMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться';
 };
@@ -381,6 +386,7 @@ $('#authForm').onsubmit = async (event) => {
     await mergeGuestProgress();
     await loadRemoteProgress();
     rebuildSession();
+    state.courseController?.rebuild();
     renderAll();
     $('#authDialog').close();
   } catch (error) {
