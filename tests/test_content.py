@@ -93,3 +93,25 @@ def test_learning_shell_has_mobile_nav_labels_and_explicit_continue():
     assert '<label for="password">Пароль</label>' in html
     assert 'id="passwordToggle"' in html
     assert 'viewport-fit=cover' in html
+
+
+def test_beginner_course_shell_has_modules_hints_and_explicit_continue():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    for required_id in (
+        "course",
+        "courseModuleList",
+        "courseModuleSelect",
+        "coursePrompt",
+        "courseAnswer",
+        "courseHint",
+        "courseHelp",
+        "courseCheck",
+        "courseContinue",
+        "courseFeedback",
+        "courseProgressBar",
+        "courseOverall",
+    ):
+        assert f'id="{required_id}"' in html
+    assert '<label class="field-label" id="courseAnswerLabel" for="courseAnswer">' in html
+    assert 'href="#course"' in html
+    assert '/assets/css/course.css' in html
