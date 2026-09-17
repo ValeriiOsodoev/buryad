@@ -2,9 +2,9 @@ import os
 
 os.environ["DATABASE_URL"] = "sqlite:////tmp/test-buryad.db"
 
-from fastapi.testclient import TestClient
+from fastapi.testclient import TestClient  # noqa: E402
 
-from app.main import app
+from app.main import app  # noqa: E402
 
 
 def test_healthz():
