@@ -126,8 +126,8 @@ export function createCourseController({course, getProgress, record, audioMap = 
     $('#courseAudioStatus').textContent = source
       ? source.kind === 'file'
         ? 'Есть проверенная эталонная запись.'
-        : 'Доступен системный голос с языком bxr.'
-      : 'Эталонной записи пока нет. Неподдерживаемый TTS не подменяем русским или казахским голосом.';
+        : 'Можно послушать фразу системным бурятским голосом.'
+      : 'Эталонная запись этой фразы пока не добавлена.';
 
     const phraseId = task?.phrase?.id;
     const own = phraseId && recorder.isSupported ? await recorder.get(phraseId).catch(() => null) : null;
