@@ -32,7 +32,7 @@ function localProgress() {
 }
 
 function saveLocal() {
-  localStorage.setItem('buryad.progress', JSON.stringify(state.progress));
+  if (!state.user) localStorage.setItem('buryad.progress', JSON.stringify(state.progress));
 }
 
 function hydrateRemote(item) {
@@ -121,7 +121,7 @@ async function record(exercise, correct, answer) {
       current.status = remote.status;
       current.streak = remote.streak;
     } catch {
-      // Keep local copy; it can be merged on the next authenticated session.
+      // Keep the in-memory attempt visible; the next online attempt will refresh server state.
     }
   }
   renderStats();
