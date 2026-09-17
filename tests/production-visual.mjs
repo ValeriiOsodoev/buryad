@@ -11,16 +11,41 @@ const cases = [
   {name:'mobile-320', viewport:{width:320,height:720}, isMobile:true},
 ];
 
+async function waitForReady(page) {
+  await page.waitForFunction(async () => {
+    if (document.fonts?.ready) await document.fonts.ready;
+    const prompt = document.querySelector('#coursePrompt')?.textContent?.trim() || '';
+    const audioStatus = document.querySelector('#courseAudioStatus')?.textContent?.trim() || '';
+    const moduleCount = document.querySelectorAll('#courseModuleSelect option').length;
+    const overall = document.querySelector('#courseOverall')?.textContent || '';
+    return Boolean(
+      prompt &&
+      !prompt.includes('Загрузка') &&
+      audioStatus &&
+      !audioStatus.includes('Проверяем') &&
+      moduleCount === 12 &&
+      overall.includes('204')
+    );
+  }, null, {timeout:30_000});
+  await page.waitForTimeout(300);
+}
+
 const browser = await chromium.launch({headless:true});
 try {
   for (const item of cases) {
     const context = await browser.newContext({viewport:item.viewport,isMobile:item.isMobile});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle', timeout:30_000});
+    await page.goto(baseURL, {waitUntil:'domcontentloaded', timeout:30_000});
+    await waitForReady(page);
+
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(200);
     await page.screenshot({path:`${outDir}/${item.name}-home.png`, fullPage:false});
+
     await page.locator('#course').scrollIntoViewIfNeeded();
     await page.waitForTimeout(300);
     await page.screenshot({path:`${outDir}/${item.name}-course.png`, fullPage:false});
+
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production`);
     await context.close();
