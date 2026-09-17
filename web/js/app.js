@@ -1,18 +1,71 @@
 import {api} from './api.js';
 import {conjugate, PERSON_LABELS} from './conjugate.js';
 import {answerMatches, similarity} from './normalize.js';
+import {nextReview} from './progress.js';
+import {buildSession} from './session.js';
 
 const $ = (q) => document.querySelector(q);
 const state = {
   lessons: [],
   verbs: [],
   videos: [],
-  lesson: 0,
-  exercise: 0,
   progress: {},
   user: null,
   registerMode: false,
+  session: [],
+  sessionIndex: 0,
+  answered: false,
+  expandedVerb: null,
+  videoIndex: 0,
 };
+
+const escapeHtml = (value = '') => String(value)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
+
+function localProgress() {
+  try { return JSON.parse(localStorage.getItem('buryad.progress') || '{}'); }
+  catch { return {}; }
+}
+
+function saveLocal() {
+  localStorage.setItem('buryad.progress', JSON.stringify(state.progress));
+}
+
+function hydrateRemote(item) {
+  const updated = Date.parse(item.updated_at || '') || Date.now();
+  const step = Math.max(-1, Math.min(5, Number(item.streak || 0) - 1));
+  const delays = [10*60_000, 86400_000, 3*86400_000, 7*86400_000, 21*86400_000, 45*86400_000];
+  return {
+    ...item,
+    review_step: step,
+    next_review_at: updated + delays[Math.max(0, step)],
+  };
+}
+
+async function loadRemoteProgress() {
+  const data = await api('/api/progress');
+  state.progress = Object.fromEntries(data.items.map((item) => [item.exercise_id, hydrateRemote(item)]));
+}
+
+async function mergeGuestProgress() {
+  const guest = localProgress();
+  const items = Object.entries(guest)
+    .filter(([, item]) => Number(item.attempts || 0) > 0)
+    .map(([exercise_id, item]) => ({
+      exercise_id,
+      attempts: Number(item.attempts || 0),
+      correct: Number(item.correct || 0),
+      streak: Number(item.streak || 0),
+      last_answer: item.last_answer || '',
+    }));
+  if (!items.length) return;
+  await api('/api/progress/merge', {method:'POST', body:JSON.stringify({items})});
+  localStorage.removeItem('buryad.progress');
+}
 
 async function loadData() {
   [state.lessons, state.verbs, state.videos] = await Promise.all([
@@ -22,42 +75,54 @@ async function loadData() {
   ]);
   try {
     state.user = (await api('/api/me')).user;
+    await mergeGuestProgress();
     await loadRemoteProgress();
   } catch {
-    loadLocalProgress();
+    state.user = null;
+    state.progress = localProgress();
   }
+  rebuildSession();
   renderAll();
 }
 
-function loadLocalProgress() {
-  state.progress = JSON.parse(localStorage.getItem('buryad.progress') || '{}');
+function allExercises() {
+  return state.lessons.flatMap((lesson) => lesson.exercises.map((exercise) => ({...exercise, lessonTitle:lesson.title, lessonId:lesson.id})));
 }
 
-async function loadRemoteProgress() {
-  const data = await api('/api/progress');
-  state.progress = Object.fromEntries(data.items.map((x) => [x.exercise_id, x]));
+function rebuildSession() {
+  state.session = buildSession(state.lessons, state.progress, Date.now(), 10);
+  if (!state.session.length) state.session = allExercises().slice(0, 10);
+  state.sessionIndex = 0;
+  state.answered = false;
 }
 
-function saveLocal() {
-  localStorage.setItem('buryad.progress', JSON.stringify(state.progress));
+function currentExercise() {
+  return state.session[state.sessionIndex] || allExercises()[0];
 }
 
-async function record(id, correct, answer) {
-  const current = state.progress[id] || {attempts: 0, correct: 0, streak: 0, status: 'learning'};
-  current.attempts += 1;
-  current.correct += Number(correct);
-  current.streak = correct ? current.streak + 1 : 0;
-  current.status = current.streak >= 3 ? 'mastered' : 'learning';
-  current.last_answer = answer;
-  state.progress[id] = current;
+async function record(exercise, correct, answer) {
+  const existing = state.progress[exercise.id] || {attempts:0,correct:0,streak:0,status:'learning'};
+  const scheduled = nextReview(existing, correct, Date.now());
+  const current = {
+    ...scheduled,
+    attempts:Number(existing.attempts || 0) + 1,
+    correct:Number(existing.correct || 0) + Number(correct),
+    last_answer:answer,
+    updated_at:new Date().toISOString(),
+  };
+  state.progress[exercise.id] = current;
   saveLocal();
   if (state.user) {
     try {
-      await api('/api/progress', {
-        method: 'POST',
-        body: JSON.stringify({exercise_id: id, correct, answer}),
+      const remote = await api('/api/progress', {
+        method:'POST',
+        body:JSON.stringify({exercise_id:exercise.id, correct, answer}),
       });
-    } catch {}
+      current.status = remote.status;
+      current.streak = remote.streak;
+    } catch {
+      // Keep local copy; it can be merged on the next authenticated session.
+    }
   }
   renderStats();
 }
@@ -66,178 +131,263 @@ function renderAll() {
   renderLessons();
   renderExercise();
   renderVerbs();
-  renderVideos();
+  renderVideo();
   renderStats();
   renderAuth();
 }
 
 function renderLessons() {
-  $('#lessonList').innerHTML = state.lessons
-    .map(
-      (lesson, index) =>
-        `<button class="lesson-button ${index === state.lesson ? 'active' : ''}" data-i="${index}"><span>${lesson.title}</span><small>${lesson.exercises.length}</small></button>`,
-    )
-    .join('');
-  document.querySelectorAll('.lesson-button').forEach((button) => {
+  const active = currentExercise()?.lessonId;
+  $('#lessonList').innerHTML = state.lessons.map((lesson) => {
+    const due = lesson.exercises.filter((exercise) => {
+      const p = state.progress[exercise.id];
+      return p && Number(p.next_review_at || 0) <= Date.now();
+    }).length;
+    return `<button class="lesson-button ${lesson.id === active ? 'active' : ''}" data-lesson="${escapeHtml(lesson.id)}" type="button"><span>${escapeHtml(lesson.title)}</span><small>${due ? `${due} повтор.` : lesson.exercises.length}</small></button>`;
+  }).join('');
+  document.querySelectorAll('[data-lesson]').forEach((button) => {
     button.onclick = () => {
-      state.lesson = Number(button.dataset.i);
-      state.exercise = 0;
+      const lesson = state.lessons.find((item) => item.id === button.dataset.lesson);
+      if (!lesson) return;
+      state.session = lesson.exercises.map((exercise) => ({...exercise,lessonTitle:lesson.title,lessonId:lesson.id}));
+      state.sessionIndex = 0;
+      state.answered = false;
       renderLessons();
       renderExercise();
+      $('#answerInput').focus();
     };
   });
-}
-
-function currentExercise() {
-  return state.lessons[state.lesson].exercises[state.exercise];
 }
 
 function renderExercise() {
   const exercise = currentExercise();
-  $('#exerciseTag').textContent = state.lessons[state.lesson].title;
+  if (!exercise) return;
+  $('#exerciseTag').textContent = exercise.lessonTitle || 'Бытовая речь';
   $('#exercisePrompt').textContent = exercise.ru;
-  $('#newWords').innerHTML = (exercise.new || [])
-    .map(([buryat, ru]) => `<span class="word-chip"><b>${buryat}</b> — ${ru}</span>`)
-    .join('');
+  $('#exerciseState').textContent = 'Вспомни';
+  $('#newWords').innerHTML = (exercise.new || []).map(([buryat, ru]) => `<span class="word-chip"><b>${escapeHtml(buryat)}</b> — ${escapeHtml(ru)}</span>`).join('');
   $('#answerInput').value = '';
+  $('#answerInput').disabled = false;
   $('#feedback').className = 'feedback hidden';
   $('#feedback').innerHTML = '';
+  $('#checkAnswer').classList.remove('hidden');
+  $('#dontKnow').classList.remove('hidden');
+  $('#continueExercise').classList.add('hidden');
+  state.answered = false;
+  const total = Math.max(1, state.session.length);
+  $('#sessionCounter').textContent = `${state.sessionIndex + 1} / ${total}`;
+  $('#sessionProgressBar').style.width = `${Math.round(((state.sessionIndex + 1) / total) * 100)}%`;
+}
+
+function showFeedback(correct, exercise) {
+  state.answered = true;
+  $('#answerInput').disabled = true;
+  $('#exerciseState').textContent = correct ? 'Получилось' : 'Повтори';
+  const feedback = $('#feedback');
+  feedback.className = `feedback ${correct ? 'ok' : 'bad'}`;
+  feedback.innerHTML = `<strong>${correct ? 'Да, так можно сказать.' : 'Сверься с рабочим вариантом.'}</strong><div class="answer-reveal">${escapeHtml(exercise.answers[0])}</div><div class="source-note">${correct ? 'Проговори фразу вслух один раз и продолжай.' : 'Проговори правильный вариант два раза. Эта фраза вернётся раньше.'}</div>`;
+  $('#checkAnswer').classList.add('hidden');
+  $('#dontKnow').classList.add('hidden');
+  $('#continueExercise').classList.remove('hidden');
+  $('#continueExercise').focus();
+}
+
+async function checkCurrent() {
+  if (state.answered) return nextExercise();
+  const exercise = currentExercise();
+  const answer = $('#answerInput').value.trim();
+  if (!answer) {
+    $('#feedback').className = 'feedback bad';
+    $('#feedback').textContent = 'Сначала напиши вариант или нажми «Не помню».';
+    return;
+  }
+  const correct = answerMatches(answer, exercise.answers);
+  await record(exercise, correct, answer);
+  showFeedback(correct, exercise);
 }
 
 function nextExercise() {
-  const list = state.lessons[state.lesson].exercises;
-  state.exercise = (state.exercise + 1) % list.length;
+  state.sessionIndex += 1;
+  if (state.sessionIndex >= state.session.length) {
+    rebuildSession();
+    $('#todaySubtitle').textContent = 'Сессия завершена. Новая собрана из следующих повторов.';
+  }
+  renderLessons();
   renderExercise();
+  $('#answerInput').focus();
 }
 
-$('#checkAnswer').onclick = async () => {
+$('#checkAnswer').onclick = checkCurrent;
+$('#continueExercise').onclick = nextExercise;
+$('#dontKnow').onclick = async () => {
   const exercise = currentExercise();
-  const answer = $('#answerInput').value;
-  const ok = answerMatches(answer, exercise.answers);
-  await record(exercise.id, ok, answer);
-  const feedback = $('#feedback');
-  feedback.className = `feedback ${ok ? 'ok' : 'bad'}`;
-  feedback.innerHTML = `<strong>${ok ? 'Да, рабочий вариант.' : 'Почти / не совпало.'}</strong><br>${exercise.answers[0]}<div class="source-note">${ok ? 'Идём дальше.' : 'Скажи правильный вариант вслух и повтори ещё раз позже.'}</div>`;
-  setTimeout(() => ok && nextExercise(), 900);
+  await record(exercise, false, '');
+  showFeedback(false, exercise);
 };
-
-$('#dontKnow').onclick = () => {
-  const exercise = currentExercise();
-  const feedback = $('#feedback');
-  feedback.className = 'feedback bad';
-  feedback.innerHTML = `<strong>${exercise.answers[0]}</strong><div class="source-note">Проговори вслух 2 раза, затем переходи дальше.</div>`;
-  record(exercise.id, false, '');
-};
+$('#answerInput').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    state.answered ? nextExercise() : checkCurrent();
+  }
+});
+$('#restartSession').onclick = () => { rebuildSession(); renderLessons(); renderExercise(); };
 
 function renderVerbs() {
-  const query = $('#verbSearch').value?.toLowerCase() || '';
+  const query = $('#verbSearch').value?.toLowerCase().trim() || '';
   const tense = $('#verbTense').value || 'present';
   const negative = $('#verbNegative').checked;
-  const rows = state.verbs.filter(
-    (verb) => !query || `${verb.infinitive} ${verb.ru}`.toLowerCase().includes(query),
-  );
-  $('#verbGrid').innerHTML = rows
-    .map(
-      (verb) =>
-        `<article class="verb-card"><div class="verb-head"><div><small>#${verb.rank}</small><h3>${verb.infinitive}</h3><small>${verb.ru}</small></div><span class="tag">${verb.imperative}!</span></div><div class="conj">${PERSON_LABELS.map(([person, label]) => `<div><b>${label}</b>${conjugate(verb, tense, negative, person)}</div>`).join('')}</div></article>`,
-    )
-    .join('');
-}
-
-['verbSearch', 'verbTense', 'verbNegative'].forEach((id) =>
-  $(`#${id}`).addEventListener('input', renderVerbs),
-);
-
-function renderVideos() {
-  $('#videoGrid').innerHTML = state.videos
-    .map(
-      (video) =>
-        `<article class="video-card"><div class="tag">${video.source}</div><h3>${video.title}</h3><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0" title="${video.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p>${video.instruction}</p><textarea id="video-${video.id}" rows="3" placeholder="Что услышал?"></textarea><div class="video-actions"><button class="secondary" data-video="${video.id}">Сохранить попытку</button></div><div class="video-result" id="result-${video.id}"></div></article>`,
-    )
-    .join('');
-  document.querySelectorAll('[data-video]').forEach((button) => {
-    button.onclick = async () => {
-      const video = state.videos.find((item) => item.id === button.dataset.video);
-      const answer = $(`#video-${video.id}`).value.trim();
-      if (!answer) return;
-      const score = video.reference ? similarity(answer, video.reference) : 0;
-      if (state.user) {
-        try {
-          await api('/api/video-attempts', {
-            method: 'POST',
-            body: JSON.stringify({video_id: video.id, answer, score}),
-          });
-        } catch {}
-      }
-      localStorage.setItem(`buryad.video.${video.id}`, answer);
-      $(`#result-${video.id}`).textContent = video.reference
-        ? `Совпадение по словам: ${score}%`
-        : 'Попытка сохранена. Пересмотри ролик и сам сравни звучание — для этих открытых видео эталонную расшифровку мы не подменяем догадкой.';
+  const rows = state.verbs.filter((verb) => !query || `${verb.infinitive} ${verb.ru}`.toLowerCase().includes(query));
+  $('#verbGrid').innerHTML = rows.map((verb) => {
+    const expanded = state.expandedVerb === verb.infinitive;
+    return `<article class="verb-card ${expanded ? 'expanded' : ''}" data-verb-card="${escapeHtml(verb.infinitive)}">
+      <button class="verb-summary" type="button" data-verb="${escapeHtml(verb.infinitive)}" aria-expanded="${expanded}">
+        <div class="verb-title"><span class="verb-rank">#${verb.rank}</span><strong>${escapeHtml(verb.infinitive)}</strong><span>${escapeHtml(verb.ru)}</span></div>
+        <span class="verb-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="verb-detail">
+        <div class="verb-meta"><span class="word-chip">Повелительное: <b>${escapeHtml(verb.imperative)}!</b></span></div>
+        <div class="conj">${PERSON_LABELS.map(([person,label]) => `<div><b>${escapeHtml(label)}</b>${escapeHtml(conjugate(verb,tense,negative,person))}</div>`).join('')}</div>
+      </div>
+    </article>`;
+  }).join('');
+  document.querySelectorAll('[data-verb]').forEach((button) => {
+    button.onclick = () => {
+      state.expandedVerb = state.expandedVerb === button.dataset.verb ? null : button.dataset.verb;
+      renderVerbs();
+      if (state.expandedVerb) document.querySelector(`[data-verb-card="${CSS.escape(state.expandedVerb)}"]`)?.scrollIntoView({block:'nearest'});
     };
   });
 }
+['verbSearch','verbTense','verbNegative'].forEach((id) => $(`#${id}`).addEventListener('input', renderVerbs));
+
+function renderVideo() {
+  const video = state.videos[state.videoIndex];
+  if (!video) return;
+  $('#videoCounter').textContent = `${state.videoIndex + 1} / ${state.videos.length}`;
+  $('#videoPrev').disabled = state.videoIndex === 0;
+  $('#videoNext').disabled = state.videoIndex === state.videos.length - 1;
+  const saved = localStorage.getItem(`buryad.video.${video.id}`) || '';
+  $('#videoGrid').innerHTML = `<article class="video-card">
+    <div class="tag">${escapeHtml(video.source)}</div>
+    <h3>${escapeHtml(video.title)}</h3>
+    <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0" title="${escapeHtml(video.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <p>${escapeHtml(video.instruction)}</p>
+    <label class="field-label" for="activeVideoAnswer">Что услышал?</label>
+    <textarea id="activeVideoAnswer" rows="4" spellcheck="false" placeholder="Запиши фразу максимально дословно">${escapeHtml(saved)}</textarea>
+    <div class="video-actions"><button class="primary" id="saveVideoAttempt" type="button">Сохранить попытку</button></div>
+    <div class="video-result" id="activeVideoResult" role="status" aria-live="polite"></div>
+  </article>`;
+  $('#saveVideoAttempt').onclick = async () => {
+    const answer = $('#activeVideoAnswer').value.trim();
+    if (!answer) { $('#activeVideoResult').textContent = 'Сначала запиши то, что удалось услышать.'; return; }
+    const score = video.reference ? similarity(answer, video.reference) : 0;
+    localStorage.setItem(`buryad.video.${video.id}`, answer);
+    if (state.user) {
+      try { await api('/api/video-attempts',{method:'POST',body:JSON.stringify({video_id:video.id,answer,score})}); } catch {}
+    }
+    $('#activeVideoResult').textContent = video.reference
+      ? `Совпадение с проверенной расшифровкой: ${score}%`
+      : 'Попытка сохранена. Здесь нет проверенного transcript, поэтому мы не рисуем выдуманный процент: переслушай тот же фрагмент и сверяй себя на слух.';
+  };
+}
+$('#videoPrev').onclick = () => { if (state.videoIndex > 0) { state.videoIndex -= 1; renderVideo(); } };
+$('#videoNext').onclick = () => { if (state.videoIndex < state.videos.length - 1) { state.videoIndex += 1; renderVideo(); } };
 
 function renderStats() {
-  const items = Object.values(state.progress);
-  const attempts = items.reduce((sum, item) => sum + (item.attempts || 0), 0);
-  const correct = items.reduce((sum, item) => sum + (item.correct || 0), 0);
-  const mastered = items.filter((item) => item.status === 'mastered').length;
-  const best = Math.max(0, ...items.map((item) => item.streak || 0));
+  const now = Date.now();
+  const items = Object.entries(state.progress);
+  const attempts = items.reduce((sum,[,item]) => sum + Number(item.attempts || 0), 0);
+  const correct = items.reduce((sum,[,item]) => sum + Number(item.correct || 0), 0);
+  const mastered = items.filter(([,item]) => item.status === 'mastered' || Number(item.review_step || -1) >= 4).length;
+  const due = items.filter(([,item]) => Number(item.next_review_at || Number.MAX_SAFE_INTEGER) <= now).length;
+  const best = Math.max(0, ...items.map(([,item]) => Number(item.streak || 0)));
   $('#metricMastered').textContent = mastered;
-  $('#metricAttempts').textContent = attempts;
-  $('#metricAccuracy').textContent = attempts ? `${Math.round((correct / attempts) * 100)}%` : '0%';
+  $('#metricDue').textContent = due;
+  $('#metricAccuracy').textContent = attempts ? `${Math.round(correct / attempts * 100)}%` : '0%';
   $('#metricStreak').textContent = best;
-  $('#heroStats').textContent = `${mastered} освоено · ${items.filter((item) => item.status === 'learning').length} в повторении`;
+  $('#heroStats').textContent = attempts ? `${mastered} освоено · ${due} пора повторить` : '0 освоено · начни первую сессию';
+  const exerciseMap = Object.fromEntries(allExercises().map((exercise) => [exercise.id,exercise]));
+  const weak = items
+    .filter(([,item]) => Number(item.attempts || 0) >= 2 && Number(item.correct || 0) / Math.max(1,Number(item.attempts || 0)) < .6)
+    .slice(0,8);
+  $('#weakItems').innerHTML = weak.length
+    ? weak.map(([id]) => `<span class="weak-chip">${escapeHtml(exerciseMap[id]?.ru || id)}</span>`).join('')
+    : 'Пока явных слабых мест нет.';
+}
+
+function humanAuthError(message) {
+  if (message.includes('Wrong email')) return 'Неверный email или пароль.';
+  if (message.includes('already registered')) return 'Аккаунт с этим email уже существует.';
+  if (message.includes('valid email')) return 'Проверь адрес электронной почты.';
+  if (message.includes('8')) return 'Пароль должен быть не короче 8 символов.';
+  return 'Не получилось выполнить вход. Проверь данные и попробуй ещё раз.';
 }
 
 function renderAuth() {
-  $('#authButton').textContent = state.user
-    ? state.user.display_name || state.user.email.split('@')[0]
-    : 'Войти';
+  const name = state.user ? (state.user.display_name || state.user.email.split('@')[0]) : null;
+  $('#authButton').textContent = name || 'Войти';
+  $('#profileName').textContent = name || 'Гостевой режим';
   $('#progressHint').textContent = state.user
-    ? `Прогресс синхронизируется с аккаунтом ${state.user.email}.`
-    : 'Войди, чтобы прогресс сохранялся на сервере. Без входа он хранится только в этом браузере.';
+    ? `Прогресс синхронизируется с ${state.user.email}.`
+    : 'Прогресс хранится в этом браузере. Войди, чтобы синхронизировать его между устройствами.';
+  $('#profileAuthButton').textContent = state.user ? 'Выйти из аккаунта' : 'Войти / зарегистрироваться';
 }
 
-$('#authButton').onclick = async () => {
-  if (state.user) {
-    if (confirm('Выйти из аккаунта?')) {
-      await api('/api/auth/logout', {method: 'POST'});
-      state.user = null;
-      renderAuth();
-    }
-    return;
-  }
+function openAuth() {
+  $('#authError').textContent = '';
   $('#authDialog').showModal();
-};
+  setTimeout(() => $('#email').focus(), 0);
+}
 
+async function accountAction() {
+  if (!state.user) return openAuth();
+  await api('/api/auth/logout',{method:'POST'});
+  state.user = null;
+  state.progress = localProgress();
+  rebuildSession();
+  renderAll();
+}
+$('#authButton').onclick = accountAction;
+$('#profileAuthButton').onclick = accountAction;
+$('#authClose').onclick = () => $('#authDialog').close();
+$('#authDialog').addEventListener('click', (event) => { if (event.target === $('#authDialog')) $('#authDialog').close(); });
+$('#passwordToggle').onclick = () => {
+  const input = $('#password');
+  const visible = input.type === 'text';
+  input.type = visible ? 'password' : 'text';
+  $('#passwordToggle').textContent = visible ? 'Показать' : 'Скрыть';
+  $('#passwordToggle').setAttribute('aria-label', visible ? 'Показать пароль' : 'Скрыть пароль');
+};
 $('#authSwitch').onclick = () => {
   state.registerMode = !state.registerMode;
   $('#authTitle').textContent = state.registerMode ? 'Регистрация' : 'Вход';
   $('#authSubmit').textContent = state.registerMode ? 'Создать аккаунт' : 'Войти';
-  $('#displayName').classList.toggle('hidden', !state.registerMode);
-  $('#authSwitch').textContent = state.registerMode
-    ? 'Уже есть аккаунт? Войти'
-    : 'Нет аккаунта? Зарегистрироваться';
+  $('#displayNameField').classList.toggle('hidden', !state.registerMode);
+  $('#password').autocomplete = state.registerMode ? 'new-password' : 'current-password';
+  $('#authSwitch').textContent = state.registerMode ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться';
 };
-
 $('#authForm').onsubmit = async (event) => {
   event.preventDefault();
+  const submit = $('#authSubmit');
   $('#authError').textContent = '';
+  submit.disabled = true;
+  const original = submit.textContent;
+  submit.textContent = state.registerMode ? 'Создаём…' : 'Входим…';
   try {
-    const payload = {
-      email: $('#email').value,
-      password: $('#password').value,
-      display_name: $('#displayName').value,
-    };
+    const payload = {email:$('#email').value,password:$('#password').value,display_name:$('#displayName').value};
     const path = state.registerMode ? '/api/auth/register' : '/api/auth/login';
-    const data = await api(path, {method: 'POST', body: JSON.stringify(payload)});
+    const data = await api(path,{method:'POST',body:JSON.stringify(payload)});
     state.user = data.user;
+    await mergeGuestProgress();
     await loadRemoteProgress();
+    rebuildSession();
     renderAll();
     $('#authDialog').close();
   } catch (error) {
-    $('#authError').textContent = error.message;
+    $('#authError').textContent = humanAuthError(error.message);
+  } finally {
+    submit.disabled = false;
+    submit.textContent = original;
   }
 };
 
