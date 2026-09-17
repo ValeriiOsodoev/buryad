@@ -1,5 +1,7 @@
 import {answerMatches, similarity} from './normalize.js';
 import {buildCourseSession, moduleProgress, nextHint} from './course.js';
+import {hasVerifiedAudio, selectBuryatVoice} from './audio.js';
+import {createRecorderStore} from './recorder.js';
 
 const esc = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -19,16 +21,34 @@ function russianMatches(answer, expected) {
   return a === b || similarity(a, b) >= 72;
 }
 
-export function createCourseController({course, getProgress, record}) {
+function playBlob(blob) {
+  const url = URL.createObjectURL(blob);
+  const audio = new Audio(url);
+  audio.onended = () => URL.revokeObjectURL(url);
+  audio.onerror = () => URL.revokeObjectURL(url);
+  return audio.play();
+}
+
+export function createCourseController({course, getProgress, record, audioMap = {}}) {
   const $ = (q) => document.querySelector(q);
   const progress = () => getProgress?.() || {};
+  const recorder = createRecorderStore();
   const state = {
     moduleId: null,
     session: [],
     index: 0,
     answered: false,
     hintLevel: 0,
+    buryatVoice: null,
+    referenceAudio: null,
   };
+
+  function refreshBuryatVoice() {
+    if (!globalThis.speechSynthesis) return;
+    state.buryatVoice = selectBuryatVoice(globalThis.speechSynthesis.getVoices?.() || []);
+  }
+  refreshBuryatVoice();
+  globalThis.speechSynthesis?.addEventListener?.('voiceschanged', refreshBuryatVoice);
 
   function recommendedModule() {
     return course.find((module) => moduleProgress(module, progress()).percent < 100) || course[0];
@@ -41,7 +61,7 @@ export function createCourseController({course, getProgress, record}) {
   function rebuild(moduleId = state.moduleId) {
     const module = course.find((item) => item.id === moduleId) || recommendedModule();
     state.moduleId = module.id;
-    state.session = buildCourseSession(course, progress(), Date.now(), 10, module.id);
+    state.session = buildCourseSession(course, progress(), Date.now(), 10, module.id, audioMap);
     state.index = 0;
     state.answered = false;
     state.hintLevel = 0;
@@ -89,6 +109,60 @@ export function createCourseController({course, getProgress, record}) {
     state.hintLevel = 0;
   }
 
+  function referenceSource(task) {
+    if (task?.audio?.src) return {kind: 'file', src: task.audio.src};
+    const phraseId = task?.phrase?.id;
+    if (phraseId && hasVerifiedAudio(audioMap, phraseId)) {
+      return {kind: 'file', src: audioMap[phraseId].src};
+    }
+    if (state.buryatVoice && task?.phrase?.bxr) return {kind: 'tts'};
+    return null;
+  }
+
+  async function renderAudioTools(task) {
+    const source = referenceSource(task);
+    $('#courseListen').classList.toggle('hidden', !source);
+    $('#courseListenSlow').classList.toggle('hidden', !source);
+    $('#courseAudioStatus').textContent = source
+      ? source.kind === 'file'
+        ? 'Есть проверенная эталонная запись.'
+        : 'Доступен системный голос с языком bxr.'
+      : 'Эталонной записи пока нет. Неподдерживаемый TTS не подменяем русским или казахским голосом.';
+
+    const phraseId = task?.phrase?.id;
+    const own = phraseId && recorder.isSupported ? await recorder.get(phraseId).catch(() => null) : null;
+    $('#courseRecord').disabled = !recorder.isSupported || !phraseId;
+    $('#courseStopRecord').disabled = true;
+    $('#courseReplayOwn').disabled = !own;
+    $('#courseDeleteOwn').disabled = !own;
+    $('#courseRecordStatus').textContent = recorder.isSupported
+      ? own ? 'Твоя запись сохранена в этом браузере.' : 'Можно записать себя и переслушать.'
+      : 'Этот браузер не поддерживает запись с микрофона.';
+  }
+
+  function playReference(rate = 1) {
+    const task = currentTask();
+    const source = referenceSource(task);
+    if (!source) return;
+    if (source.kind === 'file') {
+      state.referenceAudio?.pause?.();
+      const audio = new Audio(source.src);
+      audio.playbackRate = rate;
+      state.referenceAudio = audio;
+      audio.play().catch(() => {
+        $('#courseAudioStatus').textContent = 'Не удалось воспроизвести эталонную запись.';
+      });
+      return;
+    }
+    if (!state.buryatVoice || !globalThis.SpeechSynthesisUtterance) return;
+    globalThis.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(task.phrase.bxr);
+    utterance.voice = state.buryatVoice;
+    utterance.lang = state.buryatVoice.lang;
+    utterance.rate = rate;
+    globalThis.speechSynthesis.speak(utterance);
+  }
+
   function renderTask() {
     const task = currentTask();
     const module = currentModule();
@@ -125,6 +199,7 @@ export function createCourseController({course, getProgress, record}) {
     $('#courseProgressBar').style.width = `${Math.round(((state.index + 1) / total) * 100)}%`;
     $('#courseModuleTitle').textContent = module.title;
     resetTaskUI();
+    void renderAudioTools(task);
   }
 
   function showFeedback(correct, task, revealed = false) {
@@ -190,6 +265,7 @@ export function createCourseController({course, getProgress, record}) {
 
   function next() {
     if (!currentTask()) return rebuild(state.moduleId);
+    state.referenceAudio?.pause?.();
     state.index += 1;
     state.answered = false;
     state.hintLevel = 0;
@@ -208,6 +284,52 @@ export function createCourseController({course, getProgress, record}) {
     $('#courseOverall').textContent = `${learned} из ${total} фраз закреплено`;
   }
 
+  async function startRecording() {
+    const task = currentTask();
+    if (!task?.phrase?.id || !recorder.isSupported) return;
+    try {
+      await recorder.start(task.phrase.id);
+      $('#courseRecord').disabled = true;
+      $('#courseStopRecord').disabled = false;
+      $('#courseRecordStatus').textContent = 'Идёт запись… скажи фразу вслух.';
+    } catch (error) {
+      $('#courseRecordStatus').textContent = error?.name === 'NotAllowedError'
+        ? 'Доступ к микрофону не разрешён.'
+        : 'Не удалось начать запись.';
+    }
+  }
+
+  async function stopRecording() {
+    try {
+      await recorder.stop();
+      $('#courseRecordStatus').textContent = 'Запись сохранена только в этом браузере.';
+      $('#courseRecord').disabled = false;
+      $('#courseStopRecord').disabled = true;
+      $('#courseReplayOwn').disabled = false;
+      $('#courseDeleteOwn').disabled = false;
+    } catch {
+      $('#courseRecordStatus').textContent = 'Не удалось сохранить запись.';
+    }
+  }
+
+  async function replayOwn() {
+    const task = currentTask();
+    const own = task?.phrase?.id ? await recorder.get(task.phrase.id).catch(() => null) : null;
+    if (!own?.blob) return;
+    playBlob(own.blob).catch(() => {
+      $('#courseRecordStatus').textContent = 'Не удалось воспроизвести твою запись.';
+    });
+  }
+
+  async function deleteOwn() {
+    const task = currentTask();
+    if (!task?.phrase?.id) return;
+    await recorder.remove(task.phrase.id).catch(() => false);
+    $('#courseReplayOwn').disabled = true;
+    $('#courseDeleteOwn').disabled = true;
+    $('#courseRecordStatus').textContent = 'Локальная запись удалена.';
+  }
+
   function render() {
     renderModules();
     renderOverview();
@@ -218,6 +340,12 @@ export function createCourseController({course, getProgress, record}) {
   $('#courseCheck').onclick = check;
   $('#courseHelp').onclick = help;
   $('#courseContinue').onclick = next;
+  $('#courseListen').onclick = () => playReference(1);
+  $('#courseListenSlow').onclick = () => playReference(0.8);
+  $('#courseRecord').onclick = startRecording;
+  $('#courseStopRecord').onclick = stopRecording;
+  $('#courseReplayOwn').onclick = replayOwn;
+  $('#courseDeleteOwn').onclick = deleteOwn;
   $('#courseAnswer').addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
