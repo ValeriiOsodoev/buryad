@@ -8,7 +8,7 @@ async function assertNoHorizontalOverflow(page) {
 }
 
 test.describe('responsive learning app', () => {
-  test('mobile has bottom navigation, accessible auth and explicit exercise continue', async ({browser}) => {
+  test('mobile beginner course has module selector, hint ladder and explicit continue', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
@@ -16,19 +16,27 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('.mobile-nav')).toBeVisible();
     await expect(page.locator('.desktop-nav')).toBeHidden();
 
+    await page.locator('#course').scrollIntoViewIfNeeded();
+    await expect(page.locator('#courseModuleSelect')).toBeVisible();
+    await expect(page.locator('.course-module-rail')).toBeHidden();
+    await expect(page.locator('#coursePrompt')).not.toHaveText('Загрузка…');
+    await expect(page.locator('#courseOverall')).toContainText('204');
+
+    await page.locator('#courseHelp').click();
+    await expect(page.locator('#courseHint')).toBeVisible();
+    const firstHint = await page.locator('#courseHint').textContent();
+    expect(firstHint?.trim().length).toBeGreaterThan(0);
+    await page.locator('#courseHelp').click();
+    const secondHint = await page.locator('#courseHint').textContent();
+    expect(secondHint).not.toBe(firstHint);
+    await page.locator('#courseHelp').click();
+    await expect(page.locator('#courseContinue')).toBeVisible();
+    await expect(page.locator('#courseFeedback')).toBeVisible();
+
     await page.locator('#authButton').click();
     await expect(page.getByRole('textbox', {name:'Email', exact:true})).toBeVisible();
     await expect(page.getByRole('textbox', {name:'Пароль', exact:true})).toBeVisible();
-    await expect(page.locator('#passwordToggle')).toBeVisible();
     await page.locator('#authClose').click();
-
-    await page.locator('#train').scrollIntoViewIfNeeded();
-    await page.locator('#answerInput').fill('Тиимэ, һайн');
-    await page.locator('#checkAnswer').click();
-    await expect(page.locator('#continueExercise')).toBeVisible();
-    await expect(page.locator('#feedback')).toBeVisible();
-    await page.waitForTimeout(1100);
-    await expect(page.locator('#continueExercise')).toBeVisible();
 
     await page.locator('#verbs').scrollIntoViewIfNeeded();
     await page.locator('#verbSearch').fill('ойлгохо');
@@ -41,22 +49,35 @@ test.describe('responsive learning app', () => {
     await context.close();
   });
 
-  test('desktop keeps top navigation and hides mobile bottom bar', async ({browser}) => {
+  test('desktop course shows module rail and can complete a recall attempt', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:1440,height:900}});
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
     await expect(page.locator('.desktop-nav')).toBeVisible();
     await expect(page.locator('.mobile-nav')).toBeHidden();
+    await expect(page.locator('.course-module-rail')).toBeVisible();
+    await expect(page.locator('#courseModuleList .course-module-button')).toHaveCount(12);
+
+    await page.locator('#course').scrollIntoViewIfNeeded();
+    await page.locator('#courseAnswer').fill('Мэндэ!');
+    await page.locator('#courseCheck').click();
+    await expect(page.locator('#courseContinue')).toBeVisible();
+    await expect(page.locator('#courseFeedback')).toBeVisible();
+    await page.waitForTimeout(1000);
+    await expect(page.locator('#courseContinue')).toBeVisible();
     await assertNoHorizontalOverflow(page);
     await context.close();
   });
 
-  test('narrow 320px viewport does not overflow horizontally', async ({browser}) => {
+  test('narrow 320px course does not overflow horizontally', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:320,height:720},isMobile:true});
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.locator('#course').scrollIntoViewIfNeeded();
     await assertNoHorizontalOverflow(page);
     await expect(page.locator('.mobile-nav')).toBeVisible();
+    await expect(page.locator('#courseModuleSelect')).toBeVisible();
+    await expect(page.locator('#courseAnswer')).toBeVisible();
     await context.close();
   });
 });
