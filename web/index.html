@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f3f0e8">
+  <title>Buryad — бытовой бурятский</title>
+  <meta name="description" content="Практический тренажёр бытового бурятского языка.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">BURYAД<span>β</span></a>
+    <nav>
+      <a href="#train">Тренировка</a>
+      <a href="#verbs">50 глаголов</a>
+      <a href="#video">Видео</a>
+      <a href="#progress">Прогресс</a>
+    </nav>
+    <button class="ghost" id="authButton">Войти</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="eyebrow">Бытовой бурятский · beginner</div>
+      <h1>Говорить.<br><em>Не проходить уроки.</em></h1>
+      <p>Частотные слова, живые фразы, 50 базовых глаголов, интервальные повторы и диктанты по настоящей бурятской речи.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#train">Начать 7 минут</a>
+        <span id="heroStats">0 освоено · 0 в повторении</span>
+      </div>
+    </section>
+
+    <section class="panel" id="train">
+      <div class="section-head"><div><span>01</span><h2>Скажи сам</h2></div><p>Сначала вспоминаешь — потом видишь ответ.</p></div>
+      <div class="trainer-grid">
+        <aside id="lessonList" class="lesson-list"></aside>
+        <article class="exercise-card">
+          <div class="tag" id="exerciseTag">Бытовая речь</div>
+          <h3 id="exercisePrompt">Загрузка…</h3>
+          <div id="newWords" class="new-words"></div>
+          <textarea id="answerInput" rows="3" placeholder="Напиши по-бурятски так, как сказал бы вслух"></textarea>
+          <div class="exercise-actions">
+            <button class="secondary" id="dontKnow">Не помню</button>
+            <button class="primary" id="checkAnswer">Проверить</button>
+          </div>
+          <div id="feedback" class="feedback hidden"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="verbs">
+      <div class="section-head"><div><span>02</span><h2>50 глаголов</h2></div><p>Частотность + бытовая полезность. Три базовых времени, лица и отрицание.</p></div>
+      <div class="verb-toolbar">
+        <input id="verbSearch" type="search" placeholder="Найти: идти, мэдэхэ, понимать…">
+        <select id="verbTense"><option value="present">Сейчас</option><option value="past">Прошлое</option><option value="future">Будущее</option></select>
+        <label><input id="verbNegative" type="checkbox"> отрицание</label>
+      </div>
+      <div id="verbGrid" class="verb-grid"></div>
+      <p class="source-note">Формы курса — учебные формы литературного бурятского с разговорными пометками. Простые времена: -на/-нэ/-но, -аа/-ээ/-оо и -ха/-хэ/-хо; личные частицы добавляются поверх временной формы.</p>
+    </section>
+
+    <section class="panel" id="video">
+      <div class="section-head"><div><span>03</span><h2>Услышь дословно</h2></div><p>Короткая настоящая речь. Смотри фрагмент несколько раз и запиши всё, что услышал.</p></div>
+      <div id="videoGrid" class="video-grid"></div>
+    </section>
+
+    <section class="panel" id="progress">
+      <div class="section-head"><div><span>04</span><h2>Твой прогресс</h2></div><p>Аккаунт хранит прогресс между устройствами.</p></div>
+      <div class="progress-grid">
+        <div class="metric"><strong id="metricMastered">0</strong><span>освоено</span></div>
+        <div class="metric"><strong id="metricAttempts">0</strong><span>попыток</span></div>
+        <div class="metric"><strong id="metricAccuracy">0%</strong><span>точность</span></div>
+        <div class="metric"><strong id="metricStreak">0</strong><span>лучший стрик</span></div>
+      </div>
+      <p id="progressHint" class="source-note">Войди, чтобы прогресс сохранялся на сервере. Без входа он хранится только в этом браузере.</p>
+    </section>
+  </main>
+
+  <dialog id="authDialog">
+    <form method="dialog" class="auth-card" id="authForm">
+      <button class="close" value="cancel" aria-label="Закрыть">×</button>
+      <div class="eyebrow">Сохрани прогресс</div>
+      <h2 id="authTitle">Вход</h2>
+      <input id="displayName" placeholder="Имя" class="hidden">
+      <input id="email" type="email" placeholder="Email" required>
+      <input id="password" type="password" placeholder="Пароль" minlength="8" required>
+      <p id="authError" class="error"></p>
+      <button class="primary" id="authSubmit" type="submit">Войти</button>
+      <button class="text-button" id="authSwitch" type="button">Нет аккаунта? Зарегистрироваться</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>
