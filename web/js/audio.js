@@ -14,7 +14,7 @@ export function makeAudioTask(phrase, mode = 'dictation', audioEntry = null) {
       id: `course:${phrase.id}:dictation`,
       phrase,
       mode,
-      audio: audioEntry,
+      audio: {...audioEntry, src: audioEntry.src},
       prompt: 'Послушай и напиши дословно по-бурятски.',
       promptLabel: 'Диктант на слух',
       answers: [phrase.bxr, ...(phrase.alternatives || [])],
@@ -25,12 +25,12 @@ export function makeAudioTask(phrase, mode = 'dictation', audioEntry = null) {
       note: phrase.note || '',
     };
   }
-  if (mode === 'audio-response' && phrase.dialogue) {
+  if (mode === 'audio-response' && phrase.dialogue && audioEntry.cueSrc) {
     return {
       id: `course:${phrase.id}:audio-response`,
       phrase,
       mode,
-      audio: audioEntry,
+      audio: {...audioEntry, src: audioEntry.cueSrc},
       prompt: phrase.dialogue.promptRu || 'Ответь на услышанную реплику.',
       promptBxr: phrase.dialogue.promptBxr || '',
       promptLabel: 'Ответь на слух',
@@ -51,6 +51,7 @@ export function audioTaskCandidates(phrase, progress = {}, audioMap = {}) {
   const recall = progress[`course:${phrase.id}:recall`] || {};
   if (!Number(recall.attempts || 0)) return [];
   const tasks = [makeAudioTask(phrase, 'dictation', entry)].filter(Boolean);
-  if (phrase.dialogue) tasks.push(makeAudioTask(phrase, 'audio-response', entry));
-  return tasks.filter(Boolean);
+  const responseTask = makeAudioTask(phrase, 'audio-response', entry);
+  if (responseTask) tasks.push(responseTask);
+  return tasks;
 }
