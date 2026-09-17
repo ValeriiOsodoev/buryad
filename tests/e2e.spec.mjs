@@ -1,6 +1,8 @@
+import {mkdirSync} from 'node:fs';
 import {test, expect} from '@playwright/test';
 
 const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:18128';
+mkdirSync('visual-artifacts', {recursive:true});
 
 async function assertNoHorizontalOverflow(page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
@@ -25,6 +27,8 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#courseAudioStatus')).toContainText('Эталонной записи пока нет');
     await expect(page.locator('#courseListen')).toBeHidden();
     await expect(page.locator('#courseListenSlow')).toBeHidden();
+
+    await page.screenshot({path:'visual-artifacts/mobile-390-course.png', fullPage:true});
 
     await page.locator('#courseHelp').click();
     await expect(page.locator('#courseHint')).toBeVisible();
@@ -65,6 +69,7 @@ test.describe('responsive learning app', () => {
     await page.locator('#course').scrollIntoViewIfNeeded();
     await expect(page.locator('#courseRecord')).toBeVisible();
     await expect(page.locator('#courseListen')).toBeHidden();
+    await page.screenshot({path:'visual-artifacts/desktop-1440-course.png', fullPage:true});
     await page.locator('#courseAnswer').fill('Мэндэ!');
     await page.locator('#courseCheck').click();
     await expect(page.locator('#courseContinue')).toBeVisible();
@@ -87,6 +92,7 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#courseRecord')).toBeVisible();
     await expect(page.locator('#courseStopRecord')).toBeVisible();
     await expect(page.locator('#courseReplayOwn')).toBeVisible();
+    await page.screenshot({path:'visual-artifacts/mobile-320-course.png', fullPage:true});
     await assertNoHorizontalOverflow(page);
     await context.close();
   });
