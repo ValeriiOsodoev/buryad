@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi import Cookie, Depends, FastAPI, HTTPException, Response, status
@@ -156,7 +156,7 @@ def save_progress(
     row.streak = row.streak + 1 if payload.correct else 0
     row.status = "mastered" if row.streak >= 3 else "learning"
     row.last_answer = payload.answer
-    row.updated_at = datetime.now(timezone.utc)
+    row.updated_at = datetime.now(UTC)
     db.commit()
     return {"ok": True, "status": row.status, "streak": row.streak}
 
