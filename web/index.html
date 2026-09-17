@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f4f1e8">
   <title>Buryad — говори по-бурятски</title>
-  <meta name="description" content="Практический тренажёр бытового бурятского: слова, диалоги, глаголы и аудирование.">
+  <meta name="description" content="Практический курс бытового бурятского: 204 фразы, диалоги, глаголы и аудирование.">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/course.css">
 </head>
 <body>
-  <a class="skip-link" href="#train">К тренировке</a>
+  <a class="skip-link" href="#course">К курсу</a>
 
   <header class="topbar" aria-label="Основная навигация">
     <a class="brand" href="#home" aria-label="Buryad, на главную">BURYAД<span>β</span></a>
     <nav class="desktop-nav">
-      <a href="#train">Учиться</a>
+      <a href="#course">Курс</a>
+      <a href="#train">Практика</a>
       <a href="#core">Слова</a>
       <a href="#verbs">Глаголы</a>
       <a href="#video">Слушать</a>
@@ -28,23 +30,83 @@
       <div class="home-copy">
         <div class="eyebrow">Бытовой бурятский · beginner</div>
         <h1>Говори каждый день.</h1>
-        <p>Короткие сессии из живых фраз, повторов и настоящей бурятской речи.</p>
+        <p>12 бытовых модулей, 204 живые фразы, диалоги и интервальные повторы.</p>
       </div>
       <aside class="today-card" aria-label="Сегодняшняя тренировка">
         <div>
           <span class="tag">Сегодня</span>
-          <strong id="todayTitle">7 минут · до 10 фраз</strong>
+          <strong id="todayTitle">7 минут · до 10 заданий</strong>
           <p id="todaySubtitle">Новые фразы + то, что пора повторить.</p>
         </div>
-        <a class="primary primary-large" href="#train">Продолжить обучение <span aria-hidden="true">→</span></a>
+        <a class="primary primary-large" href="#course">Продолжить курс <span aria-hidden="true">→</span></a>
         <div class="today-meta" id="heroStats">0 освоено · начни первую сессию</div>
       </aside>
     </section>
 
+    <section class="panel course-panel" id="course">
+      <div class="section-head compact-head">
+        <div><span>01</span><h2>Курс</h2></div>
+        <p>Фразы возвращаются в разных режимах: понять, вспомнить и применить в диалоге.</p>
+      </div>
+
+      <div class="course-overview">
+        <div>
+          <span class="tag">Beginner · 12 модулей</span>
+          <strong id="courseOverall">0 из 204 фраз закреплено</strong>
+          <small>Модули можно открывать в любом порядке, но сайт ведёт по рекомендуемому пути.</small>
+        </div>
+        <button class="primary" id="courseRecommended" type="button">Продолжить рекомендуемый модуль →</button>
+      </div>
+
+      <div class="course-mobile-picker">
+        <label class="field-label" for="courseModuleSelect">Модуль</label>
+        <select id="courseModuleSelect" aria-describedby="courseModuleMeta"></select>
+        <p id="courseModuleMeta"></p>
+      </div>
+
+      <div class="course-shell">
+        <aside class="course-module-rail" aria-label="Модули курса">
+          <span class="tag">Путь курса</span>
+          <div id="courseModuleList" class="course-module-list"></div>
+        </aside>
+
+        <article class="course-card">
+          <div class="course-session-top">
+            <div>
+              <span class="tag" id="courseMode">Скажи по-бурятски</span>
+              <strong id="courseModuleTitle">Знакомство</strong>
+            </div>
+            <span id="courseCounter">1 / 10</span>
+          </div>
+          <div class="course-progress-track" aria-hidden="true"><span id="courseProgressBar"></span></div>
+
+          <div class="course-prompt-wrap">
+            <h3 id="coursePrompt">Загрузка…</h3>
+            <div id="coursePromptBxr" class="course-dialogue-cue hidden"></div>
+          </div>
+
+          <div id="courseNewWords" class="new-words"></div>
+          <p id="courseNote" class="source-note hidden"></p>
+          <div id="courseHint" class="course-hint hidden" role="status" aria-live="polite"></div>
+
+          <label class="field-label" id="courseAnswerLabel" for="courseAnswer">Ответ по-бурятски</label>
+          <textarea id="courseAnswer" rows="3" autocomplete="off" spellcheck="false" placeholder="Напиши так, как сказал бы вслух"></textarea>
+
+          <div class="course-actions">
+            <button class="secondary" id="courseHelp" type="button">Подсказка</button>
+            <button class="primary" id="courseCheck" type="button">Проверить</button>
+            <button class="primary hidden" id="courseContinue" type="button">Дальше →</button>
+          </div>
+          <div id="courseFeedback" class="course-feedback hidden" role="status" aria-live="polite"></div>
+          <p id="courseSessionMessage" class="course-session-message" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+    </section>
+
     <section class="panel learning-panel" id="train">
       <div class="section-head compact-head">
-        <div><span>01</span><h2>Учиться</h2></div>
-        <p>Сначала вспоминаешь сам. Ответ появляется только после попытки.</p>
+        <div><span>02</span><h2>Практика</h2></div>
+        <p>Свободная тренировка старых наборов: дом, друзья, движение и языковое выживание.</p>
       </div>
 
       <div class="session-strip" aria-label="Прогресс текущей сессии">
@@ -80,7 +142,7 @@
 
     <section class="panel" id="core">
       <div class="section-head">
-        <div><span>02</span><h2>Слова и фразы</h2></div>
+        <div><span>03</span><h2>Слова и фразы</h2></div>
         <p>Быстрый справочник того, что реально пригодится в бытовом разговоре.</p>
       </div>
       <div class="core-toolbar">
@@ -100,8 +162,8 @@
 
     <section class="panel" id="verbs">
       <div class="section-head">
-        <div><span>03</span><h2>50 глаголов</h2></div>
-        <p>Не листай 50 таблиц. Найди глагол и раскрой только тот, который нужен сейчас.</p>
+        <div><span>04</span><h2>50 глаголов</h2></div>
+        <p>Найди глагол и раскрой только тот, который нужен сейчас.</p>
       </div>
       <div class="verb-toolbar">
         <label class="search-field"><span class="sr-only">Поиск глагола</span><input id="verbSearch" type="search" placeholder="Найти: идти, мэдэхэ, понимать…"></label>
@@ -119,7 +181,7 @@
 
     <section class="panel" id="video">
       <div class="section-head">
-        <div><span>04</span><h2>Слушать</h2></div>
+        <div><span>05</span><h2>Слушать</h2></div>
         <p>Один фрагмент за раз: послушай несколько раз и запиши максимально дословно.</p>
       </div>
       <div class="listening-shell">
@@ -134,7 +196,7 @@
 
     <section class="panel progress-panel" id="progress">
       <div class="section-head">
-        <div><span>05</span><h2>Прогресс</h2></div>
+        <div><span>06</span><h2>Прогресс</h2></div>
         <p>Смотри не только цифры, но и что именно стоит повторить следующим.</p>
       </div>
       <div class="progress-grid">
@@ -159,7 +221,7 @@
   </main>
 
   <nav class="mobile-nav" aria-label="Мобильная навигация">
-    <a href="#train"><span aria-hidden="true">◉</span><small>Учиться</small></a>
+    <a href="#course"><span aria-hidden="true">◉</span><small>Курс</small></a>
     <a href="#core"><span aria-hidden="true">Aa</span><small>Слова</small></a>
     <a href="#verbs"><span aria-hidden="true">↗</span><small>Глаголы</small></a>
     <a href="#video"><span aria-hidden="true">▶</span><small>Слушать</small></a>
