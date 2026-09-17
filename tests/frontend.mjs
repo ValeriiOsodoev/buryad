@@ -25,9 +25,10 @@ assert.equal(conjugate(understand, 'simplePast', true, '2sg'), 'ойлгоогү
 
 const NOW = 1_700_000_000_000;
 let review = nextReview({}, true, NOW);
-assert.equal(review.review_step, 1);
+assert.equal(review.review_step, 0);
 assert.equal(review.next_review_at, NOW + 10 * 60_000);
 review = nextReview(review, true, NOW);
+assert.equal(review.review_step, 1);
 assert.equal(review.next_review_at, NOW + 24 * 60 * 60_000);
 review = nextReview(review, false, NOW);
 assert.equal(review.review_step, 0);
