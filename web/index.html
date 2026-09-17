@@ -46,7 +46,7 @@
     <section class="panel course-panel" id="course">
       <div class="section-head compact-head">
         <div><span>01</span><h2>Курс</h2></div>
-        <p>Фразы возвращаются в разных режимах: понять, вспомнить и применить в диалоге.</p>
+        <p>Фразы возвращаются в разных режимах: понять, вспомнить, услышать и применить в диалоге.</p>
       </div>
 
       <div class="course-overview">
@@ -87,6 +87,23 @@
 
           <div id="courseNewWords" class="new-words"></div>
           <p id="courseNote" class="source-note hidden"></p>
+
+          <section class="course-audio-panel" aria-label="Произношение и запись">
+            <div class="course-audio-head">
+              <span class="tag">Произношение</span>
+              <span id="courseAudioStatus">Проверяем доступность эталонного аудио…</span>
+            </div>
+            <div class="course-audio-actions">
+              <button class="secondary hidden" id="courseListen" type="button">▶ Слушать</button>
+              <button class="secondary hidden" id="courseListenSlow" type="button">0.8×</button>
+              <button class="secondary" id="courseRecord" type="button">● Записать себя</button>
+              <button class="secondary" id="courseStopRecord" type="button" disabled>■ Стоп</button>
+              <button class="secondary" id="courseReplayOwn" type="button" disabled>Моя запись</button>
+              <button class="text-button" id="courseDeleteOwn" type="button" disabled>Удалить</button>
+            </div>
+            <p id="courseRecordStatus" class="course-record-status" role="status" aria-live="polite"></p>
+          </section>
+
           <div id="courseHint" class="course-hint hidden" role="status" aria-live="polite"></div>
 
           <label class="field-label" id="courseAnswerLabel" for="courseAnswer">Ответ по-бурятски</label>
