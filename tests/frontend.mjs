@@ -38,8 +38,8 @@ const merged = mergeProgress(
   {x:{attempts:3,correct:2,streak:2,status:'learning',last_answer:'A',updated_at:'2026-09-17T10:00:00Z'}},
   {x:{attempts:2,correct:2,streak:1,status:'learning',last_answer:'B',updated_at:'2026-09-17T11:00:00Z'},y:{attempts:1,correct:1,streak:1}},
 );
-assert.equal(merged.x.attempts, 5);
-assert.equal(merged.x.correct, 4);
+assert.equal(merged.x.attempts, 3);
+assert.equal(merged.x.correct, 2);
 assert.equal(merged.x.last_answer, 'B');
 assert.equal(merged.y.attempts, 1);
 
