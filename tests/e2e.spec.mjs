@@ -24,7 +24,7 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#coursePrompt')).not.toHaveText('Загрузка…');
     await expect(page.locator('#courseOverall')).toContainText('204');
     await expect(page.locator('#courseRecord')).toBeVisible();
-    await expect(page.locator('#courseAudioStatus')).toContainText('Эталонной записи пока нет');
+    await expect(page.locator('#courseAudioStatus')).toContainText('Эталонная запись этой фразы пока не добавлена');
     await expect(page.locator('#courseListen')).toBeHidden();
     await expect(page.locator('#courseListenSlow')).toBeHidden();
 
