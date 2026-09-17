@@ -84,6 +84,8 @@ def test_phrase_audio_manifest_only_references_known_course_phrases():
         assert entry.get("source", "").strip()
         if entry["verified"]:
             assert entry.get("src", "").startswith("/assets/audio/phrases/")
+            if entry.get("cueSrc"):
+                assert entry["cueSrc"].startswith("/assets/audio/phrases/")
 
 
 def test_video_seeds_are_youtube_ids():
@@ -114,7 +116,7 @@ def test_learning_shell_has_mobile_nav_labels_and_explicit_continue():
     assert 'viewport-fit=cover' in html
 
 
-def test_beginner_course_shell_has_modules_hints_and_explicit_continue():
+def test_beginner_course_shell_has_modules_hints_audio_and_explicit_continue():
     html = (ROOT / "web/index.html").read_text(encoding="utf-8")
     for required_id in (
         "course",
@@ -129,6 +131,14 @@ def test_beginner_course_shell_has_modules_hints_and_explicit_continue():
         "courseFeedback",
         "courseProgressBar",
         "courseOverall",
+        "courseAudioStatus",
+        "courseListen",
+        "courseListenSlow",
+        "courseRecord",
+        "courseStopRecord",
+        "courseReplayOwn",
+        "courseDeleteOwn",
+        "courseRecordStatus",
     ):
         assert f'id="{required_id}"' in html
     assert '<label class="field-label" id="courseAnswerLabel" for="courseAnswer">' in html
