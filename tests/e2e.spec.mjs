@@ -17,8 +17,8 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('.desktop-nav')).toBeHidden();
 
     await page.locator('#authButton').click();
-    await expect(page.getByLabel('Email')).toBeVisible();
-    await expect(page.getByLabel('Пароль')).toBeVisible();
+    await expect(page.getByRole('textbox', {name:'Email', exact:true})).toBeVisible();
+    await expect(page.getByRole('textbox', {name:'Пароль', exact:true})).toBeVisible();
     await expect(page.locator('#passwordToggle')).toBeVisible();
     await page.locator('#authClose').click();
 
