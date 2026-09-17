@@ -30,3 +30,11 @@ def test_video_seeds_are_youtube_ids():
     videos = json.loads((ROOT / "web/data/videos.json").read_text(encoding="utf-8"))
     assert len(videos) >= 3
     assert all(len(video["youtubeId"]) == 11 for video in videos)
+
+
+def test_frequency_core_has_practical_and_corpus_layers():
+    core = json.loads((ROOT / "web/data/core.json").read_text(encoding="utf-8"))
+    assert len(core["everyday"]) == 50
+    assert len(core["corpus"]) >= 15
+    assert core["corpus"][0]["word"] == "гэжэ"
+    assert core["corpus"][0]["rank"] == 1
