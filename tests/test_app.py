@@ -73,18 +73,30 @@ def test_progress_is_isolated_between_users():
         )
 
 
-def test_guest_progress_merge_is_scoped_to_authenticated_user():
+def test_guest_progress_merge_is_scoped_and_idempotent():
+    payload = {
+        "items": [
+            {
+                "exercise_id": "guest-1",
+                "attempts": 3,
+                "correct": 2,
+                "streak": 2,
+                "last_answer": "Һайн",
+            }
+        ]
+    }
     with TestClient(app, base_url="https://testserver") as first:
         first.post(
             "/api/auth/register",
             json={"email": new_email("merge"), "password": "correct-horse", "display_name": "A"},
         )
-        merged = first.post(
-            "/api/progress/merge",
-            json={"items": [{"exercise_id": "guest-1", "attempts": 3, "correct": 2, "streak": 2, "last_answer": "Һайн"}]},
+        assert first.post("/api/progress/merge", json=payload).status_code == 200
+        assert first.post("/api/progress/merge", json=payload).status_code == 200
+        item = next(
+            x
+            for x in first.get("/api/progress").json()["items"]
+            if x["exercise_id"] == "guest-1"
         )
-        assert merged.status_code == 200
-        item = next(x for x in first.get("/api/progress").json()["items"] if x["exercise_id"] == "guest-1")
         assert item["attempts"] == 3
         assert item["correct"] == 2
         assert item["last_answer"] == "Һайн"
