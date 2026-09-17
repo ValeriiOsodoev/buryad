@@ -8,7 +8,7 @@ async function assertNoHorizontalOverflow(page) {
 }
 
 test.describe('responsive learning app', () => {
-  test('mobile beginner course has module selector, hint ladder and explicit continue', async ({browser}) => {
+  test('mobile beginner course has module selector, audio honesty, hint ladder and explicit continue', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
@@ -21,6 +21,10 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('.course-module-rail')).toBeHidden();
     await expect(page.locator('#coursePrompt')).not.toHaveText('Загрузка…');
     await expect(page.locator('#courseOverall')).toContainText('204');
+    await expect(page.locator('#courseRecord')).toBeVisible();
+    await expect(page.locator('#courseAudioStatus')).toContainText('Эталонной записи пока нет');
+    await expect(page.locator('#courseListen')).toBeHidden();
+    await expect(page.locator('#courseListenSlow')).toBeHidden();
 
     await page.locator('#courseHelp').click();
     await expect(page.locator('#courseHint')).toBeVisible();
@@ -59,6 +63,8 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#courseModuleList .course-module-button')).toHaveCount(12);
 
     await page.locator('#course').scrollIntoViewIfNeeded();
+    await expect(page.locator('#courseRecord')).toBeVisible();
+    await expect(page.locator('#courseListen')).toBeHidden();
     await page.locator('#courseAnswer').fill('Мэндэ!');
     await page.locator('#courseCheck').click();
     await expect(page.locator('#courseContinue')).toBeVisible();
@@ -69,7 +75,7 @@ test.describe('responsive learning app', () => {
     await context.close();
   });
 
-  test('narrow 320px course does not overflow horizontally', async ({browser}) => {
+  test('narrow 320px course and pronunciation controls do not overflow horizontally', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:320,height:720},isMobile:true});
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
@@ -78,6 +84,10 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('.mobile-nav')).toBeVisible();
     await expect(page.locator('#courseModuleSelect')).toBeVisible();
     await expect(page.locator('#courseAnswer')).toBeVisible();
+    await expect(page.locator('#courseRecord')).toBeVisible();
+    await expect(page.locator('#courseStopRecord')).toBeVisible();
+    await expect(page.locator('#courseReplayOwn')).toBeVisible();
+    await assertNoHorizontalOverflow(page);
     await context.close();
   });
 });
