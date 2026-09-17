@@ -209,8 +209,8 @@ def merge_progress(
             )
             db.add(row)
             existing[item.exercise_id] = row
-        row.attempts += item.attempts
-        row.correct += min(item.correct, item.attempts)
+        row.attempts = max(row.attempts, item.attempts)
+        row.correct = max(row.correct, min(item.correct, item.attempts))
         row.streak = max(row.streak, item.streak)
         row.status = "mastered" if row.streak >= 5 else "learning"
         if item.last_answer:
