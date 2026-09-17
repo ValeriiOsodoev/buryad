@@ -12,6 +12,12 @@ import {
   phraseProgress,
   taskId,
 } from '../web/js/course.js';
+import {
+  audioTaskCandidates,
+  hasVerifiedAudio,
+  makeAudioTask,
+  selectBuryatVoice,
+} from '../web/js/audio.js';
 
 assert.equal(normalizeBuryat(' МҮНӨӨ! '), 'муноо');
 assert.equal(normalizeBuryat('hайн'), 'һайн');
@@ -90,10 +96,11 @@ const courseProgress = {
   'course:p2:recall': {attempts:2,correct:2,streak:2,next_review_at:NOW-1,status:'learning'},
 };
 const courseSession = buildCourseSession(sampleCourse, courseProgress, NOW, 4);
+assert.equal(courseSession.length, 4);
 assert.equal(courseSession[0].phrase.id, 'p1');
 assert.equal(courseSession[1].phrase.id, 'p2');
-assert.equal(courseSession[2].phrase.id, 'p3');
-assert.equal(courseSession.length, 4);
+assert.equal(courseSession[2].mode, 'dialogue');
+assert.equal(courseSession[3].phrase.id, 'p3');
 
 const pp = phraseProgress(flat[0], {
   'course:p1:recall': {attempts:5,status:'mastered'},
@@ -109,4 +116,34 @@ assert.equal(mp.total, 3);
 assert.equal(mp.learned, 1);
 assert.equal(mp.percent, 33);
 
-console.log('frontend learning and course tests: ok');
+assert.equal(selectBuryatVoice([{lang:'ru-RU'},{lang:'kk-KZ'},{lang:'mn-MN'}]), null);
+assert.equal(selectBuryatVoice([{name:'Native Buryat',lang:'bxr-RU'}])?.name, 'Native Buryat');
+assert.equal(selectBuryatVoice([{name:'Buryat',lang:'BXR'}])?.name, 'Buryat');
+const audioMap = {
+  p1:{
+    src:'/assets/audio/phrases/p1.ogg',
+    cueSrc:'/assets/audio/phrases/p1-cue.ogg',
+    speaker:'Native',
+    source:'Studio',
+    verified:true,
+  },
+  p2:{src:'/assets/audio/phrases/p2.ogg',speaker:'Unknown',source:'Draft',verified:false},
+};
+assert.equal(hasVerifiedAudio(audioMap, 'p1'), true);
+assert.equal(hasVerifiedAudio(audioMap, 'p2'), false);
+assert.equal(hasVerifiedAudio(audioMap, 'missing'), false);
+assert.equal(makeAudioTask(flat[0], 'dictation', audioMap.p1)?.id, 'course:p1:dictation');
+assert.equal(makeAudioTask(flat[0], 'audio-response', audioMap.p1)?.audio.src, audioMap.p1.cueSrc);
+assert.equal(makeAudioTask(flat[1], 'dictation', audioMap.p2), null);
+assert.deepEqual(audioTaskCandidates(flat[0], {}, audioMap), []);
+const audioCandidates = audioTaskCandidates(flat[0], {'course:p1:recall':{attempts:1}}, audioMap);
+assert.equal(audioCandidates[0].mode, 'dictation');
+assert.equal(audioCandidates[1].mode, 'audio-response');
+const withoutAudio = buildCourseSession(sampleCourse, {'course:p1:recall':{attempts:1}}, NOW, 10, 'intro', {});
+assert.equal(withoutAudio.some((task) => task.mode === 'dictation'), false);
+const withAudio = buildCourseSession(sampleCourse, {'course:p1:recall':{attempts:1}}, NOW, 10, 'intro', audioMap);
+assert.equal(withAudio.some((task) => task.mode === 'dictation'), true);
+assert.equal(withAudio.some((task) => task.mode === 'audio-response'), true);
+assert.equal(withAudio.filter((task) => task.mode !== 'recall').length >= 1, true);
+
+console.log('frontend learning, course and audio tests: ok');

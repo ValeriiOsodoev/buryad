@@ -34,7 +34,7 @@ jobs:
           npm install --ignore-scripts
           npx playwright install --with-deps chromium
       - name: Lint Python
-        run: ruff check app tests
+        run: ruff check app tests scripts
       - name: Run backend and content tests
         run: pytest -q
       - name: Run frontend unit tests
@@ -46,6 +46,7 @@ jobs:
           python -m json.tool web/data/videos.json >/dev/null
           python -m json.tool web/data/core.json >/dev/null
           python -m json.tool web/data/course.json >/dev/null
+          python -m json.tool web/data/audio.json >/dev/null
           bash -n deploy/deploy.sh deploy/install_ingress.sh
       - name: Build exact release image
         run: docker build -t "buryad-app:$GITHUB_SHA" .
@@ -62,6 +63,14 @@ jobs:
           done
           curl -fsS http://127.0.0.1:18128/healthz
           npm run test:e2e
+      - name: Upload visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: buryad-visual-qa
+          path: visual-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Package tested release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
