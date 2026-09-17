@@ -1,0 +1,109 @@
+name: Verify and deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: buryad-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install test dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Lint Python
+        run: ruff check app tests
+      - name: Run backend and content tests
+        run: pytest -q
+      - name: Run frontend normalization tests
+        run: node tests/frontend.mjs
+      - name: Validate static data and shell
+        run: |
+          python -m json.tool web/data/verbs.json >/dev/null
+          python -m json.tool web/data/lessons.json >/dev/null
+          python -m json.tool web/data/videos.json >/dev/null
+          bash -n deploy/deploy.sh deploy/install_ingress.sh
+      - name: Build exact release image
+        run: docker build -t "buryad-app:$GITHUB_SHA" .
+      - name: Smoke test image
+        run: |
+          docker run -d --name buryad-smoke -p 127.0.0.1:18128:8080 "buryad-app:$GITHUB_SHA"
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18128/healthz; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:18128/healthz
+          docker rm -f buryad-smoke
+      - name: Package tested release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir release
+          docker save "buryad-app:$GITHUB_SHA" | gzip > release/image.tar.gz
+          cp compose.yaml deploy/deploy.sh deploy/install_ingress.sh deploy/nginx.conf release/
+          cd release
+          sha256sum image.tar.gz compose.yaml deploy.sh install_ingress.sh nginx.conf > SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          name: buryad-release
+          path: release/
+          retention-days: 7
+          compression-level: 0
+
+  deploy:
+    needs: verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: production
+    concurrency:
+      group: buryad-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: buryad-release
+          path: release
+      - name: Deploy tested artifact
+        env:
+          DEPLOY_HOST: ${{ secrets.HOST || '57.129.104.184' }}
+          DEPLOY_USER: ${{ secrets.USER || 'ubuntu' }}
+          DEPLOY_KEY: ${{ secrets.SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          : "${DEPLOY_KEY:?SSH_KEY is required}"
+          : "${KNOWN_HOSTS:?SSH_KNOWN_HOSTS is required}"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+          trap 'rm -f ~/.ssh/id_ed25519' EXIT
+          remote="$DEPLOY_USER@$DEPLOY_HOST"
+          cd release
+          sha256sum -c SHA256SUMS
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "mkdir -p /home/ubuntu/buryad/releases/$GITHUB_SHA"
+          scp -o BatchMode=yes -o StrictHostKeyChecking=yes image.tar.gz compose.yaml deploy.sh install_ingress.sh nginx.conf SHA256SUMS "$remote:/home/ubuntu/buryad/releases/$GITHUB_SHA/"
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "cd /home/ubuntu/buryad/releases/$GITHUB_SHA && bash deploy.sh $GITHUB_SHA"
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "bash /home/ubuntu/buryad/releases/$GITHUB_SHA/install_ingress.sh /home/ubuntu/buryad/releases/$GITHUB_SHA/nginx.conf"
+      - name: Verify public endpoint
+        run: curl --fail --retry 10 --retry-delay 3 --max-time 15 https://buryad.buuzoed.dev/healthz
