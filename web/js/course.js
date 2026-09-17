@@ -134,19 +134,22 @@ export function buildCourseSession(
   for (const phrase of phrases) {
     const recallItem = recallProgress(progress, phrase.id);
     if (!attempts(recallItem)) continue;
-    const meaningId = taskId(phrase.id, 'meaning');
-    if (!attempts(progress[meaningId])) supplemental.push(makeTask(phrase, 'meaning'));
+
+    for (const audioTask of audioTaskCandidates(phrase, progress, audioMap)) {
+      const audioProgress = progress[audioTask.id];
+      const due = Number(audioProgress?.next_review_at || 0) <= nowMs;
+      if (!attempts(audioProgress) || due) supplemental.push(audioTask);
+    }
+
     if (phrase.dialogue) {
       const dialogueId = taskId(phrase.id, 'dialogue');
       const dialogueItem = progress[dialogueId];
       const due = Number(dialogueItem?.next_review_at || 0) <= nowMs;
       if (!attempts(dialogueItem) || due) supplemental.push(makeTask(phrase, 'dialogue'));
     }
-    for (const audioTask of audioTaskCandidates(phrase, progress, audioMap)) {
-      const audioProgress = progress[audioTask.id];
-      const due = Number(audioProgress?.next_review_at || 0) <= nowMs;
-      if (!attempts(audioProgress) || due) supplemental.push(audioTask);
-    }
+
+    const meaningId = taskId(phrase.id, 'meaning');
+    if (!attempts(progress[meaningId])) supplemental.push(makeTask(phrase, 'meaning'));
   }
 
   return mixTasks(recall, supplemental, limit);
