@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: buryad
+      POSTGRES_USER: buryad
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - buryad-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U buryad -d buryad"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  app:
+    image: buryad-app:${APP_VERSION:-latest}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://buryad:${POSTGRES_PASSWORD}@db:5432/buryad
+    ports:
+      - "127.0.0.1:18127:8080"
+volumes:
+  buryad-db:
