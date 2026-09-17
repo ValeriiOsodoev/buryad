@@ -9,6 +9,7 @@ import {flattenCourse, taskId} from './course.js';
 const $ = (q) => document.querySelector(q);
 const state = {
   course: [],
+  audio: {},
   lessons: [],
   verbs: [],
   videos: [],
@@ -68,8 +69,9 @@ async function mergeGuestProgress() {
 }
 
 async function loadData() {
-  [state.course, state.lessons, state.verbs, state.videos] = await Promise.all([
+  [state.course, state.audio, state.lessons, state.verbs, state.videos] = await Promise.all([
     fetch('/assets/data/course.json').then((r) => r.json()),
+    fetch('/assets/data/audio.json').then((r) => r.json()),
     fetch('/assets/data/lessons.json').then((r) => r.json()),
     fetch('/assets/data/verbs.json').then((r) => r.json()),
     fetch('/assets/data/videos.json').then((r) => r.json()),
@@ -85,6 +87,7 @@ async function loadData() {
   rebuildSession();
   state.courseController = createCourseController({
     course:state.course,
+    audioMap:state.audio,
     getProgress:() => state.progress,
     record,
   });
@@ -292,7 +295,9 @@ $('#videoNext').onclick = () => { if (state.videoIndex < state.videos.length - 1
 function progressLabels() {
   const labels = Object.fromEntries(allExercises().map((exercise) => [exercise.id,exercise.ru]));
   for (const phrase of flattenCourse(state.course)) {
-    for (const mode of ['recall','meaning','dialogue']) labels[taskId(phrase.id,mode)] = phrase.ru;
+    for (const mode of ['recall','meaning','dialogue','dictation','audio-response']) {
+      labels[taskId(phrase.id,mode)] = phrase.ru;
+    }
   }
   return labels;
 }
