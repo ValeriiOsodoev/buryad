@@ -67,6 +67,25 @@ def test_beginner_course_has_required_size_and_schema():
     assert len(ids) == len(set(ids))
 
 
+def test_phrase_audio_manifest_only_references_known_course_phrases():
+    course = json.loads((ROOT / "web/data/course.json").read_text(encoding="utf-8"))
+    audio = json.loads((ROOT / "web/data/audio.json").read_text(encoding="utf-8"))
+    phrase_ids = {
+        phrase["id"]
+        for module in course
+        for phrase in module["phrases"]
+    }
+    assert isinstance(audio, dict)
+    for phrase_id, entry in audio.items():
+        assert phrase_id in phrase_ids
+        assert isinstance(entry, dict)
+        assert isinstance(entry.get("verified"), bool)
+        assert entry.get("speaker", "").strip()
+        assert entry.get("source", "").strip()
+        if entry["verified"]:
+            assert entry.get("src", "").startswith("/assets/audio/phrases/")
+
+
 def test_video_seeds_are_youtube_ids():
     videos = json.loads((ROOT / "web/data/videos.json").read_text(encoding="utf-8"))
     assert len(videos) >= 3
