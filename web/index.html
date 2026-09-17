@@ -13,6 +13,7 @@
     <a class="brand" href="#home">BURYAД<span>β</span></a>
     <nav>
       <a href="#train">Тренировка</a>
+      <a href="#core">Частотное ядро</a>
       <a href="#verbs">50 глаголов</a>
       <a href="#video">Видео</a>
       <a href="#progress">Прогресс</a>
@@ -49,8 +50,21 @@
       </div>
     </section>
 
+    <section class="panel" id="core">
+      <div class="section-head"><div><span>02</span><h2>Частотное ядро</h2></div><p>Отдельно показываем, что часто встречается в корпусе, и что полезнее всего активировать в бытовой речи.</p></div>
+      <div class="core-toolbar">
+        <div class="segmented" role="tablist" aria-label="Тип частотного списка">
+          <button class="core-tab active" data-core-mode="everyday">Бытовой топ 50</button>
+          <button class="core-tab" data-core-mode="corpus">Корпусный топ</button>
+        </div>
+        <input id="coreSearch" type="search" placeholder="Найти слово или перевод…">
+      </div>
+      <div id="coreGrid" class="core-grid"></div>
+      <p id="coreNote" class="source-note">Бытовой топ — не псевдоточная статистика разговоров, а практическое ядро: корпусная частота + полезность новичку. Корпусный список показывает сырую литературную частоту и специально сохраняет служебные слова вроде «гэжэ» и «даа».</p>
+    </section>
+
     <section class="panel" id="verbs">
-      <div class="section-head"><div><span>02</span><h2>50 глаголов</h2></div><p>Частотность + бытовая полезность. Лица, отрицание и четыре формы времени.</p></div>
+      <div class="section-head"><div><span>03</span><h2>50 глаголов</h2></div><p>Частотность + бытовая полезность. Лица, отрицание и четыре формы времени.</p></div>
       <div class="verb-toolbar">
         <input id="verbSearch" type="search" placeholder="Найти: идти, мэдэхэ, понимать…">
         <select id="verbTense">
@@ -66,12 +80,12 @@
     </section>
 
     <section class="panel" id="video">
-      <div class="section-head"><div><span>03</span><h2>Услышь дословно</h2></div><p>Короткая настоящая речь. Смотри фрагмент несколько раз и запиши всё, что услышал.</p></div>
+      <div class="section-head"><div><span>04</span><h2>Услышь дословно</h2></div><p>Короткая настоящая речь. Смотри фрагмент несколько раз и запиши всё, что услышал.</p></div>
       <div id="videoGrid" class="video-grid"></div>
     </section>
 
     <section class="panel" id="progress">
-      <div class="section-head"><div><span>04</span><h2>Твой прогресс</h2></div><p>Аккаунт хранит прогресс между устройствами.</p></div>
+      <div class="section-head"><div><span>05</span><h2>Твой прогресс</h2></div><p>Аккаунт хранит прогресс между устройствами.</p></div>
       <div class="progress-grid">
         <div class="metric"><strong id="metricMastered">0</strong><span>освоено</span></div>
         <div class="metric"><strong id="metricAttempts">0</strong><span>попыток</span></div>
@@ -96,6 +110,7 @@
     </form>
   </dialog>
 
+  <script type="module" src="/assets/js/core.js"></script>
   <script type="module" src="/assets/js/app.js"></script>
 </body>
 </html>
