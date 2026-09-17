@@ -1,3 +1,5 @@
+import {audioTaskCandidates} from './audio.js';
+
 const MODES = ['recall', 'meaning', 'dialogue'];
 
 export function taskId(phraseId, mode) {
@@ -86,7 +88,14 @@ function priorityBucket(phrase, progress, nowMs) {
   return 3;
 }
 
-export function buildCourseSession(course, progress = {}, nowMs = Date.now(), limit = 10, moduleId = null) {
+export function buildCourseSession(
+  course,
+  progress = {},
+  nowMs = Date.now(),
+  limit = 10,
+  moduleId = null,
+  audioMap = {},
+) {
   const phrases = flattenCourse(course).filter((phrase) => !moduleId || phrase.moduleId === moduleId);
   const recall = phrases
     .map((phrase, order) => ({phrase, order, bucket: priorityBucket(phrase, progress, nowMs)}))
@@ -105,6 +114,11 @@ export function buildCourseSession(course, progress = {}, nowMs = Date.now(), li
       const due = Number(dialogueItem?.next_review_at || 0) <= nowMs;
       if (!attempts(dialogueItem) || due) supplemental.push(makeTask(phrase, 'dialogue'));
     }
+    for (const audioTask of audioTaskCandidates(phrase, progress, audioMap)) {
+      const audioProgress = progress[audioTask.id];
+      const due = Number(audioProgress?.next_review_at || 0) <= nowMs;
+      if (!attempts(audioProgress) || due) supplemental.push(audioTask);
+    }
   }
 
   const out = [...recall, ...supplemental];
@@ -115,13 +129,22 @@ export function phraseProgress(phrase, progress = {}) {
   const recall = progress[taskId(phrase.id, 'recall')] || {};
   const meaning = progress[taskId(phrase.id, 'meaning')] || {};
   const dialogue = progress[taskId(phrase.id, 'dialogue')] || {};
+  const dictation = progress[taskId(phrase.id, 'dictation')] || {};
+  const audioResponse = progress[taskId(phrase.id, 'audio-response')] || {};
   return {
-    attempted: attempts(recall) > 0 || attempts(meaning) > 0 || attempts(dialogue) > 0,
+    attempted:
+      attempts(recall) > 0 ||
+      attempts(meaning) > 0 ||
+      attempts(dialogue) > 0 ||
+      attempts(dictation) > 0 ||
+      attempts(audioResponse) > 0,
     mastered: recall.status === 'mastered' || Number(recall.review_step ?? -1) >= 4,
-    contextAttempted: attempts(dialogue) > 0,
+    contextAttempted: attempts(dialogue) > 0 || attempts(audioResponse) > 0,
     recallAttempts: attempts(recall),
     meaningAttempts: attempts(meaning),
     dialogueAttempts: attempts(dialogue),
+    dictationAttempts: attempts(dictation),
+    audioResponseAttempts: attempts(audioResponse),
   };
 }
 
