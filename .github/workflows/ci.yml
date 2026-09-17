@@ -127,3 +127,30 @@ jobs:
         run: |
           curl --fail --retry 10 --retry-delay 3 --max-time 15 https://buryad.buuzoed.dev/healthz
           curl --fail --retry 5 --retry-delay 2 --max-time 15 https://buryad.buuzoed.dev/ >/dev/null
+
+  production_visual:
+    needs: deploy
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install production visual dependencies
+        run: |
+          npm install --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Capture production screenshots
+        env:
+          PRODUCTION_URL: https://buryad.buuzoed.dev
+        run: node tests/production-visual.mjs
+      - name: Upload production visual QA
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: buryad-production-visual-qa
+          path: production-visual-artifacts/
+          retention-days: 7
