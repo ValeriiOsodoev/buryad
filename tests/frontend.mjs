@@ -99,7 +99,7 @@ const courseSession = buildCourseSession(sampleCourse, courseProgress, NOW, 4);
 assert.equal(courseSession.length, 4);
 assert.equal(courseSession[0].phrase.id, 'p1');
 assert.equal(courseSession[1].phrase.id, 'p2');
-assert.equal(courseSession[2].mode, 'meaning');
+assert.equal(courseSession[2].mode, 'dialogue');
 assert.equal(courseSession[3].phrase.id, 'p3');
 
 const pp = phraseProgress(flat[0], {
