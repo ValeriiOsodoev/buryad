@@ -69,6 +69,16 @@ try {
     await page.screenshot({path:`${outDir}/${item.name}-feedback.png`, fullPage:false});
     overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production feedback`);
+
+    await page.goto(`${baseURL}/support`, {waitUntil:'domcontentloaded', timeout:30_000});
+    await page.waitForFunction(() => {
+      const heading = document.querySelector('.support-hero h1')?.textContent || '';
+      return heading.includes('Поддержать проект');
+    }, null, {timeout:30_000});
+    await page.waitForTimeout(250);
+    await page.screenshot({path:`${outDir}/${item.name}-support.png`, fullPage:false});
+    overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production support`);
     await context.close();
   }
 } finally {
