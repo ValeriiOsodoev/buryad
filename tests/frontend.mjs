@@ -19,6 +19,20 @@ import {
   selectBuryatVoice,
 } from '../web/js/audio.js';
 
+const fakeField = {
+  value:'аба',
+  selectionStart:1,
+  selectionEnd:2,
+  setSelectionRange(start, end) { this.selectionStart = start; this.selectionEnd = end; },
+  dispatchEvent(event) { this.lastEvent = event.type; },
+  focus() { this.focused = true; },
+};
+assert.equal(insertAtSelection(fakeField, 'ү'), 'аүа');
+assert.equal(fakeField.selectionStart, 2);
+assert.equal(fakeField.selectionEnd, 2);
+assert.equal(fakeField.lastEvent, 'input');
+assert.equal(fakeField.focused, true);
+
 assert.equal(normalizeBuryat(' МҮНӨӨ! '), 'муноо');
 assert.equal(normalizeBuryat('hайн'), 'һайн');
 assert.equal(answerMatches('муноо эдеэлхэб', ['Мүнөө эдеэлхэб']), true);
