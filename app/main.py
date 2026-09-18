@@ -340,6 +340,12 @@ def index() -> FileResponse:
     return FileResponse(WEB / "index.html")
 
 
+@app.get("/support")
+@app.get("/support/")
+def support() -> FileResponse:
+    return FileResponse(WEB / "support.html")
+
+
 @app.get("/feedback")
 @app.get("/feedback/")
 def feedback() -> FileResponse:
