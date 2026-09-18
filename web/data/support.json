@@ -1,0 +1,21 @@
+{
+  "brand": "BURYAД",
+  "tagline": "говори по-бурятски",
+  "nonCommercial": true,
+  "boosty": {
+    "url": "",
+    "label": "Подписаться на Boosty"
+  },
+  "crypto": [
+    {
+      "asset": "USDT",
+      "network": "TON",
+      "address": ""
+    },
+    {
+      "asset": "USDT",
+      "network": "TRC20",
+      "address": ""
+    }
+  ]
+}
