@@ -216,7 +216,7 @@ test.describe('project support', () => {
     const page = await context.newPage();
     await page.goto(`${baseURL}/support`, {waitUntil:'networkidle'});
     await expect(page.locator('.support-principles')).toContainText('Поддержка не даёт платных преимуществ');
-    await expect(page.locator('a[href="/feedback"]')).toBeVisible();
+    await expect(page.locator('.support-open-actions a[href="/feedback"]')).toBeVisible();
     await assertNoHorizontalOverflow(page);
     await page.screenshot({path:'visual-artifacts/desktop-1440-support.png', fullPage:true});
     await context.close();
