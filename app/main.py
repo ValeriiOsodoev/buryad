@@ -86,7 +86,6 @@ class FeedbackPayload(BaseModel):
     actual: str = Field(default="", max_length=2000)
 
 
-
 FEEDBACK_LABELS = {
     "idea": "Идея",
     "bug": "Ошибка",
@@ -99,10 +98,14 @@ FEEDBACK_LABELS = {
 def feedback_issue_body(payload: FeedbackPayload, user: User) -> str:
     parts = [
         f"**Тип:** {FEEDBACK_LABELS[payload.kind]}",
-        f"**Пользователь сайта:** {user.display_name.strip() or 'Без имени'} (ID {user.id})",
+        "**Пользователь сайта:** "
+        f"{user.display_name.strip() or 'Без имени'} (ID {user.id})",
     ]
-    if payload.page_url:
-        parts.append(f"**Страница:** {payload.page_url}")
+    page_url = payload.page_url.strip()
+    if page_url.startswith("https://buryad.buuzoed.dev"):
+        page_url = page_url.removeprefix("https://buryad.buuzoed.dev")
+    if page_url.startswith("/"):
+        parts.append(f"**Страница:** {page_url}")
     parts.extend(["", "## Описание", payload.description.strip()])
     if payload.kind == "language":
         if payload.current_text:
@@ -120,6 +123,7 @@ def feedback_issue_body(payload: FeedbackPayload, user: User) -> str:
             parts.extend(["", "## Произошло", payload.actual.strip()])
     parts.extend(["", "---", "_Создано через форму обратной связи buryad.buuzoed.dev_"])
     return "\n".join(parts)
+
 
 def user_out(user: User) -> dict[str, object]:
     return {"id": user.id, "email": user.email, "display_name": user.display_name}
@@ -288,7 +292,6 @@ def save_video_attempt(
     return {"ok": True}
 
 
-
 @app.post("/api/feedback")
 def submit_feedback(
     payload: FeedbackPayload,
@@ -325,6 +328,7 @@ def submit_feedback(
     )
     db.commit()
     return {"ok": True, "issue": issue}
+
 
 @app.get("/")
 def index() -> FileResponse:
