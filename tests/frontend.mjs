@@ -3,6 +3,7 @@ import {conjugate, simplePast} from '../web/js/conjugate.js';
 import {answerMatches, normalizeBuryat, similarity} from '../web/js/normalize.js';
 import {mergeProgress, nextReview} from '../web/js/progress.js';
 import {buildSession} from '../web/js/session.js';
+import {insertAtSelection} from '../web/js/buryat-input.js';
 import {
   buildCourseSession,
   flattenCourse,
@@ -18,6 +19,20 @@ import {
   makeAudioTask,
   selectBuryatVoice,
 } from '../web/js/audio.js';
+
+const fakeField = {
+  value:'аба',
+  selectionStart:1,
+  selectionEnd:2,
+  setSelectionRange(start, end) { this.selectionStart = start; this.selectionEnd = end; },
+  dispatchEvent(event) { this.lastEvent = event.type; },
+  focus() { this.focused = true; },
+};
+assert.equal(insertAtSelection(fakeField, 'ү'), 'аүа');
+assert.equal(fakeField.selectionStart, 2);
+assert.equal(fakeField.selectionEnd, 2);
+assert.equal(fakeField.lastEvent, 'input');
+assert.equal(fakeField.focused, true);
 
 assert.equal(normalizeBuryat(' МҮНӨӨ! '), 'муноо');
 assert.equal(normalizeBuryat('hайн'), 'һайн');

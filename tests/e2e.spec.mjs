@@ -24,6 +24,14 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#coursePrompt')).not.toHaveText('Загрузка…');
     await expect(page.locator('#courseOverall')).toContainText('204');
     await expect(page.locator('#courseRecord')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"]')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"] button')).toHaveCount(3);
+    await page.locator('#courseAnswer').fill('би аа');
+    await page.locator('#courseAnswer').evaluate((el) => el.setSelectionRange(3, 3));
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="ү"]').click();
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="ө"]').click();
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="һ"]').click();
+    await expect(page.locator('#courseAnswer')).toHaveValue('би үөһаа');
     await expect(page.locator('#courseAudioStatus')).toContainText('Эталонная запись этой фразы пока не добавлена');
     await expect(page.locator('#courseListen')).toBeHidden();
     await expect(page.locator('#courseListenSlow')).toBeHidden();
@@ -46,13 +54,20 @@ test.describe('responsive learning app', () => {
     await expect(page.getByRole('textbox', {name:'Пароль', exact:true})).toBeVisible();
     await page.locator('#authClose').click();
 
+    await page.locator('#train').scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-buryat-keyboard-for="answerInput"]')).toBeVisible();
+    await page.locator('#core').scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-buryat-keyboard-for="coreSearch"]')).toBeVisible();
+
     await page.locator('#verbs').scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-buryat-keyboard-for="verbSearch"]')).toBeVisible();
     await page.locator('#verbSearch').fill('ойлгохо');
     await page.locator('.verb-summary').first().click();
     await expect(page.locator('.verb-card.expanded .verb-detail')).toBeVisible();
 
     await page.locator('#video').scrollIntoViewIfNeeded();
     await expect(page.locator('#videoGrid iframe')).toHaveCount(1);
+    await expect(page.locator('.video-card .buryat-keyboard')).toBeVisible();
     await assertNoHorizontalOverflow(page);
     await context.close();
   });
@@ -92,8 +107,42 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#courseRecord')).toBeVisible();
     await expect(page.locator('#courseStopRecord')).toBeVisible();
     await expect(page.locator('#courseReplayOwn')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"]')).toBeVisible();
     await page.screenshot({path:'visual-artifacts/mobile-320-course.png', fullPage:true});
     await assertNoHorizontalOverflow(page);
     await context.close();
   });
+});
+
+
+test.describe('grammar reference', () => {
+  test('mobile grammar page is navigable, searchable and has Buryat helper keys', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.goto(`${baseURL}/grammar/possessive`, {waitUntil:'networkidle'});
+    await expect(page.getByRole('heading', {name:'Притяжание: мой, наш, твой'})).toBeVisible();
+    await expect(page.locator('#grammarSelect')).toBeVisible();
+    await expect(page.locator('.grammar-sidebar')).toBeHidden();
+    await expect(page.locator('#grammarContent')).toContainText('үрэмни');
+    await expect(page.locator('#grammarContent')).toContainText('үрэмнай');
+    await expect(page.locator('[data-buryat-keyboard-for="grammarSearch"]')).toBeVisible();
+    await page.locator('#grammarSearch').fill('гармония');
+    await expect(page.locator('#grammarSearchResults')).toBeVisible();
+    await page.screenshot({path:'visual-artifacts/mobile-390-grammar.png', fullPage:true});
+    await assertNoHorizontalOverflow(page);
+    await context.close();
+  });
+});
+
+
+test('desktop grammar reference keeps navigation visible and clean', async ({browser}) => {
+  const context = await browser.newContext({viewport:{width:1440,height:900}});
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/grammar/vowels`, {waitUntil:'networkidle'});
+  await expect(page.locator('.grammar-sidebar')).toBeVisible();
+  await expect(page.locator('#grammarNav .grammar-nav-link')).toHaveCount(9);
+  await expect(page.locator('#grammarContent')).toContainText('Важное исключение: притяжание');
+  await page.screenshot({path:'visual-artifacts/desktop-1440-grammar.png', fullPage:true});
+  await assertNoHorizontalOverflow(page);
+  await context.close();
 });

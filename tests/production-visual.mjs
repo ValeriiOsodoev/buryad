@@ -46,8 +46,19 @@ try {
     await page.waitForTimeout(300);
     await page.screenshot({path:`${outDir}/${item.name}-course.png`, fullPage:false});
 
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-    if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production`);
+    let overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production course`);
+
+    await page.goto(`${baseURL}/grammar/possessive`, {waitUntil:'domcontentloaded', timeout:30_000});
+    await page.waitForFunction(() => {
+      const heading = document.querySelector('#grammarContent h2')?.textContent || '';
+      const search = document.querySelector('#grammarSearch');
+      return heading.includes('Притяжание') && Boolean(search);
+    }, null, {timeout:30_000});
+    await page.waitForTimeout(250);
+    await page.screenshot({path:`${outDir}/${item.name}-grammar.png`, fullPage:false});
+    overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production grammar`);
     await context.close();
   }
 } finally {

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Грамматика бурятского — Buryad</title>
+  <meta name="description" content="Краткий справочник по грамматике бурятского языка: гармония гласных, притяжание, падежи, глаголы, вопросы и порядок слов.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/grammar.css">
+</head>
+<body class="grammar-page">
+  <a class="skip-link" href="#grammarContent">К правилу</a>
+  <header class="topbar grammar-topbar">
+    <a class="brand" href="/" aria-label="Buryad, на главную">BURYAД<span>β</span></a>
+    <nav class="desktop-nav" aria-label="Навигация">
+      <a href="/">Курс</a>
+      <a href="/grammar" aria-current="page">Грамматика</a>
+      <a href="/#core">Слова</a>
+      <a href="/#verbs">Глаголы</a>
+      <a href="/#video">Слушать</a>
+    </nav>
+    <a class="ghost grammar-home-link" href="/">← К тренировке</a>
+  </header>
+
+  <main class="grammar-shell">
+    <section class="grammar-hero">
+      <div>
+        <span class="eyebrow">Быстрый справочник</span>
+        <h1>Грамматика бурятского</h1>
+        <p>Короткие правила для разговора: открыл нужный раздел, вспомнил форму и вернулся в практику.</p>
+      </div>
+      <label class="grammar-search">
+        <span class="field-label">Найти правило или форму</span>
+        <input id="grammarSearch" data-buryat-input type="search" autocomplete="off" placeholder="Например: үрэмнай, гү, падежи, -хэ…">
+      </label>
+      <div id="grammarSearchResults" class="grammar-search-results hidden" role="status" aria-live="polite"></div>
+    </section>
+
+    <div class="grammar-mobile-picker">
+      <label class="field-label" for="grammarSelect">Раздел</label>
+      <select id="grammarSelect"></select>
+    </div>
+
+    <div class="grammar-layout">
+      <aside class="grammar-sidebar" aria-label="Разделы грамматики">
+        <span class="tag">Разделы</span>
+        <nav id="grammarNav" class="grammar-nav"></nav>
+      </aside>
+
+      <article id="grammarContent" class="grammar-content" tabindex="-1">
+        <div class="grammar-loading">Загрузка правил…</div>
+      </article>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/js/buryat-input.js"></script>
+  <script type="module" src="/assets/js/grammar.js"></script>
+</body>
+</html>

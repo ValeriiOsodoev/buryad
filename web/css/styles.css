@@ -4,3 +4,18 @@
 @media(max-width:420px){.core-grid{grid-template-columns:1fr}.exercise-topline{align-items:flex-start}.progress-grid{grid-template-columns:1fr 1fr}.metric{padding:16px}.metric strong{font-size:2.35rem}.verb-summary{padding:13px}.verb-title{display:grid;gap:1px}.conj{grid-template-columns:1fr 1fr}.core-tab{padding-inline:10px;font-size:.84rem}.home-shell,.panel{padding-left:14px;padding-right:14px}.topbar{padding-inline:14px}}
 @media(max-width:340px){.progress-grid,.conj{grid-template-columns:1fr}.mobile-nav small{font-size:.63rem}.exercise-actions{grid-template-columns:1fr}.exercise-actions .primary,.exercise-actions #continueExercise{grid-column:1}.section-head h2{font-size:2.25rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Buryat helper keyboard */
+.buryat-keyboard{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.buryat-key{min-width:44px;min-height:40px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:1.15rem;font-weight:800;line-height:1;padding:8px 13px;color:var(--ink);box-shadow:0 1px 0 #00000008}
+.buryat-key:hover{background:var(--surface-strong);border-color:#b9b3a7}
+.buryat-key:active{transform:translateY(1px)}
+.search-field .buryat-keyboard{margin-top:6px}
+.search-field .buryat-key{min-width:40px;min-height:36px;padding:6px 11px;font-size:1rem}
+@media(max-width:420px){.buryat-keyboard{gap:7px}.buryat-key{min-width:48px;min-height:44px;font-size:1.2rem}}
+@media(prefers-reduced-motion:reduce){.buryat-key:active{transform:none}}
+
+.topbar-actions{display:flex;align-items:center;gap:8px}.mobile-grammar-link{display:none;text-decoration:none}
+@media(max-width:760px){.mobile-grammar-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:7px 10px;font-size:.78rem}.topbar-actions{gap:6px}.account-button{max-width:92px}}
+@media(max-width:360px){.mobile-grammar-link{padding-inline:8px}.account-button{max-width:78px;padding-inline:9px}}
