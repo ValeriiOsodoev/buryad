@@ -22,3 +22,14 @@ BURYAD_ISSUES_TOKEN
 ```
 
 Используйте fine-grained GitHub Personal Access Token с доступом только к репозиторию `ValeriiOsodoev/buryad` и правом **Issues: Read and write**. CI передаёт секрет на сервер через SSH в runtime `.env`; в Docker image и артефакты он не попадает.
+
+
+## Brand
+
+Публичное имя проекта: **BURYAД**. Произносится как «Буряд».
+
+- wordmark / логотип: `BURYAД`;
+- технический slug для URL, репозитория и хэндлов: `buryad`;
+- подпись: **«говори по-бурятски»**.
+
+Смешанное написание используется как визуальный знак, а ASCII-форма `buryad` — там, где кириллица неудобна или недоступна.
