@@ -99,18 +99,18 @@
 
         <label>
           <span class="field-label">Короткий заголовок</span>
-          <input id="feedbackTitle" type="text" minlength="5" maxlength="160" required placeholder="Например: В разделе притяжания уточнить форму үрэмнай">
+          <input id="feedbackTitle" data-buryat-input type="text" minlength="5" maxlength="160" required placeholder="Например: В разделе притяжания уточнить форму үрэмнай">
         </label>
         <div id="similarIssues" class="similar-issues hidden"></div>
 
         <label>
           <span class="field-label">Описание</span>
-          <textarea id="feedbackDescription" rows="6" minlength="10" maxlength="8000" required placeholder="Что именно стоит изменить и почему?"></textarea>
+          <textarea id="feedbackDescription" data-buryat-input rows="6" minlength="10" maxlength="8000" required placeholder="Что именно стоит изменить и почему?"></textarea>
         </label>
 
         <div id="languageFields" class="feedback-extra hidden">
-          <label><span class="field-label">Сейчас на сайте</span><textarea id="feedbackCurrent" rows="3"></textarea></label>
-          <label><span class="field-label">Предлагаю</span><textarea id="feedbackProposed" rows="3"></textarea></label>
+          <label><span class="field-label">Сейчас на сайте</span><textarea id="feedbackCurrent" data-buryat-input rows="3"></textarea></label>
+          <label><span class="field-label">Предлагаю</span><textarea id="feedbackProposed" data-buryat-input rows="3"></textarea></label>
           <label><span class="field-label">Источник или контекст</span><textarea id="feedbackSource" rows="3" placeholder="Ссылка, учебник, пример носителя, объяснение…"></textarea></label>
         </div>
 
@@ -135,6 +135,7 @@
     </section>
   </main>
 
+  <script type="module" src="/assets/js/buryat-input.js"></script>
   <script type="module" src="/assets/js/feedback.js"></script>
 </body>
 </html>
