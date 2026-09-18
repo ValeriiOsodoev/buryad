@@ -250,6 +250,10 @@
       ],
       "sources": [
         {
+          "label": "Burlang.Nom — личное притяжание",
+          "url": "https://nom.buryat-lang.ru/private-possession"
+        },
+        {
           "label": "Цырендоржиева — личное притяжание",
           "url": "https://cyberleninka.ru/article/n/funktsionirovanie-affiksov-lichnogo-prityazhaniya-v-sisteme-shifterov-na-materiale-buryatskogo-yazyka"
         },
@@ -364,6 +368,10 @@
       ],
       "sources": [
         {
+          "label": "Burlang.Nom — семь падежей и окончания",
+          "url": "https://nom.buryat-lang.ru/declension"
+        },
+        {
           "label": "Буряад үнэн — таблица склонения местоимений",
           "url": "https://burunen.ru/news/society/50008-uroki-buryatskogo-yazyka-s-bayarom-zhigmitovym/"
         },
@@ -458,6 +466,14 @@
       ],
       "sources": [
         {
+          "label": "Burlang.Nom — настоящее время",
+          "url": "https://nom.buryat-lang.ru/verbs-present-tense"
+        },
+        {
+          "label": "Burlang.Nom — прошедшее время",
+          "url": "https://nom.buryat-lang.ru/verbs-past-tense"
+        },
+        {
           "label": "Буряад үнэн — времена и гармония",
           "url": "https://burunen.ru/news/society/48651-uroki-buryatskogo-yazyka-s-bayarom-zhigmitovym/"
         },
@@ -547,6 +563,10 @@
         }
       ],
       "sources": [
+        {
+          "label": "Burlang.Nom — общий и специальный вопросы",
+          "url": "https://nom.buryat-lang.ru/sentences"
+        },
         {
           "label": "Burlang.Nom — вопросительные предложения",
           "url": "https://nom.buryat-lang.ru/sentences"
