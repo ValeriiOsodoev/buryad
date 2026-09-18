@@ -18,7 +18,7 @@
 Для включения создания Issues добавьте repository secret:
 
 ```
-GITHUB_ISSUES_TOKEN
+BURYAD_ISSUES_TOKEN
 ```
 
 Используйте fine-grained GitHub Personal Access Token с доступом только к репозиторию `ValeriiOsodoev/buryad` и правом **Issues: Read and write**. CI передаёт секрет на сервер через SSH в runtime `.env`; в Docker image и артефакты он не попадает.
