@@ -1,0 +1,27 @@
+name: Идея / новая функция
+description: Предложить улучшение курса или сайта
+title: "[Идея] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Перед созданием проверьте открытые Issues, чтобы не создавать дубль. Один Issue — одна конкретная идея.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что хочется улучшить?
+      description: Какую проблему или неудобство решает предложение?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Как вы предлагаете это сделать?
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Страница или раздел
+      placeholder: /grammar, /feedback, курс, аудирование…
