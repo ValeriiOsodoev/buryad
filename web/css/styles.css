@@ -15,3 +15,7 @@
 .search-field .buryat-key{min-width:40px;min-height:36px;padding:6px 11px;font-size:1rem}
 @media(max-width:420px){.buryat-keyboard{gap:7px}.buryat-key{min-width:48px;min-height:44px;font-size:1.2rem}}
 @media(prefers-reduced-motion:reduce){.buryat-key:active{transform:none}}
+
+.topbar-actions{display:flex;align-items:center;gap:8px}.mobile-grammar-link{display:none;text-decoration:none}
+@media(max-width:760px){.mobile-grammar-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:7px 10px;font-size:.78rem}.topbar-actions{gap:6px}.account-button{max-width:92px}}
+@media(max-width:360px){.mobile-grammar-link{padding-inline:8px}.account-button{max-width:78px;padding-inline:9px}}
