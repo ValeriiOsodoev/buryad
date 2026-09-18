@@ -58,3 +58,15 @@ class VideoAttempt(Base):
     answer: Mapped[str] = mapped_column(Text)
     score: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+
+class FeedbackSubmission(Base):
+    __tablename__ = "feedback_submissions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    issue_number: Mapped[int] = mapped_column(Integer, index=True)
+    issue_url: Mapped[str] = mapped_column(String(500))
+    kind: Mapped[str] = mapped_column(String(30))
+    title: Mapped[str] = mapped_column(String(160))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc, index=True)
