@@ -173,3 +173,14 @@ def test_grammar_shell_has_navigation_search_and_home_link():
     assert 'href="/"' in html
     assert '/assets/css/grammar.css' in html
     assert '/assets/js/grammar.js' in html
+
+
+def test_feedback_shell_explains_public_issues_and_requires_auth():
+    html = (ROOT / "web/feedback.html").read_text(encoding="utf-8")
+    assert "Предложения и Issues" in html
+    assert 'id="issuesList"' in html
+    assert 'id="feedbackForm"' in html
+    assert 'id="feedbackAuthGate"' in html
+    assert "GitHub" in html
+    assert "публич" in html.lower()
+    assert "/assets/js/feedback.js" in html
