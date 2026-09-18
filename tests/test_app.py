@@ -183,3 +183,10 @@ def test_feedback_status_reports_issue_bridge_state(monkeypatch):
         response = client.get("/api/feedback/status")
         assert response.status_code == 200
         assert response.json() == {"enabled": False}
+
+
+def test_support_page_is_public():
+    with TestClient(app) as client:
+        response = client.get("/support")
+        assert response.status_code == 200
+        assert "Поддержать проект" in response.text

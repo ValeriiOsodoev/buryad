@@ -196,3 +196,29 @@ test.describe('feedback and public issues', () => {
     await context.close();
   });
 });
+
+
+test.describe('project support', () => {
+  test('support page explains noncommercial model on mobile', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.goto(`${baseURL}/support`, {waitUntil:'networkidle'});
+    await expect(page.getByRole('heading', {name:'Поддержать проект'})).toBeVisible();
+    await expect(page.locator('.support-hero')).toContainText('полностью некоммерческий');
+    await expect(page.locator('#supportEmpty')).toBeVisible();
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/mobile-390-support.png', fullPage:true});
+    await context.close();
+  });
+
+  test('support page stays clean on desktop', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:1440,height:900}});
+    const page = await context.newPage();
+    await page.goto(`${baseURL}/support`, {waitUntil:'networkidle'});
+    await expect(page.locator('.support-principles')).toContainText('Поддержка не даёт платных преимуществ');
+    await expect(page.locator('.support-open-actions a[href="/feedback"]')).toBeVisible();
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/desktop-1440-support.png', fullPage:true});
+    await context.close();
+  });
+});
