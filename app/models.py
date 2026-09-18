@@ -69,4 +69,8 @@ class FeedbackSubmission(Base):
     issue_url: Mapped[str] = mapped_column(String(500))
     kind: Mapped[str] = mapped_column(String(30))
     title: Mapped[str] = mapped_column(String(160))
-    created_at: Mapped[datetime] = mapped_column(\n        DateTime(timezone=True), default=now_utc, index=True\n    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=now_utc,
+        index=True,
+    )
