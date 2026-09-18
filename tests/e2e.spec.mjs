@@ -128,7 +128,21 @@ test.describe('grammar reference', () => {
     await expect(page.locator('[data-buryat-keyboard-for="grammarSearch"]')).toBeVisible();
     await page.locator('#grammarSearch').fill('гармония');
     await expect(page.locator('#grammarSearchResults')).toBeVisible();
+    await page.screenshot({path:'visual-artifacts/mobile-390-grammar.png', fullPage:true});
     await assertNoHorizontalOverflow(page);
     await context.close();
   });
+});
+
+
+test('desktop grammar reference keeps navigation visible and clean', async ({browser}) => {
+  const context = await browser.newContext({viewport:{width:1440,height:900}});
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/grammar/vowels`, {waitUntil:'networkidle'});
+  await expect(page.locator('.grammar-sidebar')).toBeVisible();
+  await expect(page.locator('#grammarNav .grammar-nav-link')).toHaveCount(9);
+  await expect(page.locator('#grammarContent')).toContainText('Важное исключение: притяжание');
+  await page.screenshot({path:'visual-artifacts/desktop-1440-grammar.png', fullPage:true});
+  await assertNoHorizontalOverflow(page);
+  await context.close();
 });
