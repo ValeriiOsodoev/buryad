@@ -152,7 +152,7 @@ test.describe('feedback and public issues', () => {
   test('guest can inspect existing issues but cannot submit', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=open&per_page=100', async (route) => {
+    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=all&per_page=100', async (route) => {
       await route.fulfill({
         status:200,
         contentType:'application/json',
@@ -163,6 +163,7 @@ test.describe('feedback and public issues', () => {
             body:'Проверить объяснение притяжательной формы.',
             html_url:'https://github.com/ValeriiOsodoev/buryad/issues/42',
             created_at:'2026-09-18T10:00:00Z',
+            state:'open',
             labels:[{name:'language'}],
           },
         ]),
@@ -183,7 +184,7 @@ test.describe('feedback and public issues', () => {
   test('desktop feedback page explains issue format clearly', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:1440,height:900}});
     const page = await context.newPage();
-    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=open&per_page=100', async (route) => {
+    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=all&per_page=100', async (route) => {
       await route.fulfill({status:200, contentType:'application/json', body:'[]'});
     });
     await page.goto(`${baseURL}/feedback`, {waitUntil:'networkidle'});
