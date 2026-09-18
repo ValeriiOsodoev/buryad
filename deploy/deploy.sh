@@ -10,6 +10,14 @@ if [[ ! -f "$root/.env" ]]; then
   umask 077
   printf 'POSTGRES_PASSWORD=%s\n' "$(openssl rand -hex 32)" > "$root/.env"
 fi
+if [[ -f "$release/runtime-secrets.env" ]]; then
+  umask 077
+  tmp="$(mktemp)"
+  grep -v '^GITHUB_ISSUES_TOKEN=' "$root/.env" > "$tmp" || true
+  cat "$release/runtime-secrets.env" >> "$tmp"
+  mv "$tmp" "$root/.env"
+  rm -f "$release/runtime-secrets.env"
+fi
 export APP_VERSION="$sha"
 docker load -i image.tar.gz
 cp compose.yaml "$root/compose.yaml"

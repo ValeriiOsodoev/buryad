@@ -146,3 +146,53 @@ test('desktop grammar reference keeps navigation visible and clean', async ({bro
   await assertNoHorizontalOverflow(page);
   await context.close();
 });
+
+
+test.describe('feedback and public issues', () => {
+  test('guest can inspect existing issues but cannot submit', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=all&per_page=100', async (route) => {
+      await route.fulfill({
+        status:200,
+        contentType:'application/json',
+        body:JSON.stringify([
+          {
+            number:42,
+            title:'Исправить форму үрэмнай',
+            body:'Проверить объяснение притяжательной формы.',
+            html_url:'https://github.com/ValeriiOsodoev/buryad/issues/42',
+            created_at:'2026-09-18T10:00:00Z',
+            state:'open',
+            labels:[{name:'language'}],
+          },
+        ]),
+      });
+    });
+
+    await page.goto(`${baseURL}/feedback`, {waitUntil:'networkidle'});
+    await expect(page.getByRole('heading', {name:'Предложения и Issues'})).toBeVisible();
+    await expect(page.locator('#issuesList .issue-card')).toHaveCount(1);
+    await expect(page.locator('#issuesList')).toContainText('үрэмнай');
+    await expect(page.locator('#feedbackAuthGate')).toBeVisible();
+    await expect(page.locator('#feedbackForm')).toBeHidden();
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/mobile-390-feedback.png', fullPage:true});
+    await context.close();
+  });
+
+  test('desktop feedback page explains issue format clearly', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:1440,height:900}});
+    const page = await context.newPage();
+    await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=all&per_page=100', async (route) => {
+      await route.fulfill({status:200, contentType:'application/json', body:'[]'});
+    });
+    await page.goto(`${baseURL}/feedback`, {waitUntil:'networkidle'});
+    await expect(page.locator('.feedback-guide')).toContainText('Что такое Issue?');
+    await expect(page.locator('.feedback-guide')).toContainText('Одна тема');
+    await expect(page.locator('a[href="https://github.com/ValeriiOsodoev/buryad/issues"]')).toBeVisible();
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/desktop-1440-feedback.png', fullPage:true});
+    await context.close();
+  });
+});

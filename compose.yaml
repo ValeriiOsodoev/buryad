@@ -21,6 +21,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql+psycopg://buryad:${POSTGRES_PASSWORD}@db:5432/buryad
+      GITHUB_ISSUES_TOKEN: ${GITHUB_ISSUES_TOKEN:-}
     ports:
       - "127.0.0.1:18127:8080"
 volumes:

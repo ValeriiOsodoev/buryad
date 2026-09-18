@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from fastapi import Cookie, Depends, FastAPI, HTTPException, Response, status
@@ -21,7 +21,8 @@ from .auth import (
     verify_password,
 )
 from .db import Base, engine, get_db
-from .models import ExerciseProgress, User, VideoAttempt
+from .github_issues import GitHubIssueError, create_github_issue, issue_bridge_enabled
+from .models import ExerciseProgress, FeedbackSubmission, User, VideoAttempt
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB = ROOT / "web"
@@ -70,6 +71,58 @@ class VideoPayload(BaseModel):
     video_id: str = Field(min_length=1, max_length=80)
     answer: str = Field(min_length=1, max_length=5000)
     score: int = Field(ge=0, le=100)
+
+
+class FeedbackPayload(BaseModel):
+    kind: str = Field(pattern="^(idea|bug|language|ux|other)$")
+    title: str = Field(min_length=5, max_length=160)
+    description: str = Field(min_length=10, max_length=8000)
+    page_url: str = Field(default="", max_length=500)
+    current_text: str = Field(default="", max_length=2000)
+    proposed_text: str = Field(default="", max_length=2000)
+    source: str = Field(default="", max_length=2000)
+    steps: str = Field(default="", max_length=4000)
+    expected: str = Field(default="", max_length=2000)
+    actual: str = Field(default="", max_length=2000)
+
+
+FEEDBACK_LABELS = {
+    "idea": "Идея",
+    "bug": "Ошибка",
+    "language": "Исправление языка",
+    "ux": "UX/UI",
+    "other": "Другое",
+}
+
+
+def feedback_issue_body(payload: FeedbackPayload, user: User) -> str:
+    parts = [
+        f"**Тип:** {FEEDBACK_LABELS[payload.kind]}",
+        "**Пользователь сайта:** "
+        f"{user.display_name.strip() or 'Без имени'} (ID {user.id})",
+    ]
+    page_url = payload.page_url.strip()
+    if page_url.startswith("https://buryad.buuzoed.dev"):
+        page_url = page_url.removeprefix("https://buryad.buuzoed.dev")
+    if page_url.startswith("/"):
+        parts.append(f"**Страница:** {page_url}")
+    parts.extend(["", "## Описание", payload.description.strip()])
+    if payload.kind == "language":
+        if payload.current_text:
+            parts.extend(["", "## Сейчас", payload.current_text.strip()])
+        if payload.proposed_text:
+            parts.extend(["", "## Предлагаю", payload.proposed_text.strip()])
+        if payload.source:
+            parts.extend(["", "## Источник / контекст", payload.source.strip()])
+    if payload.kind == "bug":
+        if payload.steps:
+            parts.extend(["", "## Как воспроизвести", payload.steps.strip()])
+        if payload.expected:
+            parts.extend(["", "## Ожидалось", payload.expected.strip()])
+        if payload.actual:
+            parts.extend(["", "## Произошло", payload.actual.strip()])
+    parts.extend(["", "---", "_Создано через форму обратной связи buryad.buuzoed.dev_"])
+    return "\n".join(parts)
 
 
 def user_out(user: User) -> dict[str, object]:
@@ -239,9 +292,58 @@ def save_video_attempt(
     return {"ok": True}
 
 
+@app.get("/api/feedback/status")
+def feedback_status() -> dict[str, bool]:
+    return {"enabled": issue_bridge_enabled()}
+
+
+@app.post("/api/feedback")
+def submit_feedback(
+    payload: FeedbackPayload,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    cutoff = datetime.now(UTC) - timedelta(hours=1)
+    recent = db.scalars(
+        select(FeedbackSubmission).where(
+            FeedbackSubmission.user_id == user.id,
+            FeedbackSubmission.created_at >= cutoff,
+        )
+    ).all()
+    if len(recent) >= 3:
+        raise HTTPException(status_code=429, detail="Слишком много отправок. Попробуй позже.")
+
+    title = f"[{FEEDBACK_LABELS[payload.kind]}] {payload.title.strip()}"
+    try:
+        issue = create_github_issue(title, feedback_issue_body(payload, user))
+    except GitHubIssueError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="GitHub Issues временно недоступен. Попробуй чуть позже.",
+        ) from exc
+
+    db.add(
+        FeedbackSubmission(
+            user_id=user.id,
+            issue_number=int(issue["number"]),
+            issue_url=str(issue["url"]),
+            kind=payload.kind,
+            title=payload.title.strip(),
+        )
+    )
+    db.commit()
+    return {"ok": True, "issue": issue}
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(WEB / "index.html")
+
+
+@app.get("/feedback")
+@app.get("/feedback/")
+def feedback() -> FileResponse:
+    return FileResponse(WEB / "feedback.html")
 
 
 @app.get("/grammar")

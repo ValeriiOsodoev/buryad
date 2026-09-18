@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Предложения и Issues — Buryad</title>
+  <meta name="description" content="Предложения, исправления и ошибки проекта Buryad. Посмотри открытые Issues и отправь своё предложение.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/feedback.css">
+</head>
+<body class="feedback-page">
+  <header class="topbar">
+    <a class="brand" href="/">BURYAД<span>β</span></a>
+    <nav class="desktop-nav">
+      <a href="/">Курс</a>
+      <a href="/grammar">Грамматика</a>
+      <a href="/feedback" aria-current="page">Предложения</a>
+    </nav>
+    <a class="ghost feedback-repo-link" href="https://github.com/ValeriiOsodoev/buryad" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </header>
+
+  <main class="feedback-shell">
+    <section class="feedback-hero">
+      <span class="eyebrow">Открытая разработка</span>
+      <h1>Предложения и Issues</h1>
+      <p>Нашёл ошибку в бурятском, неудобный экран или придумал полезную функцию? Сначала проверь, не обсуждаем ли мы это уже. Если нет — отправь предложение, и оно автоматически станет публичным Issue в GitHub.</p>
+      <div class="feedback-hero-actions">
+        <a class="primary" href="#new-feedback">Предложить изменение ↓</a>
+        <a class="secondary" href="https://github.com/ValeriiOsodoev/buryad/issues" target="_blank" rel="noreferrer">Все Issues на GitHub ↗</a>
+      </div>
+    </section>
+
+    <section class="feedback-guide">
+      <article>
+        <span class="tag">Что такое Issue?</span>
+        <h2>Одна публичная задача или обсуждение.</h2>
+        <p>Issue — карточка в GitHub, где описана конкретная проблема, идея или исправление. Её можно обсуждать, уточнять и закрыть, когда работа выполнена.</p>
+      </article>
+      <article>
+        <span class="tag">Хороший Issue</span>
+        <ul>
+          <li>Одна тема на одно обращение.</li>
+          <li>Короткий конкретный заголовок.</li>
+          <li>Для ошибки — как воспроизвести, что ожидалось и что произошло.</li>
+          <li>Для бурятского — текущий вариант, предложенный вариант и источник/контекст.</li>
+          <li>Не публикуй личные данные, пароли, токены или приватную переписку.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="feedback-issues">
+      <div class="feedback-section-head">
+        <div>
+          <span class="eyebrow">Сначала проверь</span>
+          <h2>Открытые Issues</h2>
+        </div>
+        <label class="feedback-search">
+          <span class="field-label">Поиск по существующим Issues</span>
+          <input id="issueSearch" type="search" placeholder="Например: притяжание, мобильная версия, аудио…">
+        </label>
+      </div>
+      <div id="issuesStatus" class="feedback-status">Загружаем Issues…</div>
+      <div id="issuesList" class="issues-list"></div>
+    </section>
+
+    <section class="feedback-form-section" id="new-feedback">
+      <div class="feedback-section-head">
+        <div>
+          <span class="eyebrow">Новое обращение</span>
+          <h2>Создать Issue</h2>
+        </div>
+        <p>Отправка доступна только пользователям, вошедшим на сайт. Сам Issue будет публичным.</p>
+      </div>
+
+      <div id="feedbackAuthGate" class="feedback-auth-gate hidden">
+        <strong>Нужно войти в аккаунт Buryad.</strong>
+        <p>Это защищает публичный репозиторий от автоматического спама.</p>
+        <a class="primary" href="/#progress">Войти / зарегистрироваться →</a>
+      </div>
+
+      <div id="feedbackConfigWarning" class="feedback-config-warning hidden">
+        <strong>Отправка через сайт пока не подключена.</strong>
+        <p>Список Issues и репозиторий доступны. Для создания нового Issue через форму администратору нужно подключить GitHub write-токен.</p>
+      </div>
+
+      <form id="feedbackForm" class="feedback-form hidden">
+        <div class="feedback-grid">
+          <label>
+            <span class="field-label">Тип обращения</span>
+            <select id="feedbackKind" required>
+              <option value="idea">Идея / новая функция</option>
+              <option value="bug">Ошибка на сайте</option>
+              <option value="language">Исправление бурятского</option>
+              <option value="ux">UX/UI</option>
+              <option value="other">Другое</option>
+            </select>
+          </label>
+          <label>
+            <span class="field-label">На какой странице?</span>
+            <input id="feedbackPage" type="text" placeholder="/grammar/possessive">
+          </label>
+        </div>
+
+        <label>
+          <span class="field-label">Короткий заголовок</span>
+          <input id="feedbackTitle" data-buryat-input type="text" minlength="5" maxlength="160" required placeholder="Например: В разделе притяжания уточнить форму үрэмнай">
+        </label>
+        <div id="similarIssues" class="similar-issues hidden"></div>
+
+        <label>
+          <span class="field-label">Описание</span>
+          <textarea id="feedbackDescription" data-buryat-input rows="6" minlength="10" maxlength="8000" required placeholder="Что именно стоит изменить и почему?"></textarea>
+        </label>
+
+        <div id="languageFields" class="feedback-extra hidden">
+          <label><span class="field-label">Сейчас на сайте</span><textarea id="feedbackCurrent" data-buryat-input rows="3"></textarea></label>
+          <label><span class="field-label">Предлагаю</span><textarea id="feedbackProposed" data-buryat-input rows="3"></textarea></label>
+          <label><span class="field-label">Источник или контекст</span><textarea id="feedbackSource" rows="3" placeholder="Ссылка, учебник, пример носителя, объяснение…"></textarea></label>
+        </div>
+
+        <div id="bugFields" class="feedback-extra hidden">
+          <label><span class="field-label">Как воспроизвести</span><textarea id="feedbackSteps" rows="4" placeholder="1. Открыть… 2. Нажать…"></textarea></label>
+          <div class="feedback-grid">
+            <label><span class="field-label">Ожидалось</span><textarea id="feedbackExpected" rows="3"></textarea></label>
+            <label><span class="field-label">Произошло</span><textarea id="feedbackActual" rows="3"></textarea></label>
+          </div>
+        </div>
+
+        <div class="feedback-public-note">
+          <strong>Перед отправкой</strong>
+          <p>Заголовок и текст будут опубликованы в открытом репозитории GitHub. Email аккаунта Buryad в Issue не передаётся.</p>
+        </div>
+
+        <div class="feedback-submit-row">
+          <button id="feedbackSubmit" class="primary primary-large" type="submit">Создать публичный Issue</button>
+          <span id="feedbackResult" class="feedback-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/buryat-input.js"></script>
+  <script type="module" src="/assets/js/feedback.js"></script>
+</body>
+</html>

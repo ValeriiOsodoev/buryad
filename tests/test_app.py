@@ -122,3 +122,64 @@ def test_grammar_routes_serve_reference_shell():
             response = client.get(path)
             assert response.status_code == 200
             assert "Грамматика бурятского" in response.text
+
+
+def test_feedback_page_is_public():
+    with TestClient(app) as client:
+        response = client.get("/feedback")
+        assert response.status_code == 200
+        assert "Предложения и Issues" in response.text
+
+
+def test_feedback_submission_requires_authentication():
+    with TestClient(app, base_url="https://testserver") as client:
+        response = client.post(
+            "/api/feedback",
+            json={"kind":"idea","title":"Новая идея","description":"Подробное описание идеи"},
+        )
+        assert response.status_code == 401
+
+
+def test_authenticated_feedback_creates_public_issue_without_email(monkeypatch):
+    captured = {}
+
+    def fake_create_issue(title: str, body: str):
+        captured["title"] = title
+        captured["body"] = body
+        return {
+            "number": 123,
+            "url": "https://github.com/ValeriiOsodoev/buryad/issues/123",
+            "title": title,
+        }
+
+    monkeypatch.setattr("app.main.create_github_issue", fake_create_issue)
+
+    with TestClient(app, base_url="https://testserver") as client:
+        payload = auth_payload("feedback", "Learner")
+        email = payload["email"]
+        assert client.post("/api/auth/register", json=payload).status_code == 200
+        response = client.post(
+            "/api/feedback",
+            json={
+                "kind": "language",
+                "title": "Исправить форму үрэмнай",
+                "description": "Предлагаю уточнить объяснение притяжательной формы.",
+                "page_url": "/grammar/possessive",
+                "current_text": "үрэмнэй",
+                "proposed_text": "үрэмнай",
+                "source": "Учебная грамматика",
+            },
+        )
+        assert response.status_code == 200
+        assert response.json()["issue"]["number"] == 123
+        assert "[Исправление языка]" in captured["title"]
+        assert "үрэмнай" in captured["body"]
+        assert email not in captured["body"]
+
+
+def test_feedback_status_reports_issue_bridge_state(monkeypatch):
+    monkeypatch.delenv("GITHUB_ISSUES_TOKEN", raising=False)
+    with TestClient(app) as client:
+        response = client.get("/api/feedback/status")
+        assert response.status_code == 200
+        assert response.json() == {"enabled": False}

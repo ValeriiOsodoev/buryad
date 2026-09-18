@@ -59,6 +59,16 @@ try {
     await page.screenshot({path:`${outDir}/${item.name}-grammar.png`, fullPage:false});
     overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production grammar`);
+
+    await page.goto(`${baseURL}/feedback`, {waitUntil:'domcontentloaded', timeout:30_000});
+    await page.waitForFunction(() => {
+      const heading = document.querySelector('.feedback-hero h1')?.textContent || '';
+      return heading.includes('Предложения и Issues');
+    }, null, {timeout:30_000});
+    await page.waitForTimeout(250);
+    await page.screenshot({path:`${outDir}/${item.name}-feedback.png`, fullPage:false});
+    overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (overflow) throw new Error(`${item.name}: horizontal overflow detected on production feedback`);
     await context.close();
   }
 } finally {
