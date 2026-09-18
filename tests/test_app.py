@@ -146,7 +146,7 @@ def test_authenticated_feedback_creates_public_issue_without_email(monkeypatch):
     def fake_create_issue(title: str, body: str):
         captured["title"] = title
         captured["body"] = body
-        return {"number": 123, "url": "https://github.com/ValeriiOsodoev/buryad/issues/123", "title": title}
+        return {\n            "number": 123,\n            "url": "https://github.com/ValeriiOsodoev/buryad/issues/123",\n            "title": title,\n        }
 
     monkeypatch.setattr("app.main.create_github_issue", fake_create_issue)
 
