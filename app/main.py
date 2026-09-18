@@ -244,6 +244,13 @@ def index() -> FileResponse:
     return FileResponse(WEB / "index.html")
 
 
+@app.get("/grammar")
+@app.get("/grammar/")
+@app.get("/grammar/{slug}")
+def grammar(slug: str | None = None) -> FileResponse:
+    return FileResponse(WEB / "grammar.html")
+
+
 @app.get("/{path:path}")
 def spa_fallback(path: str) -> FileResponse:
     target = WEB / path
