@@ -21,7 +21,7 @@ from .auth import (
     verify_password,
 )
 from .db import Base, engine, get_db
-from .github_issues import GitHubIssueError, create_github_issue
+from .github_issues import GitHubIssueError, create_github_issue, issue_bridge_enabled
 from .models import ExerciseProgress, FeedbackSubmission, User, VideoAttempt
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -290,6 +290,11 @@ def save_video_attempt(
     )
     db.commit()
     return {"ok": True}
+
+
+@app.get("/api/feedback/status")
+def feedback_status() -> dict[str, bool]:
+    return {"enabled": issue_bridge_enabled()}
 
 
 @app.post("/api/feedback")
