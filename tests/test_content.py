@@ -144,3 +144,30 @@ def test_beginner_course_shell_has_modules_hints_audio_and_explicit_continue():
     assert '<label class="field-label" id="courseAnswerLabel" for="courseAnswer">' in html
     assert 'href="#course"' in html
     assert '/assets/css/course.css' in html
+
+
+def test_grammar_reference_has_separate_quick_topics():
+    grammar = json.loads((ROOT / "web/data/grammar.json").read_text(encoding="utf-8"))
+    topics = grammar["topics"]
+    assert len(topics) >= 8
+    slugs = [topic["slug"] for topic in topics]
+    assert len(slugs) == len(set(slugs))
+    assert {"vowels", "pronouns", "possessive", "cases", "verbs", "questions", "word-order"} <= set(slugs)
+    for topic in topics:
+        assert topic["title"].strip()
+        assert topic["summary"].strip()
+        assert len(topic["sections"]) >= 2
+        assert topic["sources"]
+        for section in topic["sections"]:
+            assert section["title"].strip()
+            assert section["body"].strip()
+
+
+def test_grammar_shell_has_navigation_search_and_home_link():
+    html = (ROOT / "web/grammar.html").read_text(encoding="utf-8")
+    assert 'id="grammarNav"' in html
+    assert 'id="grammarSearch"' in html
+    assert 'id="grammarContent"' in html
+    assert 'href="/"' in html
+    assert '/assets/css/grammar.css' in html
+    assert '/assets/js/grammar.js' in html
