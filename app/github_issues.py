@@ -12,6 +12,10 @@ class GitHubIssueError(RuntimeError):
     pass
 
 
+def issue_bridge_enabled() -> bool:
+    return bool(os.getenv("GITHUB_ISSUES_TOKEN", "").strip())
+
+
 def create_github_issue(title: str, body: str) -> dict[str, object]:
     token = os.getenv("GITHUB_ISSUES_TOKEN", "").strip()
     if not token:
