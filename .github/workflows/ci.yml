@@ -108,6 +108,7 @@ jobs:
           DEPLOY_USER: ${{ secrets.USER || 'ubuntu' }}
           DEPLOY_KEY: ${{ secrets.SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          ISSUES_TOKEN: ${{ secrets.GITHUB_ISSUES_TOKEN }}
         run: |
           set -euo pipefail
           : "${DEPLOY_KEY:?SSH_KEY is required}"
@@ -120,8 +121,16 @@ jobs:
           remote="$DEPLOY_USER@$DEPLOY_HOST"
           cd release
           sha256sum -c SHA256SUMS
+          if [[ -n "${ISSUES_TOKEN:-}" ]]; then
+            umask 077
+            printf 'GITHUB_ISSUES_TOKEN=%s\n' "$ISSUES_TOKEN" > runtime-secrets.env
+          fi
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "mkdir -p /home/ubuntu/buryad/releases/$GITHUB_SHA"
           scp -o BatchMode=yes -o StrictHostKeyChecking=yes image.tar.gz compose.yaml deploy.sh install_ingress.sh nginx.conf SHA256SUMS "$remote:/home/ubuntu/buryad/releases/$GITHUB_SHA/"
+          if [[ -f runtime-secrets.env ]]; then
+            scp -o BatchMode=yes -o StrictHostKeyChecking=yes runtime-secrets.env "$remote:/home/ubuntu/buryad/releases/$GITHUB_SHA/"
+            rm -f runtime-secrets.env
+          fi
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "cd /home/ubuntu/buryad/releases/$GITHUB_SHA && bash deploy.sh $GITHUB_SHA"
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$remote" "bash /home/ubuntu/buryad/releases/$GITHUB_SHA/install_ingress.sh /home/ubuntu/buryad/releases/$GITHUB_SHA/nginx.conf"
       - name: Verify public endpoint
