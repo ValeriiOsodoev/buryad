@@ -122,3 +122,19 @@ def test_grammar_routes_serve_reference_shell():
             response = client.get(path)
             assert response.status_code == 200
             assert "Грамматика бурятского" in response.text
+
+
+def test_feedback_page_is_public():
+    with TestClient(app) as client:
+        response = client.get("/feedback")
+        assert response.status_code == 200
+        assert "Предложения и Issues" in response.text
+
+
+def test_feedback_submission_requires_authentication():
+    with TestClient(app, base_url="https://testserver") as client:
+        response = client.post(
+            "/api/feedback",
+            json={"kind":"idea","title":"Новая идея","description":"Подробное описание идеи"},
+        )
+        assert response.status_code == 401
