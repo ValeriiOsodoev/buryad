@@ -114,3 +114,11 @@ def test_logout_invalidates_session():
         assert client.get("/api/me").status_code == 200
         assert client.post("/api/auth/logout").status_code == 200
         assert client.get("/api/me").status_code == 401
+
+
+def test_grammar_routes_serve_reference_shell():
+    with TestClient(app) as client:
+        for path in ("/grammar", "/grammar/", "/grammar/vowels", "/grammar/possessive"):
+            response = client.get(path)
+            assert response.status_code == 200
+            assert "Грамматика бурятского" in response.text
