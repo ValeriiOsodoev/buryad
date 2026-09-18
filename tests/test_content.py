@@ -184,3 +184,13 @@ def test_feedback_shell_explains_public_issues_and_requires_auth():
     assert "GitHub" in html
     assert "публич" in html.lower()
     assert "/assets/js/feedback.js" in html
+
+
+def test_support_page_explains_noncommercial_status_and_donation_methods():
+    html = (ROOT / "web/support.html").read_text(encoding="utf-8")
+    assert "полностью некоммерческий" in html.lower()
+    assert "Boosty" in html
+    assert "крипт" in html.lower()
+    assert 'id="supportMethods"' in html
+    assert '/assets/js/support.js' in html
+    assert '/assets/css/support.css' in html
