@@ -222,3 +222,31 @@ test.describe('project support', () => {
     await context.close();
   });
 });
+
+
+test('authenticated feedback submission survives async reset and shows created Issue', async ({browser}) => {
+  const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+  const page = await context.newPage();
+  await page.route('https://api.github.com/repos/ValeriiOsodoev/buryad/issues?state=all&per_page=100', async (route) => {
+    await route.fulfill({status:200, contentType:'application/json', body:'[]'});
+  });
+  await page.route('**/api/me', async (route) => {
+    await route.fulfill({status:200, contentType:'application/json', body:JSON.stringify({user:{id:1,email:'test@example.com',display_name:'Tester'}})});
+  });
+  await page.route('**/api/feedback/status', async (route) => {
+    await route.fulfill({status:200, contentType:'application/json', body:JSON.stringify({enabled:true})});
+  });
+  await page.route('**/api/feedback', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await route.fulfill({status:200, contentType:'application/json', body:JSON.stringify({ok:true,issue:{number:77,url:'https://github.com/ValeriiOsodoev/buryad/issues/77',title:'Test'}})});
+  });
+
+  await page.goto(`${baseURL}/feedback`, {waitUntil:'networkidle'});
+  await expect(page.locator('#feedbackForm')).toBeVisible();
+  await page.locator('#feedbackTitle').fill('Тестовое предложение');
+  await page.locator('#feedbackDescription').fill('Проверяем успешную отправку формы.');
+  await page.locator('#feedbackSubmit').click();
+  await expect(page.locator('#feedbackResult')).toContainText('Issue #77');
+  await expect(page.locator('#feedbackTitle')).toHaveValue('');
+  await context.close();
+});
