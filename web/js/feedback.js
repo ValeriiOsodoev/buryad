@@ -132,6 +132,7 @@ function payload() {
 
 async function submitFeedback(event) {
   event.preventDefault();
+  const form = event.currentTarget;
   const button = $('#feedbackSubmit');
   const result = $('#feedbackResult');
   button.disabled = true;
@@ -147,7 +148,7 @@ async function submitFeedback(event) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.detail || 'Не удалось создать Issue');
     result.innerHTML = 'Готово: <a href="' + escapeHtml(data.issue.url) + '" target="_blank" rel="noreferrer">Issue #' + data.issue.number + ' открыт на GitHub ↗</a>';
-    event.currentTarget.reset();
+    form.reset();
     $('#feedbackPage').value = location.pathname;
     updateExtraFields();
     await loadIssues();
