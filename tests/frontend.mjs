@@ -3,6 +3,7 @@ import {conjugate, simplePast} from '../web/js/conjugate.js';
 import {answerMatches, normalizeBuryat, similarity} from '../web/js/normalize.js';
 import {mergeProgress, nextReview} from '../web/js/progress.js';
 import {buildSession} from '../web/js/session.js';
+import {insertAtSelection} from '../web/js/buryat-input.js';
 import {
   buildCourseSession,
   flattenCourse,
