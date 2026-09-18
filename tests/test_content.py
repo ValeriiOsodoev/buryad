@@ -153,7 +153,8 @@ def test_grammar_reference_has_separate_quick_topics():
     assert len(topics) >= 8
     slugs = [topic["slug"] for topic in topics]
     assert len(slugs) == len(set(slugs))
-    assert {"vowels", "pronouns", "possessive", "cases", "verbs", "questions", "word-order"} <= set(slugs)
+    required = {"vowels", "pronouns", "possessive", "cases", "verbs", "questions", "word-order"}
+    assert required <= set(slugs)
     for topic in topics:
         assert topic["title"].strip()
         assert topic["summary"].strip()
