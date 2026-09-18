@@ -1,0 +1,35 @@
+name: Исправление бурятского
+description: Предложить исправление слова, формы, перевода или правила
+title: "[Исправление языка] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Для языковых исправлений особенно важен контекст. Если есть источник, словарь, учебник или пример носителя — приложите его.
+  - type: textarea
+    id: current
+    attributes:
+      label: Сейчас
+      description: Что написано на сайте?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Предлагаю
+      description: Как должно быть?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Почему?
+      description: Коротко объясните различие.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Источник / контекст
+      description: Ссылка, книга, корпус, пример живой речи.
