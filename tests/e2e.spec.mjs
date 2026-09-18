@@ -24,6 +24,13 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#coursePrompt')).not.toHaveText('Загрузка…');
     await expect(page.locator('#courseOverall')).toContainText('204');
     await expect(page.locator('#courseRecord')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"]')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"] button')).toHaveCount(3);
+    await page.locator('#courseAnswer').fill('би ');
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="ү"]').click();
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="ө"]').click();
+    await page.locator('[data-buryat-keyboard-for="courseAnswer"] button[data-char="һ"]').click();
+    await expect(page.locator('#courseAnswer')).toHaveValue('би үөһ');
     await expect(page.locator('#courseAudioStatus')).toContainText('Эталонная запись этой фразы пока не добавлена');
     await expect(page.locator('#courseListen')).toBeHidden();
     await expect(page.locator('#courseListenSlow')).toBeHidden();
@@ -92,6 +99,7 @@ test.describe('responsive learning app', () => {
     await expect(page.locator('#courseRecord')).toBeVisible();
     await expect(page.locator('#courseStopRecord')).toBeVisible();
     await expect(page.locator('#courseReplayOwn')).toBeVisible();
+    await expect(page.locator('[data-buryat-keyboard-for="courseAnswer"]')).toBeVisible();
     await page.screenshot({path:'visual-artifacts/mobile-320-course.png', fullPage:true});
     await assertNoHorizontalOverflow(page);
     await context.close();
