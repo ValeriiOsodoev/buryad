@@ -114,6 +114,7 @@ def test_learning_shell_has_mobile_nav_labels_and_explicit_continue():
     assert '<label for="password">Пароль</label>' in html
     assert 'id="passwordToggle"' in html
     assert 'viewport-fit=cover' in html
+    assert 'href="/grammar"' in html
 
 
 def test_beginner_course_shell_has_modules_hints_audio_and_explicit_continue():
