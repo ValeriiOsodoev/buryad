@@ -171,3 +171,11 @@ def test_authenticated_feedback_creates_public_issue_without_email(monkeypatch):
         assert "[Исправление языка]" in captured["title"]
         assert "үрэмнай" in captured["body"]
         assert email not in captured["body"]
+
+
+def test_feedback_status_reports_issue_bridge_state(monkeypatch):
+    monkeypatch.delenv("GITHUB_ISSUES_TOKEN", raising=False)
+    with TestClient(app) as client:
+        response = client.get("/api/feedback/status")
+        assert response.status_code == 200
+        assert response.json() == {"enabled": False}
