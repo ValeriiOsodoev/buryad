@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "title": "Автоматизм",
+  "intro": "Одна мысль должна легко перестраиваться: сейчас / завтра, да / нет, я / ты, здесь / там.",
+  "sets": [
+    {
+      "id": "work-polarity",
+      "title": "Работа: да / нет",
+      "items": [
+        "work-02",
+        "work-03"
+      ]
+    },
+    {
+      "id": "location",
+      "title": "Где: дома / здесь / там",
+      "items": [
+        "where-02",
+        "where-03",
+        "where-04",
+        "where-15",
+        "where-16"
+      ]
+    },
+    {
+      "id": "movement",
+      "title": "Движение: домой / город / завтра",
+      "items": [
+        "move-02",
+        "move-03",
+        "move-09"
+      ]
+    },
+    {
+      "id": "temperature",
+      "title": "Холодно / тепло",
+      "items": [
+        "state-08",
+        "state-09",
+        "state-10",
+        "state-11"
+      ]
+    },
+    {
+      "id": "know-word",
+      "title": "Знаю / не знаю",
+      "items": [
+        "survival-15",
+        "survival-16"
+      ]
+    },
+    {
+      "id": "tea",
+      "title": "Чай: вопрос / ответ",
+      "items": [
+        "food-10",
+        "food-11",
+        "food-13",
+        "food-14"
+      ]
+    }
+  ]
+}
