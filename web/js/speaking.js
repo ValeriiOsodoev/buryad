@@ -44,7 +44,7 @@ async function initSpeaking() {
       `<button class="speaking-scenario ${i===state.scenario?'active':''}" type="button" data-speaking-scenario="${i}"><strong>${esc(s.title)}</strong><small>${esc(s.mood)}</small></button>`
     ).join('');
     scenarioButtons.querySelectorAll('[data-speaking-scenario]').forEach(btn => {
-      btn.onclick = () => { state.scenario=Number(btn.dataset.speakingScenario); state.step=0; state.revealed=false; render(); };
+      btn.onclick = () => { state.scenario=Number(btn.dataset.speakingScenario); state.step=0; state.revealed=false; state.correct=0; state.attempts=0; state.responseTimes=[]; render(); };
     });
   }
 
@@ -178,8 +178,8 @@ async function initPatterns() {
   }
 
   setSelect.innerHTML=config.sets.map((s,i)=>`<option value="${i}">${esc(s.title)}</option>`).join('');
-  setSelect.onchange=()=>{state.setIndex=Number(setSelect.value);state.streak=0;rebuild();};
-  document.querySelector('#patternShuffle').onclick=()=>{state.streak=0;rebuild();};
+  setSelect.onchange=()=>{state.setIndex=Number(setSelect.value);state.streak=0;state.times=[];rebuild();};
+  document.querySelector('#patternShuffle').onclick=()=>{state.streak=0;state.times=[];rebuild();};
 
   function finish(ok) {
     const phrase=currentPhrase();
