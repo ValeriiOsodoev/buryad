@@ -7,7 +7,8 @@
   <title>BURYAД — говори по-бурятски</title>
   <meta name="description" content="Практический курс бытового бурятского: 204 фразы, диалоги, глаголы и аудирование.">
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <link rel="stylesheet" href="/assets/css/course.css">\n  <link rel="stylesheet" href="/assets/css/speaking.css">
+  <link rel="stylesheet" href="/assets/css/course.css">
+  <link rel="stylesheet" href="/assets/css/speaking.css">
 </head>
 <body>
   <a class="skip-link" href="#course">К курсу</a>
@@ -15,11 +16,13 @@
   <header class="topbar" aria-label="Основная навигация">
     <a class="brand" href="#home" aria-label="Buryad, на главную">BURYAД<span>β</span></a>
     <nav class="desktop-nav">
-      <a href="#daily">Сегодня</a>\n      <a href="#course">Курс</a>
+      <a href="#daily">Сегодня</a>
+      <a href="#course">Курс</a>
       <a href="/grammar">Грамматика</a>
       <a href="/feedback">Предложения</a>
       <a href="/support">Поддержать</a>
-      <a href="#speaking">Говорить</a>\n      <a href="#train">Практика</a>
+      <a href="#speaking">Говорить</a>
+      <a href="#train">Практика</a>
       <a href="#core">Слова</a>
       <a href="#verbs">Глаголы</a>
       <a href="#video">Слушать</a>
@@ -44,6 +47,23 @@
         <a class="primary primary-large" href="#daily">Начать сегодня <span aria-hidden="true">→</span></a>
         <div class="today-meta" id="heroStats">0 освоено · начни первую сессию</div>
       </aside>
+    </section>
+
+    <section class="panel daily-panel" id="daily">
+      <div class="section-head compact-head">
+        <div><span>00</span><h2>Сегодня</h2></div>
+        <p>Один круг в день: вспомнить, сказать, перестроить, услышать.</p>
+      </div>
+      <div class="daily-overview">
+        <div>
+          <span class="tag">Ежедневный ритуал · 25–30 минут</span>
+          <strong id="dailySummary">0 из 4 этапов</strong>
+          <p id="dailyContext">Собираем сегодняшнюю практику…</p>
+        </div>
+        <button class="text-button" id="dailyReset" type="button">Начать круг заново</button>
+      </div>
+      <div class="daily-progress" aria-hidden="true"><span id="dailyProgressBar"></span></div>
+      <div id="dailySteps" class="daily-steps"></div>
     </section>
 
     <section class="panel course-panel" id="course">
@@ -119,6 +139,32 @@
           </div>
           <div id="courseFeedback" class="course-feedback hidden" role="status" aria-live="polite"></div>
           <p id="courseSessionMessage" class="course-session-message" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel path-panel" id="path">
+      <div class="section-head compact-head">
+        <div><span>Путь</span><h2>8 недель</h2></div>
+        <p>Русского становится всё меньше. К восьмой неделе задача — держать простой бытовой разговор самостоятельно.</p>
+      </div>
+      <div class="path-shell">
+        <aside id="pathWeeks" class="path-weeks" aria-label="Недели обучения"></aside>
+        <article class="path-main">
+          <span class="tag">Текущий этап</span>
+          <h3 id="pathTitle">Неделя 1</h3>
+          <p id="pathFocus"></p>
+          <small id="pathModules"></small>
+          <div class="checkpoint-card">
+            <span class="tag">Живая проверка</span>
+            <h4 id="checkpointTitle">Сцена</h4>
+            <div class="checkpoint-meta"><span id="checkpointCounter">1 / 5</span><span>Сначала ответь вслух</span></div>
+            <p id="checkpointPrompt">Загрузка…</p>
+            <div class="checkpoint-actions">
+              <button class="primary" id="checkpointNext" type="button">Следующая реплика →</button>
+              <button class="primary hidden" id="checkpointDone" type="button">Завершить сцену</button>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -338,7 +384,10 @@
   </dialog>
 
   <script type="module" src="/assets/js/buryat-input.js"></script>
-  <script type="module" src="/assets/js/core.js"></script>\n  <script type="module" src="/assets/js/speaking.js"></script>\n  <script type="module" src="/assets/js/daily.js"></script>
+  <script type="module" src="/assets/js/core.js"></script>
+  <script type="module" src="/assets/js/speaking.js"></script>
+  <script type="module" src="/assets/js/daily.js"></script>
+  <script type="module" src="/assets/js/progression.js"></script>
   <script type="module" src="/assets/js/app.js"></script>
 </body>
 </html>
