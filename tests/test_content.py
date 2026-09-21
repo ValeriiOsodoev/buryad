@@ -280,3 +280,26 @@ def test_speaking_scenarios_cover_all_core_everyday_domains():
         "shop", "work", "phone", "help", "state", "survival",
     } <= ids
     assert sum(len(item["steps"]) for item in speaking["scenarios"]) >= 50
+
+
+def test_eight_week_progression_references_known_modules_and_scenarios():
+    course = json.loads((ROOT / "web/data/course.json").read_text(encoding="utf-8"))
+    speaking = json.loads((ROOT / "web/data/speaking.json").read_text(encoding="utf-8"))
+    progression = json.loads((ROOT / "web/data/progression.json").read_text(encoding="utf-8"))
+    module_ids = {module["id"] for module in course}
+    scenario_ids = {scenario["id"] for scenario in speaking["scenarios"]}
+    assert len(progression["weeks"]) == 8
+    for week in progression["weeks"]:
+        assert week["title"].strip()
+        assert week["focus"].strip()
+        assert set(week["modules"]) <= module_ids
+        assert set(week["scenarios"]) <= scenario_ids
+        assert len(week["checkpoint"]["prompts"]) >= 4
+
+
+def test_index_has_no_literal_backslash_newline_artifacts():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert "\\n" not in html
+    assert 'id="daily"' in html
+    assert 'id="path"' in html
+    assert '/assets/js/progression.js' in html
