@@ -222,3 +222,36 @@ test.describe('project support', () => {
     await context.close();
   });
 });
+
+
+test.describe('daily ritual and speaking practice', () => {
+  test('mobile daily ritual exposes four guided stages without overflow', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.locator('#daily').scrollIntoViewIfNeeded();
+    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(4);
+    await expect(page.locator('#dailySummary')).toContainText('4 этапов');
+    await expect(page.locator('#dailySteps')).toContainText('Разбудить язык');
+    await expect(page.locator('#dailySteps')).toContainText('Поговорить');
+    await expect(page.locator('#dailySteps')).toContainText('Перестроить фразы');
+    await expect(page.locator('#dailySteps')).toContainText('Услышать');
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/mobile-390-daily.png', fullPage:true});
+    await context.close();
+  });
+
+  test('desktop speaking mode and automaticity drill are usable', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:1440,height:900}});
+    const page = await context.newPage();
+    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.locator('#speaking').scrollIntoViewIfNeeded();
+    await expect(page.locator('#speakingScenarioList .speaking-scenario')).toHaveCount(12);
+    await expect(page.locator('#speakingPrompt')).not.toHaveText('Загрузка…');
+    await expect(page.locator('#patternSet option')).toHaveCount(6);
+    await expect(page.locator('#patternPrompt')).not.toHaveText('Загрузка…');
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/desktop-1440-speaking.png', fullPage:true});
+    await context.close();
+  });
+});
