@@ -15,13 +15,20 @@ async function initProgression(){
 
   function render(){
     const w=current();
+    const immersion=Number(w.immersionLevel||0);
+    root.dataset.immersion=String(immersion);
     title.textContent=`Неделя ${w.week} · ${w.title}`;
     focus.textContent=w.focus;
     modules.textContent=`Фокус курса: ${w.modules.join(' · ')}`;
     cpTitle.textContent=w.checkpoint.title;
-    const prompts=w.checkpoint.prompts;
+    const useBuryat=immersion>=1 && Array.isArray(w.checkpoint.bxrPrompts);
+    const prompts=useBuryat ? w.checkpoint.bxrPrompts : w.checkpoint.prompts;
     cpPrompt.textContent=prompts[state.checkpointIndex];
     cpCounter.textContent=`${state.checkpointIndex+1} / ${prompts.length}`;
+    const immersionNote=document.querySelector('#checkpointImmersion');
+    if(immersionNote){
+      immersionNote.textContent=immersion===0?'Подсказки на русском':immersion===1?'Сцена уже по-бурятски':immersion===2?'Русский только если застрял':'Полное погружение';
+    }
     cpNext.classList.toggle('hidden',state.checkpointIndex>=prompts.length-1);
     cpDone.classList.toggle('hidden',state.checkpointIndex<prompts.length-1);
     renderWeeks();
