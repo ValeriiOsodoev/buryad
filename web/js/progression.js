@@ -5,7 +5,7 @@ async function initProgression(){
   const root=$('#path'); if(!root)return;
   const data=await fetch('/assets/data/progression.json').then(r=>r.json());
   const state={week:Number(localStorage.getItem('buryad.path.week')||1),checkpointIndex:0};
-  const list=$('#pathWeeks'), title=$('#pathTitle'), focus=$('#pathFocus'), modules=$('#pathModules'), cpTitle=$('#checkpointTitle'), cpPrompt=$('#checkpointPrompt'), cpCounter=$('#checkpointCounter'), cpNext=$('#checkpointNext'), cpDone=$('#checkpointDone');
+  const list=$('#pathWeeks'), title=$('#pathTitle'), focus=$('#pathFocus'), modules=$('#pathModules'), cpTitle=$('#checkpointTitle'), cpPrompt=$('#checkpointPrompt'), cpCounter=$('#checkpointCounter'), cpNext=$('#checkpointNext'), cpDone=$('#checkpointDone'), cpHelp=$('#checkpointHelp'), cpHelpBox=$('#checkpointHelpBox');
 
   function current(){return data.weeks.find(w=>w.week===state.week)||data.weeks[0];}
   function renderWeeks(){
@@ -31,10 +31,15 @@ async function initProgression(){
     }
     cpNext.classList.toggle('hidden',state.checkpointIndex>=prompts.length-1);
     cpDone.classList.toggle('hidden',state.checkpointIndex<prompts.length-1);
+    cpHelpBox.classList.add('hidden');
+    cpHelpBox.textContent='';
+    cpHelp.dataset.level='0';
+    cpHelp.textContent='Нужна опора';
     renderWeeks();
   }
 
-  cpNext.onclick=()=>{const w=current();if(state.checkpointIndex<w.checkpoint.prompts.length-1){state.checkpointIndex++;render();}};
+  cpNext.onclick=()=>{const w=current();const prompts=(Number(w.immersionLevel||0)>=1&&Array.isArray(w.checkpoint.bxrPrompts))?w.checkpoint.bxrPrompts:w.checkpoint.prompts;if(state.checkpointIndex<prompts.length-1){state.checkpointIndex++;render();}};
+  cpHelp.onclick=()=>{const w=current();const level=Number(cpHelp.dataset.level||0);cpHelpBox.classList.remove('hidden');if(level===0){cpHelpBox.textContent=w.checkpoint.help?.primary||'Вспомни знакомые слова.';cpHelp.dataset.level='1';cpHelp.textContent='Ещё помощь';return;}cpHelpBox.textContent=w.checkpoint.help?.secondary||'Посмотри смысл и снова ответь по-бурятски.';cpHelp.dataset.level='2';cpHelp.textContent='Опора показана';};
   cpDone.onclick=()=>{localStorage.setItem(`buryad.path.week.${state.week}.checkpoint`,'done'); cpPrompt.textContent='Эта контрольная сцена завершена. Повтори её ещё раз без чтения подсказок.'; cpDone.classList.add('hidden');};
   render();
 }
