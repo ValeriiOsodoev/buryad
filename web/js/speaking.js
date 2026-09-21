@@ -102,6 +102,7 @@ async function initSpeaking() {
     $('#speakingPrompt').textContent='Сценарий пройден.';
     $('#speakingFeedback').className='speaking-feedback ok';
     $('#speakingFeedback').innerHTML=`<strong>${score} уверенных ответа из ${total}.</strong><p>Вернись к этому разговору завтра и постарайся отвечать быстрее, не переводя фразу слово за словом.</p>`;
+    document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'speak'}}));
     next.classList.add('hidden');
     check.classList.add('hidden');
     reveal.classList.add('hidden');
@@ -199,6 +200,7 @@ async function initPatterns() {
 
   next.onclick=()=>{
     if(state.index < state.order.length-1){state.index++;render();return;}
+    document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'flex'}}));
     state.order=shuffle(selectedSet().items);
     state.index=0;
     render();
