@@ -255,3 +255,28 @@ def test_content_quality_policy_has_review_lifecycle():
     assert quality["policy"]["statuses"] == ["draft", "sourced", "native-reviewed", "verified"]
     assert quality["course"]["verified_phrase_ids"] == []
     assert quality["audio"]["require_native_recording_for_verified"] is True
+
+
+def test_daily_ritual_shell_and_script_are_present():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    for required_id in (
+        "daily",
+        "dailySummary",
+        "dailyContext",
+        "dailyProgressBar",
+        "dailySteps",
+        "dailyReset",
+    ):
+        assert f'id="{required_id}"' in html
+    assert 'href="#daily"' in html
+    assert '/assets/js/daily.js' in html
+
+
+def test_speaking_scenarios_cover_all_core_everyday_domains():
+    speaking = json.loads((ROOT / "web/data/speaking.json").read_text(encoding="utf-8"))
+    ids = {scenario["id"] for scenario in speaking["scenarios"]}
+    assert {
+        "meet", "where", "home", "tea", "plans", "move",
+        "shop", "work", "phone", "help", "state", "survival",
+    } <= ids
+    assert sum(len(item["steps"]) for item in speaking["scenarios"]) >= 50
