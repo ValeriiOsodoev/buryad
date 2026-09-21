@@ -90,8 +90,7 @@ async function initDaily(){
     ? `${mastered} из ${totalPhrases} фраз закреплено · ${due} пора повторить · ${weak} слабых мест`
     : `${totalPhrases} базовых фраз ждут впереди. Сегодня достаточно одного маленького круга.`;
 
-  $('#dailyReset').onclick=()=>{for(const s of stages)delete saved[s.id];saveDaily(saved);render();};
-  render();
+  document.addEventListener('buryad:daily-complete',(event)=>{\n    const stage=event.detail?.stage;\n    if(!stages.some(item=>item.id===stage))return;\n    saved[stage]=true;\n    saveDaily(saved);\n    render();\n  });\n\n  $('#dailyReset').onclick=()=>{for(const s of stages)delete saved[s.id];saveDaily(saved);render();};\n  render();
 }
 
 initDaily().catch(err=>console.error(err));
