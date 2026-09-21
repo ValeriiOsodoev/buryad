@@ -42,3 +42,28 @@
   .daily-step-actions{display:grid;grid-template-columns:1fr auto}
   .daily-step-actions .secondary{width:100%}
 }
+
+.path-panel{background:#f7f3e9}
+.path-shell{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:start}
+.path-weeks{display:grid;gap:8px;position:sticky;top:92px}
+.path-week{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;text-align:left;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:14px}
+.path-week>span{grid-row:1/3;color:var(--accent);font-weight:850;font-size:.75rem;padding-top:2px}
+.path-week strong{font-size:1rem}
+.path-week small{color:var(--muted);line-height:1.35}
+.path-week.active{background:var(--ink);color:#fff}
+.path-week.active small{color:#cfcbbf}
+.path-main{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:clamp(22px,4vw,38px);box-shadow:var(--shadow)}
+.path-main>h3{font-size:clamp(2rem,5vw,4rem);line-height:.95;letter-spacing:-.055em;margin:8px 0 12px}
+.path-main>p{font-size:1.1rem;margin:0 0 8px}
+.path-main>small{color:var(--muted)}
+.checkpoint-card{margin-top:28px;border-top:1px solid var(--line);padding-top:24px}
+.checkpoint-card h4{font-size:1.65rem;margin:6px 0 14px}
+.checkpoint-meta{display:flex;justify-content:space-between;gap:14px;color:var(--muted);font-size:.85rem}
+.checkpoint-card>p{font-size:clamp(1.7rem,4vw,3.2rem);line-height:1.05;letter-spacing:-.045em;margin:28px 0}
+.checkpoint-actions{display:flex;justify-content:flex-end}
+@media(max-width:760px){
+  .path-shell{grid-template-columns:1fr}
+  .path-weeks{position:static;display:flex;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .path-week{flex:0 0 210px}
+  .path-main{border-radius:22px;padding:22px 18px}
+}
