@@ -153,6 +153,33 @@
           <p class="speaking-rule"><strong>Повтори сценарий завтра.</strong> Скорость и лёгкость ответа важнее количества новых карточек.</p>
         </article>
       </div>
+
+      <section class="pattern-lab" aria-labelledby="patternTitle">
+        <div class="pattern-head">
+          <div>
+            <span class="tag">Автоматизм</span>
+            <h3 id="patternTitle">Перестраивай мысль без перевода</h3>
+          </div>
+          <p>Быстрые серии из похожих фраз: да/нет, сейчас/завтра, здесь/там. Это тренирует не память карточки, а гибкость речи.</p>
+        </div>
+        <div class="pattern-controls">
+          <label class="field-label" for="patternSet">Серия</label>
+          <select id="patternSet"></select>
+          <button class="secondary" id="patternShuffle" type="button">Новая серия</button>
+        </div>
+        <article class="pattern-card">
+          <div class="pattern-meta"><span id="patternCounter">1 / 4</span><span id="patternStreak">0 подряд</span></div>
+          <h4 id="patternPrompt">Загрузка…</h4>
+          <label class="field-label" for="patternAnswer">Скажи вслух, затем напиши</label>
+          <input id="patternAnswer" autocomplete="off" spellcheck="false" placeholder="Ответ по-бурятски">
+          <div class="pattern-actions">
+            <button class="text-button" id="patternReveal" type="button">Показать ответ</button>
+            <button class="primary" id="patternCheck" type="button">Проверить</button>
+            <button class="primary hidden" id="patternNext" type="button">Дальше →</button>
+          </div>
+          <div id="patternFeedback" class="speaking-feedback hidden" role="status" aria-live="polite"></div>
+        </article>
+      </section>
     </section>
 
     <section class="panel learning-panel" id="train">
