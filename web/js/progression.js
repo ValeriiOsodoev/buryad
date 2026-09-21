@@ -9,7 +9,7 @@ async function initProgression(){
 
   function current(){return data.weeks.find(w=>w.week===state.week)||data.weeks[0];}
   function renderWeeks(){
-    list.innerHTML=data.weeks.map(w=>`<button type="button" class="path-week ${w.week===state.week?'active':''}" data-week="${w.week}"><span>${String(w.week).padStart(2,'0')}</span><strong>${esc(w.title)}</strong><small>${esc(w.focus)}</small></button>`).join('');
+    list.innerHTML=data.weeks.map(w=>{const done=localStorage.getItem(`buryad.path.week.${w.week}.checkpoint`)==='done';return `<button type="button" class="path-week ${w.week===state.week?'active':''} ${done?'done':''}" data-week="${w.week}"><span>${done?'✓':String(w.week).padStart(2,'0')}</span><strong>${esc(w.title)}</strong><small>${esc(w.focus)}</small></button>`;}).join('');
     list.querySelectorAll('[data-week]').forEach(btn=>btn.onclick=()=>{state.week=Number(btn.dataset.week);state.checkpointIndex=0;localStorage.setItem('buryad.path.week',String(state.week));render();});
   }
 
@@ -40,7 +40,7 @@ async function initProgression(){
 
   cpNext.onclick=()=>{const w=current();const prompts=(Number(w.immersionLevel||0)>=1&&Array.isArray(w.checkpoint.bxrPrompts))?w.checkpoint.bxrPrompts:w.checkpoint.prompts;if(state.checkpointIndex<prompts.length-1){state.checkpointIndex++;render();}};
   cpHelp.onclick=()=>{const w=current();const level=Number(cpHelp.dataset.level||0);cpHelpBox.classList.remove('hidden');if(level===0){cpHelpBox.textContent=w.checkpoint.help?.primary||'Вспомни знакомые слова.';cpHelp.dataset.level='1';cpHelp.textContent='Ещё помощь';return;}cpHelpBox.textContent=w.checkpoint.help?.secondary||'Посмотри смысл и снова ответь по-бурятски.';cpHelp.dataset.level='2';cpHelp.textContent='Опора показана';};
-  cpDone.onclick=()=>{localStorage.setItem(`buryad.path.week.${state.week}.checkpoint`,'done'); cpPrompt.textContent='Эта контрольная сцена завершена. Повтори её ещё раз без чтения подсказок.'; cpDone.classList.add('hidden');};
+  cpDone.onclick=()=>{localStorage.setItem(`buryad.path.week.${state.week}.checkpoint`,'done'); cpPrompt.textContent='Эта контрольная сцена завершена. Повтори её ещё раз без чтения подсказок.'; cpDone.classList.add('hidden'); renderWeeks(); if(state.week<8){const nextButton=document.querySelector(`[data-week="${state.week+1}"]`); if(nextButton){nextButton.classList.add('recommended');}}};
   render();
 }
 
