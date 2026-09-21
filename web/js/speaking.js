@@ -116,3 +116,95 @@ initSpeaking().catch(err => {
   const el=document.querySelector('#speakingPrompt');
   if(el) el.textContent='Не удалось загрузить разговорную практику.';
 });
+
+
+async function initPatterns() {
+  const setSelect = document.querySelector('#patternSet');
+  if (!setSelect) return;
+  const [course, config] = await Promise.all([
+    fetch('/assets/data/course.json').then(r => r.json()),
+    fetch('/assets/data/patterns.json').then(r => r.json())
+  ]);
+  const phrases = flattenCourse(course);
+  const state = {setIndex:0, order:[], index:0, streak:0, answered:false};
+
+  const prompt = document.querySelector('#patternPrompt');
+  const answer = document.querySelector('#patternAnswer');
+  const counter = document.querySelector('#patternCounter');
+  const streak = document.querySelector('#patternStreak');
+  const feedback = document.querySelector('#patternFeedback');
+  const check = document.querySelector('#patternCheck');
+  const reveal = document.querySelector('#patternReveal');
+  const next = document.querySelector('#patternNext');
+
+  function shuffle(items) {
+    const copy=[...items];
+    for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}
+    return copy;
+  }
+
+  function selectedSet(){ return config.sets[state.setIndex]; }
+  function currentPhrase(){ return phrases.get(state.order[state.index]); }
+
+  function rebuild() {
+    state.order=shuffle(selectedSet().items);
+    state.index=0;
+    state.answered=false;
+    render();
+  }
+
+  function render() {
+    const phrase=currentPhrase();
+    counter.textContent=`${state.index+1} / ${state.order.length}`;
+    streak.textContent=`${state.streak} подряд`;
+    prompt.textContent=phrase?.ru || 'Загрузка…';
+    answer.value='';
+    answer.disabled=false;
+    feedback.className='speaking-feedback hidden';
+    feedback.innerHTML='';
+    check.classList.remove('hidden');
+    reveal.classList.remove('hidden');
+    next.classList.add('hidden');
+    answer.focus({preventScroll:true});
+  }
+
+  setSelect.innerHTML=config.sets.map((s,i)=>`<option value="${i}">${esc(s.title)}</option>`).join('');
+  setSelect.onchange=()=>{state.setIndex=Number(setSelect.value);state.streak=0;rebuild();};
+  document.querySelector('#patternShuffle').onclick=()=>{state.streak=0;rebuild();};
+
+  function finish(ok) {
+    const phrase=currentPhrase();
+    state.answered=true;
+    if(ok) state.streak++; else state.streak=0;
+    streak.textContent=`${state.streak} подряд`;
+    feedback.className=`speaking-feedback ${ok?'ok':'bad'}`;
+    feedback.innerHTML=ok
+      ? '<strong>Есть.</strong><p>Скажи эту же фразу ещё один раз без взгляда на экран.</p>'
+      : `<strong>Правильная опора:</strong><p class="speaking-reveal">${esc(phrase?.bxr || '')}</p><p>Повтори вслух два раза, затем продолжай.</p>`;
+    answer.disabled=true;
+    check.classList.add('hidden');
+    reveal.classList.add('hidden');
+    next.classList.remove('hidden');
+  }
+
+  check.onclick=()=>{
+    const phrase=currentPhrase();
+    const value=answer.value.trim();
+    if(!value){feedback.className='speaking-feedback bad';feedback.innerHTML='<strong>Сначала скажи и напиши ответ.</strong>';return;}
+    const accepted=[phrase.bxr,...(phrase.alternatives||[])];
+    finish(accepted.some(a=>answerMatches(value,a)));
+  };
+
+  reveal.onclick=()=>finish(false);
+
+  next.onclick=()=>{
+    if(state.index < state.order.length-1){state.index++;render();return;}
+    state.order=shuffle(selectedSet().items);
+    state.index=0;
+    render();
+  };
+
+  rebuild();
+}
+
+initPatterns().catch(err => console.error(err));
