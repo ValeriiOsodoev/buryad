@@ -194,3 +194,42 @@ def test_support_page_explains_noncommercial_status_and_donation_methods():
     assert 'id="supportMethods"' in html
     assert '/assets/js/support.js' in html
     assert '/assets/css/support.css' in html
+
+
+def test_speaking_scenarios_reference_known_course_phrases():
+    course = json.loads((ROOT / "web/data/course.json").read_text(encoding="utf-8"))
+    speaking = json.loads((ROOT / "web/data/speaking.json").read_text(encoding="utf-8"))
+    phrase_ids = {
+        phrase["id"]
+        for module in course
+        for phrase in module["phrases"]
+    }
+    scenarios = speaking["scenarios"]
+    assert len(scenarios) >= 7
+    assert sum(len(item["steps"]) for item in scenarios) >= 28
+    for scenario in scenarios:
+        assert scenario["title"].strip()
+        assert scenario["mood"].strip()
+        assert len(scenario["steps"]) >= 4
+        for step in scenario["steps"]:
+            assert step["prompt"].strip()
+            assert step["accept"]
+            assert set(step["accept"]) <= phrase_ids
+
+
+def test_speaking_mode_is_primary_and_loaded():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    for required_id in (
+        "speaking",
+        "speakingScenarioList",
+        "speakingPrompt",
+        "speakingAnswer",
+        "speakingReveal",
+        "speakingCheck",
+        "speakingNext",
+        "speakingFeedback",
+    ):
+        assert f'id="{required_id}"' in html
+    assert 'href="#speaking"' in html
+    assert '/assets/js/speaking.js' in html
+    assert '/assets/css/speaking.css' in html
