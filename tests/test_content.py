@@ -233,3 +233,25 @@ def test_speaking_mode_is_primary_and_loaded():
     assert 'href="#speaking"' in html
     assert '/assets/js/speaking.js' in html
     assert '/assets/css/speaking.css' in html
+
+
+def test_automaticity_patterns_reference_known_course_phrases():
+    course = json.loads((ROOT / "web/data/course.json").read_text(encoding="utf-8"))
+    patterns = json.loads((ROOT / "web/data/patterns.json").read_text(encoding="utf-8"))
+    phrase_ids = {
+        phrase["id"]
+        for module in course
+        for phrase in module["phrases"]
+    }
+    assert len(patterns["sets"]) >= 6
+    for pattern in patterns["sets"]:
+        assert pattern["title"].strip()
+        assert len(pattern["items"]) >= 2
+        assert set(pattern["items"]) <= phrase_ids
+
+
+def test_content_quality_policy_has_review_lifecycle():
+    quality = json.loads((ROOT / "web/data/content-quality.json").read_text(encoding="utf-8"))
+    assert quality["policy"]["statuses"] == ["draft", "sourced", "native-reviewed", "verified"]
+    assert quality["course"]["verified_phrase_ids"] == []
+    assert quality["audio"]["require_native_recording_for_verified"] is True
