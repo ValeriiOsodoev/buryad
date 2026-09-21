@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "policy": {
+    "statuses": ["draft", "sourced", "native-reviewed", "verified"],
+    "rule": "Only verified content should become the long-term canonical answer when a native-speaker review is available. Sourced content may remain in the course but must not be presented as dialect-universal.",
+    "notes": [
+      "Do not fabricate conversational forms to fill coverage gaps.",
+      "Keep accepted alternatives when reliable spoken variants are known.",
+      "Prefer natural household speech over mechanically generated textbook forms.",
+      "Record reviewer, region/dialect context and evidence for every native-reviewed or verified change."
+    ]
+  },
+  "course": {
+    "default_status": "sourced",
+    "verified_phrase_ids": [],
+    "native_reviewed_phrase_ids": [],
+    "review_queue": [
+      "food-10",
+      "food-11",
+      "state-12",
+      "survival-17"
+    ]
+  },
+  "audio": {
+    "default_status": "draft",
+    "require_native_recording_for_verified": true
+  }
+}
