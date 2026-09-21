@@ -19,3 +19,26 @@
 .topbar-actions{display:flex;align-items:center;gap:8px}.mobile-grammar-link{display:none;text-decoration:none}
 @media(max-width:760px){.mobile-grammar-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:7px 10px;font-size:.78rem}.topbar-actions{gap:6px}.account-button{max-width:92px}}
 @media(max-width:360px){.mobile-grammar-link{padding-inline:8px}.account-button{max-width:78px;padding-inline:9px}}
+
+.daily-panel{background:linear-gradient(180deg,#f4f1e8 0%,#eee8da 100%)}
+.daily-overview{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:22px 24px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:var(--shadow)}
+.daily-overview strong{display:block;font-size:clamp(1.5rem,3vw,2.25rem);letter-spacing:-.035em;margin:8px 0 4px}
+.daily-overview p{margin:0;color:var(--muted)}
+.daily-progress{height:9px;background:#ddd5c5;border-radius:999px;overflow:hidden;margin:14px 0 18px}
+.daily-progress span{display:block;height:100%;width:0;background:var(--accent);border-radius:inherit;transition:width .25s ease}
+.daily-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.daily-step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.daily-step.done{opacity:.72;background:#f7f4ec}
+.daily-step-index{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-weight:850;font-size:.8rem}
+.daily-step.done .daily-step-index{background:var(--ok)}
+.daily-step-copy h3{margin:4px 0 6px;font-size:1.35rem;letter-spacing:-.03em}
+.daily-step-copy p{margin:0;color:var(--muted)}
+.daily-step-actions{grid-column:2;display:flex;gap:8px;align-items:center}
+.daily-step-actions .secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+@media(max-width:760px){
+  .daily-overview{align-items:flex-start;flex-direction:column;padding:18px}
+  .daily-steps{grid-template-columns:1fr}
+  .daily-step{padding:18px 16px}
+  .daily-step-actions{display:grid;grid-template-columns:1fr auto}
+  .daily-step-actions .secondary{width:100%}
+}
