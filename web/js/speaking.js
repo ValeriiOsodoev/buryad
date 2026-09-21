@@ -22,7 +22,7 @@ async function initSpeaking() {
     fetch('/assets/data/speaking.json').then(r => r.json())
   ]);
   const phrases = flattenCourse(course);
-  const state = {scenario:0, step:0, revealed:false, correct:0, attempts:0};
+  const state = {scenario:0, step:0, revealed:false, correct:0, attempts:0, startedAt:performance.now(), responseTimes:[]};
 
   const scenarioButtons = $('#speakingScenarioList');
   const title = $('#speakingTitle');
@@ -64,11 +64,14 @@ async function initSpeaking() {
     next.classList.add('hidden');
     state.revealed=false;
     renderScenarioList();
+    state.startedAt=performance.now();
     answer.focus({preventScroll:true});
   }
 
   function finish(ok, answers){
     state.attempts++;
+    const elapsed=Math.max(0,performance.now()-state.startedAt);
+    state.responseTimes.push(elapsed);
     if(ok) state.correct++;
     answer.disabled=true;
     feedback.className=`speaking-feedback ${ok?'ok':'bad'}`;
@@ -99,9 +102,13 @@ async function initSpeaking() {
     if(state.step < s.steps.length-1){ state.step++; render(); return; }
     const total=state.attempts || s.steps.length;
     const score=state.correct;
+    const avgSeconds=state.responseTimes.length ? Math.round(state.responseTimes.reduce((a,b)=>a+b,0)/state.responseTimes.length/100)/10 : 0;
+    const metricKey=`buryad.speaking.${s.id}`;
+    const previous=JSON.parse(localStorage.getItem(metricKey)||'{}');
+    localStorage.setItem(metricKey,JSON.stringify({runs:Number(previous.runs||0)+1,bestAccuracy:Math.max(Number(previous.bestAccuracy||0),score/Math.max(1,total)),bestAvgSeconds:previous.bestAvgSeconds?Math.min(Number(previous.bestAvgSeconds),avgSeconds):avgSeconds,lastAvgSeconds:avgSeconds,lastScore:score,lastTotal:total,updatedAt:new Date().toISOString()}));
     $('#speakingPrompt').textContent='Сценарий пройден.';
     $('#speakingFeedback').className='speaking-feedback ok';
-    $('#speakingFeedback').innerHTML=`<strong>${score} уверенных ответа из ${total}.</strong><p>Вернись к этому разговору завтра и постарайся отвечать быстрее, не переводя фразу слово за словом.</p>`;
+    $('#speakingFeedback').innerHTML=`<strong>${score} уверенных ответа из ${total} · в среднем ${avgSeconds} с.</strong><p>Вернись к этому разговору завтра и постарайся отвечать быстрее, не переводя фразу слово за словом.</p>`;
     document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'speak'}}));
     next.classList.add('hidden');
     check.classList.add('hidden');
@@ -127,7 +134,7 @@ async function initPatterns() {
     fetch('/assets/data/patterns.json').then(r => r.json())
   ]);
   const phrases = flattenCourse(course);
-  const state = {setIndex:0, order:[], index:0, streak:0, answered:false};
+  const state = {setIndex:0, order:[], index:0, streak:0, answered:false, startedAt:performance.now(), times:[]};
 
   const prompt = document.querySelector('#patternPrompt');
   const answer = document.querySelector('#patternAnswer');
@@ -166,6 +173,7 @@ async function initPatterns() {
     check.classList.remove('hidden');
     reveal.classList.remove('hidden');
     next.classList.add('hidden');
+    state.startedAt=performance.now();
     answer.focus({preventScroll:true});
   }
 
@@ -176,6 +184,7 @@ async function initPatterns() {
   function finish(ok) {
     const phrase=currentPhrase();
     state.answered=true;
+    state.times.push(Math.max(0,performance.now()-state.startedAt));
     if(ok) state.streak++; else state.streak=0;
     streak.textContent=`${state.streak} подряд`;
     feedback.className=`speaking-feedback ${ok?'ok':'bad'}`;
@@ -200,7 +209,12 @@ async function initPatterns() {
 
   next.onclick=()=>{
     if(state.index < state.order.length-1){state.index++;render();return;}
+    const avgSeconds=state.times.length ? Math.round(state.times.reduce((a,b)=>a+b,0)/state.times.length/100)/10 : 0;
+    const metricKey=`buryad.pattern.${selectedSet().id}`;
+    const previous=JSON.parse(localStorage.getItem(metricKey)||'{}');
+    localStorage.setItem(metricKey,JSON.stringify({runs:Number(previous.runs||0)+1,bestAvgSeconds:previous.bestAvgSeconds?Math.min(Number(previous.bestAvgSeconds),avgSeconds):avgSeconds,lastAvgSeconds:avgSeconds,updatedAt:new Date().toISOString()}));
     document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'flex'}}));
+    state.times=[];
     state.order=shuffle(selectedSet().items);
     state.index=0;
     render();
