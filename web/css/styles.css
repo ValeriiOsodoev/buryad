@@ -67,3 +67,16 @@
   .path-week{flex:0 0 210px}
   .path-main{border-radius:22px;padding:22px 18px}
 }
+
+.path-week.done{border-color:#a7d7bd}
+.path-week.done:not(.active){background:#f0f7f2}
+.path-week.recommended{box-shadow:0 0 0 3px #ff5a3620;border-color:#d98b76}
+.checkpoint-help{margin:16px 0 0;padding:14px 16px;border:1px dashed #b8b0a0;border-radius:14px;background:#f1ede4;color:var(--ink)}
+.path-panel[data-immersion="2"] .checkpoint-card,
+.path-panel[data-immersion="3"] .checkpoint-card{background:#171713;color:#f6f1e7;border-radius:20px;padding:22px;border-top:0}
+.path-panel[data-immersion="2"] .checkpoint-card .tag,
+.path-panel[data-immersion="3"] .checkpoint-card .tag,
+.path-panel[data-immersion="2"] .checkpoint-meta,
+.path-panel[data-immersion="3"] .checkpoint-meta{color:#bfb7a8}
+.path-panel[data-immersion="2"] .checkpoint-help,
+.path-panel[data-immersion="3"] .checkpoint-help{background:#24231d;border-color:#555147;color:#f6f1e7}
