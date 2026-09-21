@@ -303,3 +303,23 @@ def test_index_has_no_literal_backslash_newline_artifacts():
     assert 'id="daily"' in html
     assert 'id="path"' in html
     assert '/assets/js/progression.js' in html
+
+
+def test_late_weeks_reduce_russian_with_buryat_prompts():
+    progression = json.loads((ROOT / "web/data/progression.json").read_text(encoding="utf-8"))
+    weeks = {week["week"]: week for week in progression["weeks"]}
+    assert weeks[1]["immersionLevel"] == 0
+    assert weeks[5]["immersionLevel"] >= 1
+    assert weeks[7]["immersionLevel"] >= 2
+    assert weeks[8]["immersionLevel"] == 3
+    for number in (5, 6, 7, 8):
+        checkpoint = weeks[number]["checkpoint"]
+        assert len(checkpoint["bxrPrompts"]) == len(checkpoint["prompts"])
+        assert checkpoint["help"]["primary"].strip()
+        assert checkpoint["help"]["secondary"].strip()
+
+
+def test_weekly_checkpoint_has_immersion_help_ui():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    for required_id in ("checkpointImmersion", "checkpointHelp", "checkpointHelpBox"):
+        assert f'id="{required_id}"' in html
