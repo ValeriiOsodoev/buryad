@@ -220,6 +220,7 @@ async function checkCurrent() {
 function nextExercise() {
   state.sessionIndex += 1;
   if (state.sessionIndex >= state.session.length) {
+    document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'review'}}));
     rebuildSession();
     $('#todaySubtitle').textContent = 'Сессия завершена. Новая собрана из следующих повторов.';
   }
@@ -287,6 +288,7 @@ function renderVideo() {
     $('#activeVideoResult').textContent = video.reference
       ? `Совпадение с проверенной расшифровкой: ${score}%`
       : 'Попытка сохранена. Здесь нет проверенного transcript, поэтому мы не рисуем выдуманный процент: переслушай тот же фрагмент и сверяй себя на слух.';
+    document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'listen'}}));
   };
 }
 $('#videoPrev').onclick = () => { if (state.videoIndex > 0) { state.videoIndex -= 1; renderVideo(); } };
