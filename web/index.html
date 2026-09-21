@@ -7,7 +7,7 @@
   <title>BURYAД — говори по-бурятски</title>
   <meta name="description" content="Практический курс бытового бурятского: 204 фразы, диалоги, глаголы и аудирование.">
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <link rel="stylesheet" href="/assets/css/course.css">
+  <link rel="stylesheet" href="/assets/css/course.css">\n  <link rel="stylesheet" href="/assets/css/speaking.css">
 </head>
 <body>
   <a class="skip-link" href="#course">К курсу</a>
@@ -19,7 +19,7 @@
       <a href="/grammar">Грамматика</a>
       <a href="/feedback">Предложения</a>
       <a href="/support">Поддержать</a>
-      <a href="#train">Практика</a>
+      <a href="#speaking">Говорить</a>\n      <a href="#train">Практика</a>
       <a href="#core">Слова</a>
       <a href="#verbs">Глаголы</a>
       <a href="#video">Слушать</a>
@@ -123,9 +123,41 @@
       </div>
     </section>
 
+    <section class="panel speaking-panel" id="speaking">
+      <div class="section-head compact-head">
+        <div><span>02</span><h2>Говори</h2></div>
+        <p>Сначала ответь вслух. Только потом напиши и проверь себя. Цель — перестать переводить каждую фразу в голове.</p>
+      </div>
+      <div class="speaking-intro">
+        <aside class="speaking-scenarios" id="speakingScenarioList" aria-label="Разговорные ситуации"></aside>
+        <article class="speaking-card">
+          <div class="speaking-top">
+            <div>
+              <span class="tag">Живая ситуация</span>
+              <strong id="speakingTitle">Разговор</strong>
+              <p id="speakingMood"></p>
+            </div>
+            <span id="speakingCounter">1 / 4</span>
+          </div>
+          <div class="speaking-progress" aria-hidden="true"><span id="speakingProgressBar"></span></div>
+          <div class="speaking-instruction"><b>Правило:</b> не печатай сразу. Сначала произнеси ответ вслух, как будто человек стоит перед тобой.</div>
+          <h3 id="speakingPrompt">Загрузка…</h3>
+          <label class="field-label" for="speakingAnswer">После ответа вслух — напиши фразу</label>
+          <textarea id="speakingAnswer" rows="3" autocomplete="off" spellcheck="false" placeholder="Сначала скажи. Потом напиши."></textarea>
+          <div class="speaking-actions">
+            <button class="secondary" id="speakingReveal" type="button">Нужна опора</button>
+            <button class="primary" id="speakingCheck" type="button">Проверить</button>
+            <button class="primary hidden" id="speakingNext" type="button">Следующая реплика →</button>
+          </div>
+          <div id="speakingFeedback" class="speaking-feedback hidden" role="status" aria-live="polite"></div>
+          <p class="speaking-rule"><strong>Повтори сценарий завтра.</strong> Скорость и лёгкость ответа важнее количества новых карточек.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="panel learning-panel" id="train">
       <div class="section-head compact-head">
-        <div><span>02</span><h2>Практика</h2></div>
+        <div><span>03</span><h2>Практика</h2></div>
         <p>Свободная тренировка старых наборов: дом, друзья, движение и языковое выживание.</p>
       </div>
 
@@ -162,7 +194,7 @@
 
     <section class="panel" id="core">
       <div class="section-head">
-        <div><span>03</span><h2>Слова и фразы</h2></div>
+        <div><span>04</span><h2>Слова и фразы</h2></div>
         <p>Быстрый справочник того, что реально пригодится в бытовом разговоре.</p>
       </div>
       <div class="core-toolbar">
@@ -182,7 +214,7 @@
 
     <section class="panel" id="verbs">
       <div class="section-head">
-        <div><span>04</span><h2>50 глаголов</h2></div>
+        <div><span>05</span><h2>50 глаголов</h2></div>
         <p>Найди глагол и раскрой только тот, который нужен сейчас.</p>
       </div>
       <div class="verb-toolbar">
@@ -201,7 +233,7 @@
 
     <section class="panel" id="video">
       <div class="section-head">
-        <div><span>05</span><h2>Слушать</h2></div>
+        <div><span>06</span><h2>Слушать</h2></div>
         <p>Один фрагмент за раз: послушай несколько раз и запиши максимально дословно.</p>
       </div>
       <div class="listening-shell">
@@ -216,7 +248,7 @@
 
     <section class="panel progress-panel" id="progress">
       <div class="section-head">
-        <div><span>06</span><h2>Прогресс</h2></div>
+        <div><span>07</span><h2>Прогресс</h2></div>
         <p>Смотри не только цифры, но и что именно стоит повторить следующим.</p>
       </div>
       <div class="progress-grid">
@@ -244,7 +276,7 @@
 
   <nav class="mobile-nav" aria-label="Мобильная навигация">
     <a href="#course"><span aria-hidden="true">◉</span><small>Курс</small></a>
-    <a href="#core"><span aria-hidden="true">Aa</span><small>Слова</small></a>
+    <a href="#speaking"><span aria-hidden="true">◌</span><small>Говорить</small></a>
     <a href="#verbs"><span aria-hidden="true">↗</span><small>Глаголы</small></a>
     <a href="#video"><span aria-hidden="true">▶</span><small>Слушать</small></a>
     <a href="#progress"><span aria-hidden="true">●</span><small>Профиль</small></a>
@@ -279,7 +311,7 @@
   </dialog>
 
   <script type="module" src="/assets/js/buryat-input.js"></script>
-  <script type="module" src="/assets/js/core.js"></script>
+  <script type="module" src="/assets/js/core.js"></script>\n  <script type="module" src="/assets/js/speaking.js"></script>
   <script type="module" src="/assets/js/app.js"></script>
 </body>
 </html>
