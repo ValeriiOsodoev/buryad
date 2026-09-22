@@ -6,6 +6,7 @@ The script is intentionally offline from the learner-facing app: generated
 images are committed/deployed as static assets, so no API key reaches browsers.
 """
 from __future__ import annotations
+
 import argparse
 import base64
 import json
