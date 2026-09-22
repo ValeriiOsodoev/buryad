@@ -263,7 +263,7 @@ test.describe('master-apprentice immersion', () => {
     const page = await context.newPage();
     await page.goto(baseURL,{waitUntil:'networkidle'});
     await page.locator('#immersion').scrollIntoViewIfNeeded();
-    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(3);
+    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
     await expect(page.locator('#immersionCue')).toHaveText('Сай.');
     await expect(page.locator('#immersionHelpBox')).toBeHidden();
     await page.locator('#immersionHelp').click();
