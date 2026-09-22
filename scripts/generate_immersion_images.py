@@ -6,8 +6,12 @@ The script is intentionally offline from the learner-facing app: generated
 images are committed/deployed as static assets, so no API key reaches browsers.
 """
 from __future__ import annotations
-import argparse, base64, json, os
+import argparse
+import base64
+import json
+import os
 from pathlib import Path
+
 from openai import OpenAI
 
 ROOT=Path(__file__).resolve().parents[1]
