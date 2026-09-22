@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Create responsive WebP/AVIF derivatives for generated BURYAД teaching images."""
+from contextlib import suppress
 from pathlib import Path
+
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]/"web/images"
