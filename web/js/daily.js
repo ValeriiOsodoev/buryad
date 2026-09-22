@@ -50,10 +50,11 @@ async function initDaily(){
   const mastered=masteredCourse(course,progress);
 
   const stages=[
-    {id:'review',title:'Разбудить язык',minutes:7,target:'#course',detail:due?`${due} повторов уже ждут тебя`:'Повтори несколько знакомых фраз',cta:'Повторить'},
-    {id:'speak',title:'Поговорить',minutes:8,target:'#speaking',detail:'Один бытовой сценарий вслух, без подсказок',cta:'Говорить'},
-    {id:'flex',title:'Перестроить фразы',minutes:5,target:'#patternTitle',detail:'Быстрая серия на автоматизм',cta:'Автоматизм'},
-    {id:'listen',title:'Услышать',minutes:7,target:'#video',detail:'Один фрагмент: слушай → запиши → переслушай',cta:'Слушать'}
+    {id:'live',title:'Пожить на бурятском',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй, отвечай',cta:'Начать сцену'},
+    {id:'review',title:'Разбудить язык',minutes:5,target:'#course',detail:due?`${due} повторов уже ждут тебя`:'Повтори несколько знакомых фраз',cta:'Повторить'},
+    {id:'speak',title:'Поговорить',minutes:6,target:'#speaking',detail:'Один бытовой сценарий вслух, без подсказок',cta:'Говорить'},
+    {id:'flex',title:'Перестроить фразы',minutes:4,target:'#patternTitle',detail:'Быстрая серия на автоматизм',cta:'Автоматизм'},
+    {id:'listen',title:'Услышать',minutes:5,target:'#video',detail:'Один фрагмент: слушай → запиши → переслушай',cta:'Слушать'}
   ];
 
   const list=$('#dailySteps');
