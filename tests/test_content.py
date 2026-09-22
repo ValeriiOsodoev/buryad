@@ -457,3 +457,16 @@ def test_immersion_tracks_russian_fallback_usage():
     js = (ROOT / "web/js/immersion.js").read_text(encoding="utf-8")
     assert "russianUses" in js
     assert "noRussian" in js
+
+
+def test_starter_vocabulary_core_reaches_target_without_invented_bulk():
+    vocabulary = json.loads((ROOT / "web/data/vocabulary.json").read_text(encoding="utf-8"))
+    assert 150 <= len(vocabulary["items"]) <= 250
+    assert all(item["quality"] in {"sourced", "native-reviewed", "verified"} for item in vocabulary["items"])
+
+
+def test_reference_library_is_secondary_to_primary_flow():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert '/assets/js/library.js' in html
+    js = (ROOT / "web/js/library.js").read_text(encoding="utf-8")
+    assert "library-secondary" in js
