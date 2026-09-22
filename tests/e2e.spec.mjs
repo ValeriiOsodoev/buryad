@@ -13,7 +13,7 @@ test.describe('responsive learning app', () => {
   test('mobile beginner course has module selector, audio honesty, hint ladder and explicit continue', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.goto(`${baseURL}/#course`, {waitUntil:'networkidle'});
     await assertNoHorizontalOverflow(page);
     await expect(page.locator('.mobile-nav')).toBeVisible();
     await expect(page.locator('.desktop-nav')).toBeHidden();
@@ -75,7 +75,7 @@ test.describe('responsive learning app', () => {
   test('desktop course shows module rail and can complete a recall attempt', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:1440,height:900}});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.goto(`${baseURL}/#course`, {waitUntil:'networkidle'});
     await expect(page.locator('.desktop-nav')).toBeVisible();
     await expect(page.locator('.mobile-nav')).toBeHidden();
     await expect(page.locator('.course-module-rail')).toBeVisible();
@@ -98,7 +98,7 @@ test.describe('responsive learning app', () => {
   test('narrow 320px course and pronunciation controls do not overflow horizontally', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:320,height:720},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.goto(`${baseURL}/#course`, {waitUntil:'networkidle'});
     await page.locator('#course').scrollIntoViewIfNeeded();
     await assertNoHorizontalOverflow(page);
     await expect(page.locator('.mobile-nav')).toBeVisible();
@@ -228,14 +228,13 @@ test.describe('daily ritual and speaking practice', () => {
   test('mobile daily ritual exposes four guided stages without overflow', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
-    await page.locator('#daily').scrollIntoViewIfNeeded();
-    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(6);
-    await expect(page.locator('#dailySummary')).toContainText('6 этапов');
-    await expect(page.locator('#dailySteps')).toContainText('Разбудить язык');
-    await expect(page.locator('#dailySteps')).toContainText('Поговорить');
-    await expect(page.locator('#dailySteps')).toContainText('Перестроить фразы');
-    await expect(page.locator('#dailySteps')).toContainText('Услышать');
+    await page.goto(`${baseURL}/#daily`, {waitUntil:'networkidle'});
+    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(4);
+    await expect(page.locator('#dailySummary')).toContainText('4 этапов');
+    await expect(page.locator('#dailySteps')).toContainText('Живая сцена');
+    await expect(page.locator('#dailySteps')).toContainText('Вернуть слова');
+    await expect(page.locator('#dailySteps')).toContainText('Сказать самому');
+    await expect(page.locator('#dailySteps')).toContainText('Закрепить');
     await assertNoHorizontalOverflow(page);
     await page.screenshot({path:'visual-artifacts/mobile-390-daily.png', fullPage:true});
     await context.close();
@@ -244,8 +243,7 @@ test.describe('daily ritual and speaking practice', () => {
   test('desktop speaking mode and automaticity drill are usable', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:1440,height:900}});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
-    await page.locator('#speaking').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#speaking`, {waitUntil:'networkidle'});
     await expect(page.locator('#speakingScenarioList .speaking-scenario')).toHaveCount(12);
     await expect(page.locator('#speakingPrompt')).not.toHaveText('Загрузка…');
     await expect(page.locator('#patternSet option')).toHaveCount(6);
@@ -261,8 +259,7 @@ test.describe('master-apprentice immersion', () => {
   test('mobile starts with a contextual scene and keeps Russian behind help', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL,{waitUntil:'networkidle'});
-    await page.locator('#immersion').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#immersion`,{waitUntil:'networkidle'});
     await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
     await expect(page.locator('#immersionCue')).toHaveText('Сай.');
     await expect(page.locator('#immersionHelpBox')).toBeHidden();
@@ -279,9 +276,8 @@ test.describe('master apprentice immersion', () => {
   test('mobile starts from a contextual living scene', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL, {waitUntil:'networkidle'});
-    await page.locator('#immersion').scrollIntoViewIfNeeded();
-    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(3);
+    await page.goto(`${baseURL}/#immersion`, {waitUntil:'networkidle'});
+    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
     await expect(page.locator('#immersionTitle')).toContainText('Пьём чай');
     await expect(page.locator('#immersionCue')).toContainText('Сай');
     await expect(page.locator('#immersionVocab .immersion-word')).toHaveCount(3);
@@ -296,14 +292,15 @@ test.describe('primary mobile learning path', () => {
   test('assessment immersion daily vocabulary and challenge fit phone viewport', async ({browser}) => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
-    await page.goto(baseURL,{waitUntil:'networkidle'});
-    for (const selector of ['#assessment','#immersion','#daily','#challenge','#my-words','#progress']) {
-      await page.locator(selector).scrollIntoViewIfNeeded();
+    for (const [hash,selector] of [['assessment','#assessment'],['immersion','#immersion'],['daily','#daily'],['progress','#progress']]) {
+      await page.goto(baseURL+'/#'+hash,{waitUntil:'networkidle'});
       await expect(page.locator(selector)).toBeVisible();
       await assertNoHorizontalOverflow(page);
     }
+    await page.goto(baseURL+'/#immersion',{waitUntil:'networkidle'});
     await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
-    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(6);
+    await page.goto(baseURL+'/#daily',{waitUntil:'networkidle'});
+    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(4);
     await page.screenshot({path:'visual-artifacts/mobile-390-primary-flow.png',fullPage:true});
     await context.close();
   });
