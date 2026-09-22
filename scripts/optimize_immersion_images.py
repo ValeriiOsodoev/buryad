@@ -5,8 +5,8 @@ from pathlib import Path
 
 from PIL import Image
 
-ROOT=Path(__file__).resolve().parents[1]/"web/images"
-WIDTHS=(480,960,1440)
+ROOT = Path(__file__).resolve().parents[1] / "web/images"
+WIDTHS = (480, 960, 1440)
 
 def main():
     if not ROOT.exists():
