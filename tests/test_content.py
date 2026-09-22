@@ -462,7 +462,7 @@ def test_immersion_tracks_russian_fallback_usage():
 def test_starter_vocabulary_core_reaches_target_without_invented_bulk():
     vocabulary = json.loads((ROOT / "web/data/vocabulary.json").read_text(encoding="utf-8"))
     assert 150 <= len(vocabulary["items"]) <= 250
-    assert all(item["quality"] in {"sourced", "native-reviewed", "verified"} for item in vocabulary["items"])
+    allowed = {"sourced", "native-reviewed", "verified"}\n    assert all(item["quality"] in allowed for item in vocabulary["items"])
 
 
 def test_reference_library_is_secondary_to_primary_flow():
@@ -476,7 +476,7 @@ def test_every_immersion_scene_is_in_native_review_queue():
     immersion = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
     review = json.loads((ROOT / "web/data/immersion-review.json").read_text(encoding="utf-8"))
     assert {scene["id"] for scene in immersion["scenes"]} == set(review["scenes"])
-    assert all(item["status"] in {"needs-native-review", "native-reviewed", "verified"} for item in review["scenes"].values())
+    allowed = {"needs-native-review", "native-reviewed", "verified"}\n    assert all(item["status"] in allowed for item in review["scenes"].values())
 
 
 def test_native_recording_studio_and_verified_audio_runtime_exist():
