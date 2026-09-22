@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "states": [
     "unseen",
     "seen",
@@ -87,6 +87,393 @@
       "pos": "formula",
       "domain": "social",
       "visual": "👋",
+      "quality": "sourced"
+    },
+    {
+      "id": "i",
+      "bxr": "би",
+      "ru": "я",
+      "pos": "pronoun",
+      "domain": "core",
+      "visual": "🙋",
+      "quality": "sourced"
+    },
+    {
+      "id": "you",
+      "bxr": "ши",
+      "ru": "ты",
+      "pos": "pronoun",
+      "domain": "core",
+      "visual": "🫵",
+      "quality": "sourced"
+    },
+    {
+      "id": "yes",
+      "bxr": "тиимэ",
+      "ru": "да",
+      "pos": "formula",
+      "domain": "core",
+      "visual": "✓",
+      "quality": "sourced"
+    },
+    {
+      "id": "no",
+      "bxr": "үгы",
+      "ru": "нет",
+      "pos": "formula",
+      "domain": "core",
+      "visual": "✕",
+      "quality": "sourced"
+    },
+    {
+      "id": "what",
+      "bxr": "юу",
+      "ru": "что",
+      "pos": "pronoun",
+      "domain": "core",
+      "visual": "?",
+      "quality": "sourced"
+    },
+    {
+      "id": "where",
+      "bxr": "хаана",
+      "ru": "где",
+      "pos": "adverb",
+      "domain": "place",
+      "visual": "📍",
+      "quality": "sourced"
+    },
+    {
+      "id": "now",
+      "bxr": "мүнөө",
+      "ru": "сейчас",
+      "pos": "adverb",
+      "domain": "time",
+      "visual": "⏱",
+      "quality": "sourced"
+    },
+    {
+      "id": "today",
+      "bxr": "мүнөөдэр",
+      "ru": "сегодня",
+      "pos": "adverb",
+      "domain": "time",
+      "visual": "☀️",
+      "quality": "sourced"
+    },
+    {
+      "id": "tomorrow",
+      "bxr": "үглөөдэр",
+      "ru": "завтра",
+      "pos": "adverb",
+      "domain": "time",
+      "visual": "🌅",
+      "quality": "sourced"
+    },
+    {
+      "id": "home",
+      "bxr": "гэр",
+      "ru": "дом",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🏠",
+      "quality": "sourced"
+    },
+    {
+      "id": "at-home",
+      "bxr": "гэртээ",
+      "ru": "дома / домой",
+      "pos": "adverb",
+      "domain": "home",
+      "visual": "🏠",
+      "quality": "sourced"
+    },
+    {
+      "id": "sit",
+      "bxr": "һууха",
+      "ru": "сидеть / садиться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "🪑",
+      "quality": "sourced"
+    },
+    {
+      "id": "take",
+      "bxr": "абаха",
+      "ru": "брать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "✋",
+      "quality": "sourced"
+    },
+    {
+      "id": "give",
+      "bxr": "үгэхэ",
+      "ru": "давать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "🤲",
+      "quality": "sourced"
+    },
+    {
+      "id": "drink",
+      "bxr": "ууха",
+      "ru": "пить",
+      "pos": "verb",
+      "domain": "food",
+      "visual": "🥤",
+      "quality": "sourced"
+    },
+    {
+      "id": "eat",
+      "bxr": "эдеэлхэ",
+      "ru": "есть",
+      "pos": "verb",
+      "domain": "food",
+      "visual": "🍲",
+      "quality": "sourced"
+    },
+    {
+      "id": "go",
+      "bxr": "ябаха",
+      "ru": "идти / ехать",
+      "pos": "verb",
+      "domain": "movement",
+      "visual": "🚶",
+      "quality": "sourced"
+    },
+    {
+      "id": "come",
+      "bxr": "ерэхэ",
+      "ru": "приходить / приезжать",
+      "pos": "verb",
+      "domain": "movement",
+      "visual": "➡️",
+      "quality": "sourced"
+    },
+    {
+      "id": "understand",
+      "bxr": "ойлгохо",
+      "ru": "понимать",
+      "pos": "verb",
+      "domain": "language",
+      "visual": "💡",
+      "quality": "sourced"
+    },
+    {
+      "id": "say",
+      "bxr": "хэлэхэ",
+      "ru": "говорить / сказать",
+      "pos": "verb",
+      "domain": "language",
+      "visual": "💬",
+      "quality": "sourced"
+    },
+    {
+      "id": "again",
+      "bxr": "дахин",
+      "ru": "снова / ещё раз",
+      "pos": "adverb",
+      "domain": "language",
+      "visual": "↻",
+      "quality": "sourced"
+    },
+    {
+      "id": "slowly",
+      "bxr": "ааляар",
+      "ru": "медленно",
+      "pos": "adverb",
+      "domain": "language",
+      "visual": "🐢",
+      "quality": "sourced"
+    },
+    {
+      "id": "mother",
+      "bxr": "эжы",
+      "ru": "мама",
+      "pos": "noun",
+      "domain": "family",
+      "visual": "👩",
+      "quality": "sourced"
+    },
+    {
+      "id": "father",
+      "bxr": "аба",
+      "ru": "отец",
+      "pos": "noun",
+      "domain": "family",
+      "visual": "👨",
+      "quality": "sourced"
+    },
+    {
+      "id": "child",
+      "bxr": "үхибүүн",
+      "ru": "ребёнок",
+      "pos": "noun",
+      "domain": "family",
+      "visual": "🧒",
+      "quality": "sourced"
+    },
+    {
+      "id": "dog",
+      "bxr": "нохой",
+      "ru": "собака",
+      "pos": "noun",
+      "domain": "animals",
+      "visual": "🐕",
+      "quality": "sourced"
+    },
+    {
+      "id": "cat",
+      "bxr": "миисгэй",
+      "ru": "кошка",
+      "pos": "noun",
+      "domain": "animals",
+      "visual": "🐈",
+      "quality": "sourced"
+    },
+    {
+      "id": "milk",
+      "bxr": "һүн",
+      "ru": "молоко",
+      "pos": "noun",
+      "domain": "food",
+      "visual": "🥛",
+      "quality": "sourced"
+    },
+    {
+      "id": "bread",
+      "bxr": "хилээмэн",
+      "ru": "хлеб",
+      "pos": "noun",
+      "domain": "food",
+      "visual": "🍞",
+      "quality": "sourced"
+    },
+    {
+      "id": "meat",
+      "bxr": "мяхан",
+      "ru": "мясо",
+      "pos": "noun",
+      "domain": "food",
+      "visual": "🥩",
+      "quality": "sourced"
+    },
+    {
+      "id": "table",
+      "bxr": "шэрээ",
+      "ru": "стол",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🪵",
+      "quality": "sourced"
+    },
+    {
+      "id": "chair",
+      "bxr": "һандали",
+      "ru": "стул",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🪑",
+      "quality": "sourced"
+    },
+    {
+      "id": "window",
+      "bxr": "сонхо",
+      "ru": "окно",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🪟",
+      "quality": "sourced"
+    },
+    {
+      "id": "head",
+      "bxr": "толгой",
+      "ru": "голова",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "🙂",
+      "quality": "sourced"
+    },
+    {
+      "id": "eye",
+      "bxr": "нюдэн",
+      "ru": "глаз",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "👁️",
+      "quality": "sourced"
+    },
+    {
+      "id": "ear",
+      "bxr": "шэхэн",
+      "ru": "ухо",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "👂",
+      "quality": "sourced"
+    },
+    {
+      "id": "nose",
+      "bxr": "хамар",
+      "ru": "нос",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "👃",
+      "quality": "sourced"
+    },
+    {
+      "id": "mouth",
+      "bxr": "ама",
+      "ru": "рот",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "👄",
+      "quality": "sourced"
+    },
+    {
+      "id": "hand",
+      "bxr": "гар",
+      "ru": "рука",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "✋",
+      "quality": "sourced"
+    },
+    {
+      "id": "foot",
+      "bxr": "хүл",
+      "ru": "нога",
+      "pos": "noun",
+      "domain": "body",
+      "visual": "🦶",
+      "quality": "sourced"
+    },
+    {
+      "id": "red",
+      "bxr": "улаан",
+      "ru": "красный",
+      "pos": "adjective",
+      "domain": "color",
+      "visual": "🔴",
+      "quality": "sourced"
+    },
+    {
+      "id": "white",
+      "bxr": "сагаан",
+      "ru": "белый",
+      "pos": "adjective",
+      "domain": "color",
+      "visual": "⚪",
+      "quality": "sourced"
+    },
+    {
+      "id": "black",
+      "bxr": "хара",
+      "ru": "чёрный",
+      "pos": "adjective",
+      "domain": "color",
+      "visual": "⚫",
       "quality": "sourced"
     }
   ]
