@@ -21,7 +21,8 @@ async function initImmersion(){
  const audioAssets=new Map((audioManifest.recordingQueue||[]).filter(x=>x.status==='verified'&&x.natural).map(x=>[x.text,x]));
  const state={scene:0,step:0,help:0,correct:0,helpUses:0,russianUses:0,startedAt:performance.now()};
  const completedScenes=()=>data.scenes.filter(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed===true;}catch{return false;}});
- const immersionImage=$('#immersionImage'), immersionListen=$('#immersionListen');
+ const immersionImage=$('#immersionImage'), immersionListen=$('#immersionListen'), immersionRecord=$('#immersionRecord'), immersionStop=$('#immersionStop'), immersionReplay=$('#immersionReplay');
+ let shadowRecorder=null,shadowChunks=[],shadowUrl=null;
  const sceneList=$('#immersionScenes'), title=$('#immersionTitle'), subtitle=$('#immersionSubtitle'), cue=$('#immersionCue'), visual=$('#immersionVisual'), choices=$('#immersionChoices'), answer=$('#immersionAnswer'), check=$('#immersionCheck'), next=$('#immersionNext'), help=$('#immersionHelp'), helpBox=$('#immersionHelpBox'), meta=$('#immersionMeta'), vocab=$('#immersionVocab');
 
  function scene(){return data.scenes[state.scene];}
@@ -39,6 +40,7 @@ async function initImmersion(){
   meta.textContent=`${state.step+1} / ${s.steps.length}`; cue.textContent=st.cue; visual.textContent=st.visual||'';
   const cover=imageAssets.get(`scene-${s.id}`);if(cover&&immersionImage){immersionImage.src=cover.path;immersionImage.alt=cover.alt||s.title;immersionImage.classList.remove('hidden');immersionImage.onerror=()=>immersionImage.classList.add('hidden');immersionImage.onload=()=>immersionImage.classList.remove('hidden');}
   const audioItem=audioAssets.get(st.cue);if(immersionListen){immersionListen.classList.toggle('hidden',!audioItem);immersionListen.onclick=()=>{if(audioItem?.natural)new Audio(audioItem.natural).play();};}
+  if(immersionRecord){immersionRecord.classList.toggle('hidden',!audioItem);immersionStop.classList.add('hidden');immersionReplay.classList.add('hidden');immersionRecord.onclick=async()=>{const stream=await navigator.mediaDevices.getUserMedia({audio:true});shadowChunks=[];shadowRecorder=new MediaRecorder(stream);shadowRecorder.ondataavailable=e=>shadowChunks.push(e.data);shadowRecorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());if(shadowUrl)URL.revokeObjectURL(shadowUrl);shadowUrl=URL.createObjectURL(new Blob(shadowChunks,{type:shadowRecorder.mimeType||'audio/webm'}));immersionReplay.classList.remove('hidden');immersionStop.classList.add('hidden');immersionRecord.classList.remove('hidden');};shadowRecorder.start();immersionRecord.classList.add('hidden');immersionStop.classList.remove('hidden');};immersionStop.onclick=()=>{if(shadowRecorder?.state==='recording')shadowRecorder.stop();};immersionReplay.onclick=()=>{if(shadowUrl)new Audio(shadowUrl).play();};}
   choices.innerHTML='';answer.value='';answer.classList.add('hidden');check.classList.add('hidden');next.classList.add('hidden');helpBox.classList.add('hidden');helpBox.textContent='';help.textContent='Нужна опора';state.help=0;
   s.newWords.forEach(w=>{if(st.cue.toLowerCase().includes(w.bxr.toLowerCase()))touchWord(w,'seen');});
   if(st.type==='choose'){
