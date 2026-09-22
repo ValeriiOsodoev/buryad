@@ -24,7 +24,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python scripts/generate_immersion_images.py --limit "${{ inputs.limit }}"
-      - name: Commit generated assets
+      - name: Build responsive image derivatives\n        run: python scripts/optimize_immersion_images.py\n      - name: Commit generated assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
