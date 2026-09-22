@@ -12,7 +12,8 @@ function routeTarget(){
   if(!hash||hash==='home')return 'home';
   if(hash==='daily')return 'today';
   if(hash==='immersion')return 'immersion';
-  if(['progress','my-words','challenge'].includes(hash))return 'progress';
+  if(hash==='my-words')return 'my-words';
+  if(['progress','challenge'].includes(hash))return 'progress';
   if(hash==='assessment')return 'assessment';
   if(libraryIds.includes(hash))return hash;
   return 'home';
@@ -21,7 +22,7 @@ function routeTarget(){
 function syncViews(){
   const target=routeTarget();
   const allIds=[...new Set(Object.values(primaryViews).flat().concat(libraryIds,['assessment']))];
-  const visible=new Set(primaryViews[target]||[target]);
+  const visible=new Set(target==='my-words'?['my-words']:(primaryViews[target]||[target]));
   for(const id of allIds){
     const el=document.getElementById(id);
     if(!el)continue;
