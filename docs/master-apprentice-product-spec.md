@@ -143,7 +143,7 @@ XP и бессодержательные streak-механики не являю
 - [x] semantic domains
 - [x] SRS по состояниям recognized/active/automatic
 - [x] экран «Мои слова»
-- [ ] межсценарный transfer
+- [x] межсценарный transfer
 - [x] статистика пассивный/активный
 
 ### P2 — 16 жизненных сцен
@@ -155,15 +155,15 @@ XP и бессодержательные streak-механики не являю
 - [ ] проверить языковой материал перед массовым тиражированием
 
 ### P3 — визуалы
-- [ ] image manifest
-- [ ] единый art direction
+- [x] image manifest
+- [x] единый art direction
 - [ ] GPT Image assets
 - [ ] responsive WebP/AVIF pipeline
 - [ ] alt/accessibility
 - [ ] визуальная проверка каждой сцены
 
 ### P4 — аудио носителя
-- [ ] script/export для записи
+- [x] script/export для записи
 - [ ] интерфейс загрузки/привязки
 - [ ] slow/natural variants
 - [ ] verified metadata
@@ -171,9 +171,9 @@ XP и бессодержательные streak-механики не являю
 - [ ] shadowing
 
 ### P5 — измерение результата
-- [ ] baseline assessment
-- [ ] weekly practical checkpoints
-- [ ] response latency
+- [x] baseline assessment
+- [x] weekly practical checkpoints
+- [x] response latency
 - [ ] no-Russian completion rate
 - [ ] 5-minute household conversation target
 - [ ] финальная бытовая проверка
