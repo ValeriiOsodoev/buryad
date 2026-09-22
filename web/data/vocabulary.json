@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "states": [
     "unseen",
     "seen",
@@ -1534,6 +1534,66 @@
         "future": "татаха",
         "imperative": "тата"
       }
+    },
+    {
+      "id": "corpus-core-1",
+      "bxr": "ха",
+      "ru": "частица",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Значение сильно зависит от конструкции; не зубрить отдельно."
+    },
+    {
+      "id": "corpus-core-2",
+      "bxr": "юм",
+      "ru": "вещь; служебный элемент сказуемого",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Очень частое, но значение определяется конструкцией."
+    },
+    {
+      "id": "corpus-core-3",
+      "bxr": "хүбүүн",
+      "ru": "мальчик / сын",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Частотно в литературных текстах."
+    },
+    {
+      "id": "corpus-core-4",
+      "bxr": "гэнэ",
+      "ru": "говорит / говорят",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Форма глагола, связанная с передачей чужой речи."
+    },
+    {
+      "id": "corpus-core-5",
+      "bxr": "байгаа",
+      "ru": "был / находился; форма байха",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Частая форма глагола байха."
+    },
+    {
+      "id": "corpus-core-6",
+      "bxr": "хаан",
+      "ru": "хан / царь",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced",
+      "note": "Высокая литературная частота не означает бытовую полезность."
     }
   ]
 }
