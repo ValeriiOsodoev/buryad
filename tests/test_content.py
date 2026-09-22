@@ -323,3 +323,28 @@ def test_weekly_checkpoint_has_immersion_help_ui():
     html = (ROOT / "web/index.html").read_text(encoding="utf-8")
     for required_id in ("checkpointImmersion", "checkpointHelp", "checkpointHelpBox"):
         assert f'id="{required_id}"' in html
+
+
+def test_immersion_scenes_have_context_help_and_small_vocab_load():
+    data = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
+    assert len(data["scenes"]) >= 3
+    for scene in data["scenes"]:
+        assert 1 <= len(scene["newWords"]) <= 7
+        assert len(scene["steps"]) >= 6
+        for step in scene["steps"]:
+            assert step["cue"].strip()
+            assert isinstance(step.get("help", []), list)
+            if step["type"] == "respond":
+                assert step["answers"]
+
+
+def test_immersion_is_primary_learning_surface():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    for required_id in (
+        "immersion", "immersionScenes", "immersionTitle", "immersionCue",
+        "immersionVisual", "immersionChoices", "immersionAnswer",
+        "immersionHelp", "immersionNext", "immersionVocab",
+    ):
+        assert f'id="{required_id}"' in html
+    assert 'href="#immersion"' in html
+    assert '/assets/js/immersion.js' in html
