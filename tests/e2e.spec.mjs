@@ -290,3 +290,21 @@ test.describe('master apprentice immersion', () => {
     await context.close();
   });
 });
+
+
+test.describe('primary mobile learning path', () => {
+  test('assessment immersion daily vocabulary and challenge fit phone viewport', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.goto(baseURL,{waitUntil:'networkidle'});
+    for (const selector of ['#assessment','#immersion','#daily','#challenge','#my-words','#progress']) {
+      await page.locator(selector).scrollIntoViewIfNeeded();
+      await expect(page.locator(selector)).toBeVisible();
+      await assertNoHorizontalOverflow(page);
+    }
+    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
+    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(6);
+    await page.screenshot({path:'visual-artifacts/mobile-390-primary-flow.png',fullPage:true});
+    await context.close();
+  });
+});
