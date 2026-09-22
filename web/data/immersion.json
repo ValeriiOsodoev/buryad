@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "philosophy": "Не учи перевод. Живи несколько минут внутри понятной ситуации.",
   "scenes": [
     {
@@ -160,7 +160,9 @@
             "Спасибо!"
           ]
         }
-      ]
+      ],
+      "recycles": [],
+      "transferTarget": "guests"
     },
     {
       "id": "home",
@@ -282,7 +284,9 @@
             "Хорошо."
           ]
         }
-      ]
+      ],
+      "recycles": [],
+      "transferTarget": "guests"
     },
     {
       "id": "meet",
@@ -393,7 +397,11 @@
             ""
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "here"
+      ],
+      "transferTarget": "guests"
     },
     {
       "id": "morning",
@@ -500,7 +508,13 @@
             "Хорошо."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "tea",
+        "water",
+        "good"
+      ],
+      "transferTarget": "work"
     },
     {
       "id": "food",
@@ -614,7 +628,11 @@
             "Ешь."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "tea"
+      ],
+      "transferTarget": "shop"
     },
     {
       "id": "family",
@@ -737,7 +755,11 @@
             "Наша семья."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "here"
+      ],
+      "transferTarget": "guests"
     },
     {
       "id": "body",
@@ -860,7 +882,12 @@
             "Хорошо."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "this",
+        "good"
+      ],
+      "transferTarget": "language"
     },
     {
       "id": "language",
@@ -952,7 +979,9 @@
             "Говори по-бурятски."
           ]
         }
-      ]
+      ],
+      "recycles": [],
+      "transferTarget": "phone"
     },
     {
       "id": "street",
@@ -1052,7 +1081,11 @@
             "Пойдём."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "hand"
+      ],
+      "transferTarget": "weather"
     },
     {
       "id": "shop",
@@ -1167,7 +1200,15 @@
             "Спасибо."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "tea",
+        "bread",
+        "meat",
+        "milk",
+        "father"
+      ],
+      "transferTarget": "guests"
     },
     {
       "id": "weather",
@@ -1287,7 +1328,12 @@
             "Выйдем на улицу."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "hand",
+        "outside"
+      ],
+      "transferTarget": "clothes"
     },
     {
       "id": "work",
@@ -1379,7 +1425,12 @@
             "Работа закончилась."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "this",
+        "today"
+      ],
+      "transferTarget": "evening"
     },
     {
       "id": "phone",
@@ -1473,7 +1524,11 @@
             "До свидания."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "bye"
+      ],
+      "transferTarget": "evening"
     },
     {
       "id": "evening",
@@ -1564,7 +1619,11 @@
             "Хорошо отдохни."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "good"
+      ],
+      "transferTarget": "morning"
     },
     {
       "id": "guests",
@@ -1658,7 +1717,13 @@
             "Садитесь."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "tea",
+        "here",
+        "hello"
+      ],
+      "transferTarget": "tea"
     },
     {
       "id": "clothes",
@@ -1762,7 +1827,15 @@
             "Пойдём."
           ]
         }
-      ]
+      ],
+      "recycles": [
+        "this",
+        "father",
+        "outside",
+        "go",
+        "cold"
+      ],
+      "transferTarget": "street"
     }
   ]
 }
