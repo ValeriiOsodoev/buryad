@@ -16,9 +16,11 @@ function touchWord(word,event){
 
 async function initImmersion(){
  const root=$('#immersion'); if(!root)return;
- const data=await fetch('/assets/data/immersion.json').then(r=>r.json());
+ const [data,imageManifest]=await Promise.all([fetch('/assets/data/immersion.json').then(r=>r.json()),fetch('/assets/data/image-manifest.json').then(r=>r.json()).catch(()=>({assets:[]}))]);
+ const imageAssets=new Map((imageManifest.assets||[]).map(x=>[x.id,x]));
  const state={scene:0,step:0,help:0,correct:0,helpUses:0,russianUses:0,startedAt:performance.now()};
  const completedScenes=()=>data.scenes.filter(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed===true;}catch{return false;}});
+ const immersionImage=$('#immersionImage');
  const sceneList=$('#immersionScenes'), title=$('#immersionTitle'), subtitle=$('#immersionSubtitle'), cue=$('#immersionCue'), visual=$('#immersionVisual'), choices=$('#immersionChoices'), answer=$('#immersionAnswer'), check=$('#immersionCheck'), next=$('#immersionNext'), help=$('#immersionHelp'), helpBox=$('#immersionHelpBox'), meta=$('#immersionMeta'), vocab=$('#immersionVocab');
 
  function scene(){return data.scenes[state.scene];}
@@ -34,6 +36,7 @@ async function initImmersion(){
  function render(){
   const s=scene(),st=step(); title.textContent=s.title;subtitle.textContent=s.subtitle;
   meta.textContent=`${state.step+1} / ${s.steps.length}`; cue.textContent=st.cue; visual.textContent=st.visual||'';
+  const cover=imageAssets.get(`scene-${s.id}`);if(cover&&immersionImage){immersionImage.src=cover.path;immersionImage.alt=cover.alt||s.title;immersionImage.classList.remove('hidden');immersionImage.onerror=()=>immersionImage.classList.add('hidden');immersionImage.onload=()=>immersionImage.classList.remove('hidden');}
   choices.innerHTML='';answer.value='';answer.classList.add('hidden');check.classList.add('hidden');next.classList.add('hidden');helpBox.classList.add('hidden');helpBox.textContent='';help.textContent='Нужна опора';state.help=0;
   s.newWords.forEach(w=>{if(st.cue.toLowerCase().includes(w.bxr.toLowerCase()))touchWord(w,'seen');});
   if(st.type==='choose'){
