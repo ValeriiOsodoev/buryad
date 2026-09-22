@@ -16,6 +16,7 @@
   <header class="topbar" aria-label="Основная навигация">
     <a class="brand" href="#home" aria-label="Buryad, на главную">BURYAД<span>β</span></a>
     <nav class="desktop-nav">
+      <a href="#immersion">Жить</a>
       <a href="#daily">Сегодня</a>
       <a href="#course">Курс</a>
       <a href="/grammar">Грамматика</a>
@@ -44,9 +45,43 @@
           <strong id="todayTitle">7 минут · до 10 заданий</strong>
           <p id="todaySubtitle">Новые фразы + то, что пора повторить.</p>
         </div>
-        <a class="primary primary-large" href="#daily">Начать сегодня <span aria-hidden="true">→</span></a>
+        <a class="primary primary-large" href="#immersion">Начать сцену <span aria-hidden="true">→</span></a>
         <div class="today-meta" id="heroStats">0 освоено · начни первую сессию</div>
       </aside>
+    </section>
+
+    <section class="immersion-panel" id="immersion">
+      <div class="immersion-head">
+        <div>
+          <span class="eyebrow">Живи на бурятском</span>
+          <h2>Не переводи.<br>Смотри и понимай.</h2>
+        </div>
+        <p>Главный режим BURYAД: знакомая бытовая ситуация, несколько новых слов и много повторений. Русский — только аварийная подсказка.</p>
+      </div>
+      <div class="immersion-shell">
+        <aside id="immersionScenes" class="immersion-scenes" aria-label="Бытовые сцены"></aside>
+        <article class="immersion-stage">
+          <div class="immersion-stage-top">
+            <div><span class="tag">Сейчас живём здесь</span><strong id="immersionTitle">Пьём чай</strong><small id="immersionSubtitle"></small></div>
+            <span id="immersionMeta">1 / 10</span>
+          </div>
+          <div id="immersionVisual" class="immersion-visual" aria-hidden="true">☕</div>
+          <h3 id="immersionCue">Сай.</h3>
+          <div id="immersionChoices" class="immersion-choices"></div>
+          <textarea id="immersionAnswer" class="hidden" rows="2" autocomplete="off" spellcheck="false" placeholder="Сначала скажи вслух. Потом напиши."></textarea>
+          <div id="immersionFeedback" class="immersion-feedback hidden" role="status" aria-live="polite"></div>
+          <div id="immersionHelpBox" class="immersion-help hidden" role="status" aria-live="polite"></div>
+          <div class="immersion-actions">
+            <button class="text-button" id="immersionHelp" type="button">Нужна опора</button>
+            <button class="primary hidden" id="immersionCheck" type="button">Проверить</button>
+            <button class="primary" id="immersionNext" type="button">Дальше →</button>
+          </div>
+          <div class="immersion-vocab-wrap">
+            <span class="tag">Слова этой сцены</span>
+            <div id="immersionVocab" class="immersion-vocab"></div>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="panel daily-panel" id="daily">
@@ -389,6 +424,7 @@
   <script type="module" src="/assets/js/core.js"></script>
   <script type="module" src="/assets/js/speaking.js"></script>
   <script type="module" src="/assets/js/daily.js"></script>
+  <script type="module" src="/assets/js/immersion.js"></script>
   <script type="module" src="/assets/js/progression.js"></script>
   <script type="module" src="/assets/js/app.js"></script>
 </body>
