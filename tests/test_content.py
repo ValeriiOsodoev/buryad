@@ -441,3 +441,19 @@ def test_baseline_assessment_has_five_practical_prompts():
     baseline = json.loads((ROOT / "web/data/baseline.json").read_text(encoding="utf-8"))
     assert len(baseline["questions"]) == 5
     assert all(item["accept"] for item in baseline["questions"])
+
+
+def test_final_challenge_targets_five_minutes_without_russian():
+    challenge = json.loads((ROOT / "web/data/final-challenge.json").read_text(encoding="utf-8"))
+    assert challenge["durationSeconds"] == 300
+    assert len(challenge["prompts"]) == 5
+    assert all(item["bxr"].strip() for item in challenge["prompts"])
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert 'id="challenge"' in html
+    assert '/assets/js/challenge.js' in html
+
+
+def test_immersion_tracks_russian_fallback_usage():
+    js = (ROOT / "web/js/immersion.js").read_text(encoding="utf-8")
+    assert "russianUses" in js
+    assert "noRussian" in js
