@@ -469,7 +469,7 @@ def test_reference_library_is_secondary_to_primary_flow():
     html = (ROOT / "web/index.html").read_text(encoding="utf-8")
     assert '/assets/js/library.js' in html
     js = (ROOT / "web/js/library.js").read_text(encoding="utf-8")
-    assert "library-secondary" in js
+    assert "app-view-hidden" in js
 
 
 def test_every_immersion_scene_is_in_native_review_queue():
@@ -485,3 +485,15 @@ def test_native_recording_studio_and_verified_audio_runtime_exist():
     assert 'id="recordingDownload"' in html
     immersion_js = (ROOT / "web/js/immersion.js").read_text(encoding="utf-8")
     assert "status==='verified'" in immersion_js
+
+
+def test_primary_shell_uses_focused_app_views():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert 'id="heroPrimaryAction"' in html
+    assert 'data-nav-view="home"' in html
+    assert 'data-nav-view="today"' in html
+    assert 'data-nav-view="immersion"' in html
+    assert 'data-nav-view="progress"' in html
+    router = (ROOT / "web/js/library.js").read_text(encoding="utf-8")
+    assert "primaryViews" in router
+    assert "app-view-hidden" in router
