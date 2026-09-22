@@ -166,9 +166,9 @@ XP и бессодержательные streak-механики не являю
 - [x] script/export для записи
 - [ ] интерфейс загрузки/привязки
 - [ ] slow/natural variants
-- [ ] verified metadata
-- [ ] listen-only exercises
-- [ ] shadowing
+- [x] verified metadata
+- [x] listen-only exercises (активируются только при verified native audio)
+- [x] shadowing (listen → record → replay; активируется только при verified native audio)
 
 ### P5 — измерение результата
 - [x] baseline assessment
