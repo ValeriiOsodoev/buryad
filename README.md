@@ -33,3 +33,16 @@ BURYAD_ISSUES_TOKEN
 - подпись: **«говори по-бурятски»**.
 
 Смешанное написание используется как визуальный знак, а ASCII-форма `buryad` — там, где кириллица неудобна или недоступна.
+
+
+## Visual asset generation
+
+The learner-facing app never receives an OpenAI API key. Immersion visuals are generated offline from `web/data/image-manifest.json` and deployed as static assets.
+
+```bash
+python -m pip install -r requirements-tools.txt
+export OPENAI_API_KEY=...
+python scripts/generate_immersion_images.py --limit 3
+```
+
+The current image model configured by the pipeline is `gpt-image-2`. Review generated teaching images before committing them: the depicted object/action must be unambiguous and there must be no text inside the image.
