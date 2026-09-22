@@ -420,3 +420,24 @@ def test_daily_ritual_contains_weak_vocabulary_pass():
     assert "id:'words'" in js
     assert "weakVocab" in js
     assert "target:'#my-words'" in js
+
+
+def test_visual_manifest_covers_every_immersion_scene():
+    immersion = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
+    manifest = json.loads((ROOT / "web/data/image-manifest.json").read_text(encoding="utf-8"))
+    covers = {asset["scene"] for asset in manifest["assets"] if asset["kind"] == "scene-cover"}
+    assert {scene["id"] for scene in immersion["scenes"]} <= covers
+    assert manifest["artDirection"]["style"].strip()
+
+
+def test_native_audio_queue_is_explicitly_verified_only():
+    audio = json.loads((ROOT / "web/data/native-audio-queue.json").read_text(encoding="utf-8"))
+    assert audio["policy"]["verifiedOnly"] is True
+    assert audio["policy"]["ttsFallback"] is False
+    assert len(audio["recordingQueue"]) >= 50
+
+
+def test_baseline_assessment_has_five_practical_prompts():
+    baseline = json.loads((ROOT / "web/data/baseline.json").read_text(encoding="utf-8"))
+    assert len(baseline["questions"]) == 5
+    assert all(item["accept"] for item in baseline["questions"])
