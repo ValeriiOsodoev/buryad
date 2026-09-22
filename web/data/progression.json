@@ -63,7 +63,7 @@
       "focus": "Сегодня / завтра, идти / приходить, встречи",
       "modules": [
         "friends",
-        "move"
+        "movement"
       ],
       "scenarios": [
         "plans",
@@ -222,7 +222,7 @@
         "home",
         "food",
         "friends",
-        "move",
+        "movement",
         "shop",
         "work",
         "phone",
