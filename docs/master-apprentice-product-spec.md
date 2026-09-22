@@ -174,9 +174,9 @@ XP и бессодержательные streak-механики не являю
 - [x] baseline assessment
 - [x] weekly practical checkpoints
 - [x] response latency
-- [ ] no-Russian completion rate
-- [ ] 5-minute household conversation target
-- [ ] финальная бытовая проверка
+- [x] no-Russian completion rate
+- [x] 5-minute household conversation target
+- [x] финальная бытовая проверка
 
 ## Definition of Done для базовой версии
 Пользователь может открыть сайт каждый день и без выбора методики пройти 20–30 минут практики. Он регулярно видит и слышит знакомую бытовую ситуацию, осваивает несколько новых слов без обязательного перевода, выполняет действия, самостоятельно отвечает, встречает слова повторно в других сценах и видит рост recognized/active vocabulary. Старые учебные разделы не мешают этому пути.
