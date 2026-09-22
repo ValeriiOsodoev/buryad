@@ -11,28 +11,28 @@ Copy reviewed files into web/audio/native/ and run this script.
 import json
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]
-QUEUE=ROOT/"web/data/native-audio-queue.json"
-AUDIO=ROOT/"web/audio/native"
+ROOT = Path(__file__).resolve().parents[1]
+QUEUE = ROOT / "web/data/native-audio-queue.json"
+AUDIO = ROOT / "web/audio/native"
 
 def main():
-    data=json.loads(QUEUE.read_text(encoding="utf-8"))
-    by_id={item["id"]:item for item in data["recordingQueue"]}
+    data = json.loads(QUEUE.read_text(encoding="utf-8"))
+    by_id = {item["id"]: item for item in data["recordingQueue"]}
     if not AUDIO.exists():
         print("No web/audio/native directory.")
         return
     for file in AUDIO.iterdir():
         if not file.is_file() or "__" not in file.stem:
             continue
-        parts=file.stem.split("__")
-        if len(parts)<3 or parts[0] not in by_id or parts[1] not in {"slow","natural"}:
+        parts = file.stem.split("__")
+        if len(parts) < 3 or parts[0] not in by_id or parts[1] not in {"slow","natural"}:
             continue
-        item=by_id[parts[0]]
-        item[parts[1]]=f"/assets/audio/native/{file.name}"
-        item["speaker"]=parts[2]
+        item = by_id[parts[0]]
+        item[parts[1]] = f"/assets/audio/native/{file.name}"
+        item["speaker"] = parts[2]
         if item.get("slow") and item.get("natural"):
-            item["status"]="verified"
-    QUEUE.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            item["status"] = "verified"
+    QUEUE.write_text(\n        json.dumps(data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8"\n    )
 
 if __name__=="__main__":
     main()
