@@ -348,3 +348,26 @@ def test_immersion_is_primary_learning_surface():
         assert f'id="{required_id}"' in html
     assert 'href="#immersion"' in html
     assert '/assets/js/immersion.js' in html
+
+
+def test_immersion_scenes_are_primary_and_context_first():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    immersion = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
+    assert 'id="immersion"' in html
+    assert 'href="#immersion"' in html
+    assert '/assets/js/immersion.js' in html
+    assert len(immersion["scenes"]) >= 3
+    for scene in immersion["scenes"]:
+        assert len(scene["newWords"]) <= 7
+        assert len(scene["steps"]) >= 6
+        assert any(step["type"] == "respond" for step in scene["steps"])
+        for step in scene["steps"]:
+            assert step["cue"].strip()
+            assert len(step.get("help", [])) <= 2
+
+
+def test_daily_ritual_starts_with_living_scene():
+    js = (ROOT / "web/js/daily.js").read_text(encoding="utf-8")
+    live = js.index("id:'live'")
+    review = js.index("id:'review'")
+    assert live != -1 and review != -1 and live < review
