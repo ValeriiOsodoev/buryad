@@ -56,13 +56,10 @@ async function initDaily(){
   const weakVocab=vocabulary.map(item=>({...item,learning:vocabState(item.id)})).filter(item=>['seen','recognized','active'].includes(item.learning.state));
   const weakLabel=weakVocab.length?`${weakVocab.slice(0,3).map(x=>x.bxr).join(' · ')}${weakVocab.length>3?' …':''}`:'первые слова появятся после сцены';
   const stages=[
-    {id:'live',title:'Пожить на языке',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй и отвечай без перевода',cta:'Начать сцену'},
-    {id:'words',title:'Вернуть слова',minutes:4,target:'#my-words',detail:`Слабые сейчас: ${weakLabel}`,cta:'Мои слова'},
-    {id:'live',title:'Пожить на бурятском',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй, отвечай',cta:'Начать сцену'},
-    {id:'review',title:'Разбудить язык',minutes:5,target:'#course',detail:due?`${due} повторов уже ждут тебя`:'Повтори несколько знакомых фраз',cta:'Повторить'},
-    {id:'speak',title:'Поговорить',minutes:6,target:'#speaking',detail:'Один бытовой сценарий вслух, без подсказок',cta:'Говорить'},
-    {id:'flex',title:'Перестроить фразы',minutes:4,target:'#patternTitle',detail:'Быстрая серия на автоматизм',cta:'Автоматизм'},
-    {id:'listen',title:'Услышать',minutes:5,target:'#video',detail:'Один фрагмент: слушай → запиши → переслушай',cta:'Слушать'}
+    {id:'live',title:'Живая сцена',minutes:10,target:'#immersion',detail:'Смотри, действуй и отвечай по-бурятски в одной бытовой ситуации',cta:'Начать'},
+    {id:'words',title:'Вернуть слова',minutes:4,target:'#my-words',detail:`Сейчас полезно вернуть: ${weakLabel}`,cta:'Повторить'},
+    {id:'speak',title:'Сказать самому',minutes:6,target:'#speaking',detail:'Короткий разговор вслух без готового перевода',cta:'Говорить'},
+    {id:'review',title:'Закрепить',minutes:5,target:'#course',detail:due?`${due} фраз пора повторить`:'Несколько знакомых фраз на закрепление',cta:'Закрепить'}
   ];
 
   const list=$('#dailySteps');
@@ -99,7 +96,16 @@ async function initDaily(){
     ? `${mastered} из ${totalPhrases} фраз закреплено · ${due} пора повторить · ${weak} слабых мест`
     : `${totalPhrases} базовых фраз ждут впереди. Сегодня достаточно одного маленького круга.`;
 
-  document.addEventListener('buryad:daily-complete',(event)=>{\n    const stage=event.detail?.stage;\n    if(!stages.some(item=>item.id===stage))return;\n    saved[stage]=true;\n    saveDaily(saved);\n    render();\n  });\n\n  $('#dailyReset').onclick=()=>{for(const s of stages)delete saved[s.id];saveDaily(saved);render();};\n  render();
+  document.addEventListener('buryad:daily-complete',(event)=>{
+    const stage=event.detail?.stage;
+    if(!stages.some(item=>item.id===stage))return;
+    saved[stage]=true;
+    saveDaily(saved);
+    render();
+  });
+
+  $('#dailyReset').onclick=()=>{for(const s of stages)delete saved[s.id];saveDaily(saved);render();};
+  render();
 }
 
 initDaily().catch(err=>console.error(err));
