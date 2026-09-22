@@ -149,3 +149,8 @@ body[data-view="immersion"] #immersion{min-height:calc(100vh - 72px)}
   .immersion-vocab-wrap{margin-top:24px}
 }
 @media(max-width:760px){.mobile-grammar-link{display:none!important}.topbar-actions{gap:4px}.account-button{padding-inline:10px}.mobile-nav{grid-template-columns:repeat(4,1fr)}}
+.immersion-scenes{background:#22211c;border:1px solid #3a382f;border-radius:18px;padding:14px}
+.scene-picker-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.scene-picker-head small{color:#aaa293}
+.immersion-scenes select{width:100%;min-height:48px;border:1px solid #4b473c;border-radius:12px;background:#2a2821;color:#f5efe3;padding:10px 12px;font:inherit}
+.immersion-scenes>p{font-size:.78rem;line-height:1.45;color:#9f9789;margin:10px 2px 0}
+@media(max-width:760px){.immersion-scenes{display:block;overflow:visible;padding:12px}.immersion-scenes select{font-size:16px}}
