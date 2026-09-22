@@ -371,3 +371,23 @@ def test_daily_ritual_starts_with_living_scene():
     live = js.index("id:'live'")
     review = js.index("id:'review'")
     assert live != -1 and review != -1 and live < review
+
+
+def test_master_apprentice_product_spec_and_vocabulary_dataset():
+    spec = (ROOT / "docs/master-apprentice-product-spec.md").read_text(encoding="utf-8")
+    vocabulary = json.loads((ROOT / "web/data/vocabulary.json").read_text(encoding="utf-8"))
+    assert "unseen → seen → recognized → active → automatic" in spec
+    assert vocabulary["states"] == ["unseen", "seen", "recognized", "active", "automatic"]
+    assert len(vocabulary["items"]) >= 9
+    for item in vocabulary["items"]:
+        assert item["id"].strip()
+        assert item["bxr"].strip()
+        assert item["domain"].strip()
+        assert item["quality"] in {"draft", "sourced", "native-reviewed", "verified"}
+
+
+def test_primary_navigation_keeps_reference_material_secondary():
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    assert '<details class="library-menu">' in html
+    assert 'id="my-words"' in html
+    assert '/assets/js/vocabulary.js' in html
