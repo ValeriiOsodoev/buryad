@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BURYAД immersion scene v2",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "subtitle",
+    "emoji",
+    "newWords",
+    "steps"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "emoji": {
+      "type": "string",
+      "minLength": 1
+    },
+    "newWords": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "bxr",
+          "ru",
+          "visual"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "bxr": {
+            "type": "string"
+          },
+          "ru": {
+            "type": "string"
+          },
+          "visual": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "recycles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transferTarget": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "cue"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "observe",
+              "choose",
+              "act",
+              "respond",
+              "identify",
+              "contrast",
+              "transfer",
+              "finish"
+            ]
+          },
+          "cue": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visual": {
+            "type": "string"
+          },
+          "visuals": {
+            "type": "array"
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "help": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
