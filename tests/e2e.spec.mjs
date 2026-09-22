@@ -54,18 +54,18 @@ test.describe('responsive learning app', () => {
     await expect(page.getByRole('textbox', {name:'Пароль', exact:true})).toBeVisible();
     await page.locator('#authClose').click();
 
-    await page.locator('#train').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#train`,{waitUntil:'networkidle'});
     await expect(page.locator('[data-buryat-keyboard-for="answerInput"]')).toBeVisible();
-    await page.locator('#core').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#core`,{waitUntil:'networkidle'});
     await expect(page.locator('[data-buryat-keyboard-for="coreSearch"]')).toBeVisible();
 
-    await page.locator('#verbs').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#verbs`,{waitUntil:'networkidle'});
     await expect(page.locator('[data-buryat-keyboard-for="verbSearch"]')).toBeVisible();
     await page.locator('#verbSearch').fill('ойлгохо');
     await page.locator('.verb-summary').first().click();
     await expect(page.locator('.verb-card.expanded .verb-detail')).toBeVisible();
 
-    await page.locator('#video').scrollIntoViewIfNeeded();
+    await page.goto(`${baseURL}/#video`,{waitUntil:'networkidle'});
     await expect(page.locator('#videoGrid iframe')).toHaveCount(1);
     await expect(page.locator('.video-card .buryat-keyboard')).toBeVisible();
     await assertNoHorizontalOverflow(page);
