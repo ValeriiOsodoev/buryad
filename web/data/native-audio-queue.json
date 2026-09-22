@@ -1,0 +1,1110 @@
+{
+  "version": 1,
+  "policy": {
+    "verifiedOnly": true,
+    "ttsFallback": false,
+    "variants": [
+      "slow",
+      "natural"
+    ],
+    "note": "До записи носителем интерфейс не должен имитировать бурятское произношение."
+  },
+  "recordingQueue": [
+    {
+      "id": "phrase-1",
+      "text": "Сай.",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-2",
+      "text": "Уһан.",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-3",
+      "text": "Сай хаана байна?",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-4",
+      "text": "Аяга хаана байна?",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-5",
+      "text": "Аяга аба.",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-6",
+      "text": "Уһан үгэ.",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-7",
+      "text": "Сай уухаш?",
+      "scenes": [
+        "tea",
+        "morning",
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-8",
+      "text": "Юу уухаш?",
+      "scenes": [
+        "tea",
+        "food"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-9",
+      "text": "Уһан байна гү?",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-10",
+      "text": "Баярлаа!",
+      "scenes": [
+        "tea"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-11",
+      "text": "Үүдэн.",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-12",
+      "text": "Үүдэн хаана байна?",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-13",
+      "text": "Үүдэн нээ.",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-14",
+      "text": "Үүдэн хаа.",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-15",
+      "text": "Эндэ һуу.",
+      "scenes": [
+        "home",
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-16",
+      "text": "Энэ хаана байна?",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-17",
+      "text": "Ши хаанаш?",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-18",
+      "text": "Һайн даа.",
+      "scenes": [
+        "home"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-19",
+      "text": "Мэндэ!",
+      "scenes": [
+        "meet",
+        "meet",
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-20",
+      "text": "Һайн байнаш?",
+      "scenes": [
+        "meet"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-21",
+      "text": "Ши мүнөө хаанаш?",
+      "scenes": [
+        "meet"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-22",
+      "text": "Ши ойлгонош?",
+      "scenes": [
+        "meet",
+        "language"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-23",
+      "text": "Баяртай!",
+      "scenes": [
+        "meet",
+        "meet"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-24",
+      "text": "Мүнөөдэр.",
+      "scenes": [
+        "morning"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-25",
+      "text": "Уһан хаана байна?",
+      "scenes": [
+        "morning"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-26",
+      "text": "Эдеэлээ гүш?",
+      "scenes": [
+        "morning",
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-27",
+      "text": "Мүнөөдэр ямар байнаш?",
+      "scenes": [
+        "morning"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-28",
+      "text": "Һайн.",
+      "scenes": [
+        "morning",
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-29",
+      "text": "Хилээмэн.",
+      "scenes": [
+        "food"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-30",
+      "text": "Мяхан.",
+      "scenes": [
+        "food"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-31",
+      "text": "Һүн хаана байна?",
+      "scenes": [
+        "food",
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-32",
+      "text": "Мяхан хаана байна?",
+      "scenes": [
+        "food"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-33",
+      "text": "Эдеэлэ.",
+      "scenes": [
+        "food"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-34",
+      "text": "Эжы.",
+      "scenes": [
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-35",
+      "text": "Аба.",
+      "scenes": [
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-36",
+      "text": "Үхибүүн.",
+      "scenes": [
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-37",
+      "text": "Эжы хаана байна?",
+      "scenes": [
+        "family",
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-38",
+      "text": "Аба хаана байна?",
+      "scenes": [
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-39",
+      "text": "Манай бүлэ.",
+      "scenes": [
+        "family"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-40",
+      "text": "Нюдэн.",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-41",
+      "text": "Шэхэн.",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-42",
+      "text": "Хамар.",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-43",
+      "text": "Хамараа харуулыш.",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-44",
+      "text": "Гараа харуулыш.",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-45",
+      "text": "Нюдэн хаана байна?",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-46",
+      "text": "Энэ юу бэ?",
+      "scenes": [
+        "body"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-47",
+      "text": "Ойлгоноб.",
+      "scenes": [
+        "language"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-48",
+      "text": "Дахин хэлэ.",
+      "scenes": [
+        "language"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-49",
+      "text": "Ааляар хэлэ.",
+      "scenes": [
+        "language"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-50",
+      "text": "Ойлгонош?",
+      "scenes": [
+        "language",
+        "phone"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-51",
+      "text": "Буряадаар хэлэ.",
+      "scenes": [
+        "language"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-52",
+      "text": "Газаа.",
+      "scenes": [
+        "street"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-53",
+      "text": "Харгы.",
+      "scenes": [
+        "street"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-54",
+      "text": "Газаа гара.",
+      "scenes": [
+        "street"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-55",
+      "text": "Ши хаашаа ябанаш?",
+      "scenes": [
+        "street"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-56",
+      "text": "Харгы хаана байна?",
+      "scenes": [
+        "street"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-57",
+      "text": "Ябая.",
+      "scenes": [
+        "street",
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-58",
+      "text": "Магазин.",
+      "scenes": [
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-59",
+      "text": "Хилээмэн хаана байна?",
+      "scenes": [
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-60",
+      "text": "Юу абахаш?",
+      "scenes": [
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-61",
+      "text": "Хилээмэ аба.",
+      "scenes": [
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-62",
+      "text": "Баярлаа.",
+      "scenes": [
+        "shop"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-63",
+      "text": "Хүйтэн.",
+      "scenes": [
+        "weather"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-64",
+      "text": "Дулаан.",
+      "scenes": [
+        "weather"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-65",
+      "text": "Бороо.",
+      "scenes": [
+        "weather"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-66",
+      "text": "Саһан.",
+      "scenes": [
+        "weather"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-67",
+      "text": "Газаа хүйтэн гү?",
+      "scenes": [
+        "weather",
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-68",
+      "text": "Газаа гарая.",
+      "scenes": [
+        "weather"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-69",
+      "text": "Ажал.",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-70",
+      "text": "Бэшэнэб.",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-71",
+      "text": "Мүнөөдэр ажалланаш гү?",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-72",
+      "text": "Юу хэнэбши?",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-73",
+      "text": "Бэшэ.",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-74",
+      "text": "Ажал дүүрээ.",
+      "scenes": [
+        "work"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-75",
+      "text": "Дуудана.",
+      "scenes": [
+        "phone"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-76",
+      "text": "Намда бэшэ.",
+      "scenes": [
+        "phone"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-77",
+      "text": "Хүлеэ.",
+      "scenes": [
+        "phone",
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-78",
+      "text": "Ши намайе дууланаш?",
+      "scenes": [
+        "phone"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-79",
+      "text": "Баяртай.",
+      "scenes": [
+        "phone"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-80",
+      "text": "Үдэшэ.",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-81",
+      "text": "Эсээб.",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-82",
+      "text": "Амар.",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-83",
+      "text": "Эсээ гүш?",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-84",
+      "text": "Юу хэхэш?",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-85",
+      "text": "Һайнаар амараарай.",
+      "scenes": [
+        "evening"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-86",
+      "text": "Һуугты.",
+      "scenes": [
+        "guests"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-87",
+      "text": "Газаа хүйтэн.",
+      "scenes": [
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-88",
+      "text": "Энэ.",
+      "scenes": [
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-89",
+      "text": "Энэ аба.",
+      "scenes": [
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    },
+    {
+      "id": "phrase-90",
+      "text": "Газаа ябахаш гү?",
+      "scenes": [
+        "clothes"
+      ],
+      "status": "needed",
+      "slow": null,
+      "natural": null,
+      "speaker": null,
+      "dialect": null
+    }
+  ]
+}
