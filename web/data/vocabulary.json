@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "states": [
     "unseen",
     "seen",
@@ -655,6 +655,885 @@
       "domain": "state",
       "visual": "🛋️",
       "quality": "sourced"
+    },
+    {
+      "id": "core-1",
+      "bxr": "муу",
+      "ru": "плохой / плохо",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-2",
+      "bxr": "тэрэ",
+      "ru": "он / она; тот",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-3",
+      "bxr": "бидэ",
+      "ru": "мы",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-4",
+      "bxr": "та",
+      "ru": "вы",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-5",
+      "bxr": "тэдэ",
+      "ru": "они",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-6",
+      "bxr": "хэн",
+      "ru": "кто",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-7",
+      "bxr": "хаашаа",
+      "ru": "куда",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-8",
+      "bxr": "хэзээ",
+      "ru": "когда",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-9",
+      "bxr": "юундэ",
+      "ru": "почему / зачем",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-10",
+      "bxr": "яажа",
+      "ru": "как / каким образом",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-11",
+      "bxr": "үни",
+      "ru": "уже",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-12",
+      "bxr": "үшөө",
+      "ru": "ещё",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-13",
+      "bxr": "тэндэ",
+      "ru": "там",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-14",
+      "bxr": "иишээ",
+      "ru": "сюда",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-15",
+      "bxr": "нэгэ",
+      "ru": "один",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-16",
+      "bxr": "хоёр",
+      "ru": "два",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-17",
+      "bxr": "ехэ",
+      "ru": "много / большой",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-18",
+      "bxr": "бага",
+      "ru": "мало / маленький",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-19",
+      "bxr": "гэжэ",
+      "ru": "«что / мол / говоря»",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-20",
+      "bxr": "даа",
+      "ru": "усилительная частица",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-21",
+      "bxr": "лэ",
+      "ru": "только / именно",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-22",
+      "bxr": "харин",
+      "ru": "а вот / зато",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-23",
+      "bxr": "баһа",
+      "ru": "тоже / ещё",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-24",
+      "bxr": "байна",
+      "ru": "есть / находится",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-25",
+      "bxr": "хэнэ",
+      "ru": "делает",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-26",
+      "bxr": "мэдэнэ",
+      "ru": "знает",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-27",
+      "bxr": "ойлгоно",
+      "ru": "понимает",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-28",
+      "bxr": "хэлэнэ",
+      "ru": "говорит",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-29",
+      "bxr": "ябана",
+      "ru": "идёт / едет",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-30",
+      "bxr": "ерэнэ",
+      "ru": "приходит / приезжает",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-31",
+      "bxr": "харана",
+      "ru": "смотрит / видит",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-32",
+      "bxr": "абана",
+      "ru": "берёт",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-33",
+      "bxr": "үгэнэ",
+      "ru": "даёт",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-34",
+      "bxr": "эдеэлнэ",
+      "ru": "ест",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-35",
+      "bxr": "ууна",
+      "ru": "пьёт",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "core-36",
+      "bxr": "унтана",
+      "ru": "спит",
+      "pos": "core",
+      "domain": "core",
+      "visual": "•",
+      "quality": "sourced"
+    },
+    {
+      "id": "verb-1",
+      "bxr": "гэхэ",
+      "ru": "сказать / говорить; служебный глагол цитирования",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "гэнэ",
+        "past": "гээ",
+        "future": "гэхэ",
+        "imperative": "гэ"
+      }
+    },
+    {
+      "id": "verb-2",
+      "bxr": "байха",
+      "ru": "быть / находиться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "байна",
+        "past": "байгаа",
+        "future": "байха",
+        "imperative": "бай"
+      }
+    },
+    {
+      "id": "verb-3",
+      "bxr": "болохо",
+      "ru": "становиться / получаться / можно",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "болоно",
+        "past": "болоо",
+        "future": "болохо",
+        "imperative": "боло"
+      }
+    },
+    {
+      "id": "verb-6",
+      "bxr": "хэхэ",
+      "ru": "делать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хэнэ",
+        "past": "хээ",
+        "future": "хэхэ",
+        "imperative": "хэ"
+      }
+    },
+    {
+      "id": "verb-7",
+      "bxr": "гараха",
+      "ru": "выходить / появляться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "гарана",
+        "past": "гараа",
+        "future": "гараха",
+        "imperative": "гара"
+      }
+    },
+    {
+      "id": "verb-8",
+      "bxr": "ошохо",
+      "ru": "идти / ехать туда",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "ошоно",
+        "past": "ошоо",
+        "future": "ошохо",
+        "imperative": "ошо"
+      }
+    },
+    {
+      "id": "verb-9",
+      "bxr": "хүдэлхэ",
+      "ru": "работать / двигаться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хүдэлнэ",
+        "past": "хүдэлөө",
+        "future": "хүдэлхэ",
+        "imperative": "хүдэл"
+      }
+    },
+    {
+      "id": "verb-12",
+      "bxr": "хараха",
+      "ru": "смотреть / видеть",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "харана",
+        "past": "хараа",
+        "future": "хараха",
+        "imperative": "хара"
+      }
+    },
+    {
+      "id": "verb-14",
+      "bxr": "мэдэхэ",
+      "ru": "знать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "мэдэнэ",
+        "past": "мэдээ",
+        "future": "мэдэхэ",
+        "imperative": "мэдэ"
+      }
+    },
+    {
+      "id": "verb-16",
+      "bxr": "һанаха",
+      "ru": "думать / помнить / намереваться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "һанана",
+        "past": "һанаа",
+        "future": "һанаха",
+        "imperative": "һана"
+      }
+    },
+    {
+      "id": "verb-17",
+      "bxr": "бодохо",
+      "ru": "думать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "бодоно",
+        "past": "бодоо",
+        "future": "бодохо",
+        "imperative": "бодо"
+      }
+    },
+    {
+      "id": "verb-18",
+      "bxr": "орохо",
+      "ru": "входить / заходить",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "ороно",
+        "past": "ороо",
+        "future": "орохо",
+        "imperative": "оро"
+      }
+    },
+    {
+      "id": "verb-22",
+      "bxr": "унтаха",
+      "ru": "спать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "унтана",
+        "past": "унтаа",
+        "future": "унтаха",
+        "imperative": "унта"
+      }
+    },
+    {
+      "id": "verb-24",
+      "bxr": "һураха",
+      "ru": "учиться / изучать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "һурана",
+        "past": "һураа",
+        "future": "һураха",
+        "imperative": "һура"
+      }
+    },
+    {
+      "id": "verb-26",
+      "bxr": "уншаха",
+      "ru": "читать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "уншана",
+        "past": "уншаа",
+        "future": "уншаха",
+        "imperative": "унша"
+      }
+    },
+    {
+      "id": "verb-27",
+      "bxr": "шагнаха",
+      "ru": "слушать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "шагнана",
+        "past": "шагнаа",
+        "future": "шагнаха",
+        "imperative": "шагна"
+      }
+    },
+    {
+      "id": "verb-28",
+      "bxr": "асууха",
+      "ru": "спрашивать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "асууна",
+        "past": "асуугаа",
+        "future": "асууха",
+        "imperative": "асуу"
+      }
+    },
+    {
+      "id": "verb-29",
+      "bxr": "харюусаха",
+      "ru": "отвечать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "харюусана",
+        "past": "харюусаа",
+        "future": "харюусаха",
+        "imperative": "харюуса"
+      }
+    },
+    {
+      "id": "verb-31",
+      "bxr": "уулзаха",
+      "ru": "встречаться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "уулзана",
+        "past": "уулзаа",
+        "future": "уулзаха",
+        "imperative": "уулза"
+      }
+    },
+    {
+      "id": "verb-32",
+      "bxr": "хөөрэлдэхэ",
+      "ru": "разговаривать / беседовать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хөөрэлдэнэ",
+        "past": "хөөрэлдөө",
+        "future": "хөөрэлдэхэ",
+        "imperative": "хөөрэлдэ"
+      }
+    },
+    {
+      "id": "verb-34",
+      "bxr": "эльгээхэ",
+      "ru": "отправлять",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "эльгээнэ",
+        "past": "эльгээгээ",
+        "future": "эльгээхэ",
+        "imperative": "эльгээ"
+      }
+    },
+    {
+      "id": "verb-35",
+      "bxr": "бусаха",
+      "ru": "возвращаться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "бусана",
+        "past": "бусаа",
+        "future": "бусаха",
+        "imperative": "буса"
+      }
+    },
+    {
+      "id": "verb-36",
+      "bxr": "нээхэ",
+      "ru": "открывать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "нээнэ",
+        "past": "нээгээ",
+        "future": "нээхэ",
+        "imperative": "нээ"
+      }
+    },
+    {
+      "id": "verb-37",
+      "bxr": "хааха",
+      "ru": "закрывать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хаана",
+        "past": "хаагаа",
+        "future": "хааха",
+        "imperative": "хаа"
+      }
+    },
+    {
+      "id": "verb-38",
+      "bxr": "табиха",
+      "ru": "класть / ставить",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "табина",
+        "past": "табяа",
+        "future": "табиха",
+        "imperative": "таби"
+      }
+    },
+    {
+      "id": "verb-39",
+      "bxr": "угааха",
+      "ru": "мыть",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "угаана",
+        "past": "угаагаа",
+        "future": "угааха",
+        "imperative": "угаа"
+      }
+    },
+    {
+      "id": "verb-40",
+      "bxr": "үмдэхэ",
+      "ru": "надевать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "үмдэнэ",
+        "past": "үмдөө",
+        "future": "үмдэхэ",
+        "imperative": "үмдэ"
+      }
+    },
+    {
+      "id": "verb-41",
+      "bxr": "тайлаха",
+      "ru": "снимать одежду",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "тайлана",
+        "past": "тайлаа",
+        "future": "тайлаха",
+        "imperative": "тайла"
+      }
+    },
+    {
+      "id": "verb-42",
+      "bxr": "һэрэхэ",
+      "ru": "просыпаться",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "һэрэнэ",
+        "past": "һэрээ",
+        "future": "һэрэхэ",
+        "imperative": "һэрэ"
+      }
+    },
+    {
+      "id": "verb-43",
+      "bxr": "шадаха",
+      "ru": "мочь / уметь",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "шадана",
+        "past": "шадаа",
+        "future": "шадаха",
+        "imperative": "шада"
+      }
+    },
+    {
+      "id": "verb-44",
+      "bxr": "олохо",
+      "ru": "находить",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "олоно",
+        "past": "олоо",
+        "future": "олохо",
+        "imperative": "оло"
+      }
+    },
+    {
+      "id": "verb-45",
+      "bxr": "хайха",
+      "ru": "искать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хайна",
+        "past": "хайгаа",
+        "future": "хайха",
+        "imperative": "хай"
+      }
+    },
+    {
+      "id": "verb-46",
+      "bxr": "хүрэхэ",
+      "ru": "достигать / доходить / приезжать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "хүрэнэ",
+        "past": "хүрөө",
+        "future": "хүрэхэ",
+        "imperative": "хүрэ"
+      }
+    },
+    {
+      "id": "verb-47",
+      "bxr": "наадаха",
+      "ru": "играть",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "наадана",
+        "past": "наадаа",
+        "future": "наадаха",
+        "imperative": "наада"
+      }
+    },
+    {
+      "id": "verb-48",
+      "bxr": "түлэхэ",
+      "ru": "платить",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "түлэнэ",
+        "past": "түлөө",
+        "future": "түлэхэ",
+        "imperative": "түлэ"
+      }
+    },
+    {
+      "id": "verb-49",
+      "bxr": "тоолохо",
+      "ru": "считать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "тоолоно",
+        "past": "тоолоо",
+        "future": "тоолохо",
+        "imperative": "тооло"
+      }
+    },
+    {
+      "id": "verb-50",
+      "bxr": "татаха",
+      "ru": "тянуть / вытягивать",
+      "pos": "verb",
+      "domain": "action",
+      "visual": "→",
+      "quality": "sourced",
+      "forms": {
+        "present": "татана",
+        "past": "татаа",
+        "future": "татаха",
+        "imperative": "тата"
+      }
     }
   ]
 }
