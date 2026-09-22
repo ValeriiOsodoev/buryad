@@ -391,3 +391,17 @@ def test_primary_navigation_keeps_reference_material_secondary():
     assert '<details class="library-menu">' in html
     assert 'id="my-words"' in html
     assert '/assets/js/vocabulary.js' in html
+
+
+def test_contextual_vocabulary_core_has_multiple_everyday_domains():
+    vocabulary = json.loads((ROOT / "web/data/vocabulary.json").read_text(encoding="utf-8"))
+    domains = {item["domain"] for item in vocabulary["items"]}
+    assert len(vocabulary["items"]) >= 50
+    assert {"core", "home", "food", "family", "body", "language", "time", "movement"} <= domains
+
+
+def test_immersion_has_first_eight_everyday_worlds():
+    immersion = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
+    ids = {scene["id"] for scene in immersion["scenes"]}
+    assert {"tea", "home", "meet", "morning", "food", "family", "body", "language"} <= ids
+    assert len(immersion["scenes"]) >= 8
