@@ -18,12 +18,14 @@ async function initImmersion(){
  const root=$('#immersion'); if(!root)return;
  const data=await fetch('/assets/data/immersion.json').then(r=>r.json());
  const state={scene:0,step:0,help:0,correct:0};
+ const completedScenes=()=>data.scenes.filter(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed===true;}catch{return false;}});
  const sceneList=$('#immersionScenes'), title=$('#immersionTitle'), subtitle=$('#immersionSubtitle'), cue=$('#immersionCue'), visual=$('#immersionVisual'), choices=$('#immersionChoices'), answer=$('#immersionAnswer'), check=$('#immersionCheck'), next=$('#immersionNext'), help=$('#immersionHelp'), helpBox=$('#immersionHelpBox'), meta=$('#immersionMeta'), vocab=$('#immersionVocab');
 
  function scene(){return data.scenes[state.scene];}
  function step(){return scene().steps[state.step];}
  function renderScenes(){
-  sceneList.innerHTML=data.scenes.map((s,i)=>`<button type="button" class="immersion-scene ${i===state.scene?'active':''}" data-scene="${i}"><span>${s.emoji}</span><strong>${esc(s.title)}</strong><small>${esc(s.subtitle)}</small></button>`).join('');
+  const completed=new Set(completedScenes().map(s=>s.id));
+  sceneList.innerHTML=data.scenes.map((s,i)=>`<button type="button" class="immersion-scene ${i===state.scene?'active':''} ${completed.has(s.id)?'done':''}" data-scene="${i}"><span>${completed.has(s.id)?'✓':s.emoji}</span><strong>${esc(s.title)}</strong><small>${esc(s.subtitle)}</small></button>`).join('');
   sceneList.querySelectorAll('[data-scene]').forEach(b=>b.onclick=()=>{state.scene=Number(b.dataset.scene);state.step=0;state.help=0;state.correct=0;render();});
  }
  function renderVocab(){
