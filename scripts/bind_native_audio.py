@@ -7,8 +7,8 @@ phrase-12__slow__speaker.webm
 
 Copy reviewed files into web/audio/native/ and run this script.
 """
-from pathlib import Path
 import json
+from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 QUEUE=ROOT/"web/data/native-audio-queue.json"
