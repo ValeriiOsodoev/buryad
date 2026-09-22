@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "states": [
+    "unseen",
+    "seen",
+    "recognized",
+    "active",
+    "automatic"
+  ],
+  "items": [
+    {
+      "id": "tea",
+      "bxr": "сай",
+      "ru": "чай",
+      "pos": "noun",
+      "domain": "food",
+      "visual": "☕",
+      "quality": "sourced"
+    },
+    {
+      "id": "water",
+      "bxr": "уһан",
+      "ru": "вода",
+      "pos": "noun",
+      "domain": "food",
+      "visual": "💧",
+      "quality": "sourced"
+    },
+    {
+      "id": "cup",
+      "bxr": "аяга",
+      "ru": "чашка / пиала",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🥣",
+      "quality": "sourced"
+    },
+    {
+      "id": "door",
+      "bxr": "үүдэн",
+      "ru": "дверь",
+      "pos": "noun",
+      "domain": "home",
+      "visual": "🚪",
+      "quality": "sourced"
+    },
+    {
+      "id": "here",
+      "bxr": "эндэ",
+      "ru": "здесь",
+      "pos": "adverb",
+      "domain": "place",
+      "visual": "👇",
+      "quality": "sourced"
+    },
+    {
+      "id": "this",
+      "bxr": "энэ",
+      "ru": "это / этот",
+      "pos": "pronoun",
+      "domain": "core",
+      "visual": "👉",
+      "quality": "sourced"
+    },
+    {
+      "id": "hello",
+      "bxr": "мэндэ",
+      "ru": "привет",
+      "pos": "formula",
+      "domain": "social",
+      "visual": "👋",
+      "quality": "sourced"
+    },
+    {
+      "id": "good",
+      "bxr": "һайн",
+      "ru": "хороший / хорошо",
+      "pos": "adjective",
+      "domain": "state",
+      "visual": "🙂",
+      "quality": "sourced"
+    },
+    {
+      "id": "bye",
+      "bxr": "баяртай",
+      "ru": "до свидания",
+      "pos": "formula",
+      "domain": "social",
+      "visual": "👋",
+      "quality": "sourced"
+    }
+  ]
+}
