@@ -230,8 +230,8 @@ test.describe('daily ritual and speaking practice', () => {
     const page = await context.newPage();
     await page.goto(baseURL, {waitUntil:'networkidle'});
     await page.locator('#daily').scrollIntoViewIfNeeded();
-    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(4);
-    await expect(page.locator('#dailySummary')).toContainText('4 этапов');
+    await expect(page.locator('#dailySteps .daily-step')).toHaveCount(6);
+    await expect(page.locator('#dailySummary')).toContainText('6 этапов');
     await expect(page.locator('#dailySteps')).toContainText('Разбудить язык');
     await expect(page.locator('#dailySteps')).toContainText('Поговорить');
     await expect(page.locator('#dailySteps')).toContainText('Перестроить фразы');
