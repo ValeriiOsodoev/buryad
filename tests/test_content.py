@@ -405,3 +405,18 @@ def test_immersion_has_first_eight_everyday_worlds():
     ids = {scene["id"] for scene in immersion["scenes"]}
     assert {"tea", "home", "meet", "morning", "food", "family", "body", "language"} <= ids
     assert len(immersion["scenes"]) >= 8
+
+
+def test_first_sixteen_immersion_worlds_are_present_and_active():
+    immersion = json.loads((ROOT / "web/data/immersion.json").read_text(encoding="utf-8"))
+    assert len(immersion["scenes"]) >= 16
+    for scene in immersion["scenes"][:16]:
+        assert 1 <= len(scene["newWords"]) <= 7
+        assert any(step["type"] == "respond" for step in scene["steps"])
+
+
+def test_daily_ritual_contains_weak_vocabulary_pass():
+    js = (ROOT / "web/js/daily.js").read_text(encoding="utf-8")
+    assert "id:'words'" in js
+    assert "weakVocab" in js
+    assert "target:'#my-words'" in js
