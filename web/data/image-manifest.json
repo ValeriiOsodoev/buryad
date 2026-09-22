@@ -1,0 +1,473 @@
+{
+  "version": 1,
+  "artDirection": {
+    "style": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos",
+    "aspect": "4:3",
+    "rules": [
+      "one clear teaching subject/action per frame",
+      "recognizable object silhouettes",
+      "same visual universe across all scenes",
+      "avoid generic pan-Asian ornament",
+      "avoid historical costume unless scene requires it",
+      "no written words inside images"
+    ]
+  },
+  "assets": [
+    {
+      "id": "scene-tea",
+      "scene": "tea",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/tea/cover.webp",
+      "alt": "Пьём чай",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Пьём чай. Кухня · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-tea",
+      "scene": "tea",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/tea.webp",
+      "alt": "чай",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"чай\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-water",
+      "scene": "tea",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/water.webp",
+      "alt": "вода",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"вода\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-cup",
+      "scene": "tea",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/cup.webp",
+      "alt": "чашка",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"чашка\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-home",
+      "scene": "home",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/home/cover.webp",
+      "alt": "Дома",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Дома. Комната · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-door",
+      "scene": "home",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/door.webp",
+      "alt": "дверь",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"дверь\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-here",
+      "scene": "home",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/here.webp",
+      "alt": "здесь",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"здесь\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-this",
+      "scene": "home",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/this.webp",
+      "alt": "это",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"это\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-meet",
+      "scene": "meet",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/meet/cover.webp",
+      "alt": "Встретил своего",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Встретил своего. Встреча · 6–8 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-hello",
+      "scene": "meet",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/hello.webp",
+      "alt": "привет",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"привет\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-good",
+      "scene": "meet",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/good.webp",
+      "alt": "хорошо",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"хорошо\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-bye",
+      "scene": "meet",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/bye.webp",
+      "alt": "до свидания",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"до свидания\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-morning",
+      "scene": "morning",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/morning/cover.webp",
+      "alt": "Утро",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Утро. Начало дня · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-today",
+      "scene": "morning",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/today.webp",
+      "alt": "сегодня",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"сегодня\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-eat",
+      "scene": "morning",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/eat.webp",
+      "alt": "есть",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"есть\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-food",
+      "scene": "food",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/food/cover.webp",
+      "alt": "Еда",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Еда. За столом · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-bread",
+      "scene": "food",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/bread.webp",
+      "alt": "хлеб",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"хлеб\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-meat",
+      "scene": "food",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/meat.webp",
+      "alt": "мясо",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"мясо\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-milk",
+      "scene": "food",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/milk.webp",
+      "alt": "молоко",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"молоко\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-family",
+      "scene": "family",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/family/cover.webp",
+      "alt": "Семья",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Семья. Свои люди · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-mother",
+      "scene": "family",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/mother.webp",
+      "alt": "мама",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"мама\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-father",
+      "scene": "family",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/father.webp",
+      "alt": "отец",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"отец\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-child",
+      "scene": "family",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/child.webp",
+      "alt": "ребёнок",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"ребёнок\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-body",
+      "scene": "body",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/body/cover.webp",
+      "alt": "Я и тело",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Я и тело. Покажи на себе · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-eye",
+      "scene": "body",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/eye.webp",
+      "alt": "глаз",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"глаз\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-ear",
+      "scene": "body",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/ear.webp",
+      "alt": "ухо",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"ухо\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-nose",
+      "scene": "body",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/nose.webp",
+      "alt": "нос",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"нос\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-hand",
+      "scene": "body",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/hand.webp",
+      "alt": "рука",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"рука\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-language",
+      "scene": "language",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/language/cover.webp",
+      "alt": "Не понял",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Не понял. Останься в бурятском · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-understand",
+      "scene": "language",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/understand.webp",
+      "alt": "понимать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"понимать\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-again",
+      "scene": "language",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/again.webp",
+      "alt": "снова",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"снова\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-slowly",
+      "scene": "language",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/slowly.webp",
+      "alt": "медленно",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"медленно\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-street",
+      "scene": "street",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/street/cover.webp",
+      "alt": "На улице",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: На улице. Вышли из дома · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-outside",
+      "scene": "street",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/outside.webp",
+      "alt": "на улице",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"на улице\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-road",
+      "scene": "street",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/road.webp",
+      "alt": "дорога",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"дорога\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-go",
+      "scene": "street",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/go.webp",
+      "alt": "идти / ехать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"идти / ехать\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-shop",
+      "scene": "shop",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/shop/cover.webp",
+      "alt": "В магазине",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: В магазине. Купить нужное · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-shop",
+      "scene": "shop",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/shop.webp",
+      "alt": "магазин",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"магазин\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-weather",
+      "scene": "weather",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/weather/cover.webp",
+      "alt": "Погода",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Погода. Что на улице · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-cold",
+      "scene": "weather",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/cold.webp",
+      "alt": "холодно",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"холодно\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-warm",
+      "scene": "weather",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/warm.webp",
+      "alt": "тепло",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"тепло\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-rain",
+      "scene": "weather",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/rain.webp",
+      "alt": "дождь",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"дождь\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-snow",
+      "scene": "weather",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/snow.webp",
+      "alt": "снег",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"снег\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-work",
+      "scene": "work",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/work/cover.webp",
+      "alt": "Дела",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Дела. Рабочий день · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-work",
+      "scene": "work",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/work.webp",
+      "alt": "работа",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"работа\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-work-verb",
+      "scene": "work",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/work-verb.webp",
+      "alt": "работать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"работать\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-write",
+      "scene": "work",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/write.webp",
+      "alt": "писать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"писать\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-phone",
+      "scene": "phone",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/phone/cover.webp",
+      "alt": "По телефону",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: По телефону. Связь · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-call",
+      "scene": "phone",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/call.webp",
+      "alt": "звонить / звать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"звонить / звать\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-wait",
+      "scene": "phone",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/wait.webp",
+      "alt": "ждать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"ждать\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-evening",
+      "scene": "evening",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/evening/cover.webp",
+      "alt": "Вечер дома",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Вечер дома. Заканчиваем день · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-evening",
+      "scene": "evening",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/evening.webp",
+      "alt": "вечер",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"вечер\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-tired",
+      "scene": "evening",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/tired.webp",
+      "alt": "уставать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"уставать\", visually unambiguous, no text."
+    },
+    {
+      "id": "word-rest",
+      "scene": "evening",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/rest.webp",
+      "alt": "отдыхать",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"отдыхать\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-guests",
+      "scene": "guests",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/guests/cover.webp",
+      "alt": "Гости",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Гости. Пришли свои · 8–10 минут. Show an immediately understandable everyday situation, no text."
+    },
+    {
+      "id": "word-sit",
+      "scene": "guests",
+      "kind": "vocabulary-object",
+      "path": "/assets/images/vocabulary/sit.webp",
+      "alt": "садиться",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Isolated but naturally situated teaching image for the everyday concept \"садиться\", visually unambiguous, no text."
+    },
+    {
+      "id": "scene-clothes",
+      "scene": "clothes",
+      "kind": "scene-cover",
+      "path": "/assets/images/immersion/clothes/cover.webp",
+      "alt": "Одежда",
+      "prompt": "warm contemporary Buryat domestic life, cinematic editorial illustration, tactile natural materials, soft late-afternoon light, restrained earth palette, modern lived-in home, subtle Buryat/Tunka cues without costume or museum staging, no text, no logos. Scene: Одежда. Собираемся выйти · 7–9 минут. Show an immediately understandable everyday situation, no text."
+    }
+  ]
+}
