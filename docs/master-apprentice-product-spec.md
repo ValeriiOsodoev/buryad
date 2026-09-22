@@ -130,21 +130,21 @@ XP и бессодержательные streak-механики не являю
 - [x] immersion engine prototype
 - [x] vocabulary state prototype
 - [x] 3 starter scenes
-- [ ] сделать «Жить/Сегодня» единственным очевидным primary flow
+- [x] сделать «Жить/Сегодня» единственным очевидным primary flow
 - [ ] убрать визуальный шум старых разделов с главного пути
-- [ ] библиотеку перенести в secondary navigation
+- [x] библиотеку перенести в secondary navigation
 - [ ] связать daily session с vocabulary weaknesses
 - [ ] исправить мобильный UX новой архитектуры
 - [ ] e2e + deploy + production visual check
 
 ### P1 — словарная система
-- [ ] отдельный vocabulary dataset
+- [x] отдельный vocabulary dataset
 - [ ] 150–250 единиц starter core
-- [ ] semantic domains
+- [x] semantic domains
 - [ ] SRS по состояниям recognized/active/automatic
-- [ ] экран «Мои слова»
+- [x] экран «Мои слова»
 - [ ] межсценарный transfer
-- [ ] статистика пассивный/активный
+- [x] статистика пассивный/активный
 
 ### P2 — 16 жизненных сцен
 - [ ] создать scene schema v2
