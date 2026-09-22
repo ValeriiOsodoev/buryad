@@ -1,0 +1,986 @@
+{
+  "version": 1,
+  "policy": "Every learner-facing Buryat cue/accepted answer must be native-reviewed before the scene is marked linguistically verified.",
+  "scenes": {
+    "tea": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Сай."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Уһан."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Сай хаана байна?"
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Аяга хаана байна?"
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Аяга аба."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Уһан үгэ."
+        },
+        {
+          "step": 7,
+          "kind": "cue",
+          "text": "Сай уухаш?"
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, сай уухаб."
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, уухаб."
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 8,
+          "kind": "cue",
+          "text": "Юу уухаш?"
+        },
+        {
+          "step": 8,
+          "kind": "accepted-answer",
+          "text": "Сай уухаб."
+        },
+        {
+          "step": 8,
+          "kind": "accepted-answer",
+          "text": "Би сай уухаб."
+        },
+        {
+          "step": 8,
+          "kind": "accepted-answer",
+          "text": "Би уһа уухаб."
+        },
+        {
+          "step": 9,
+          "kind": "cue",
+          "text": "Уһан байна гү?"
+        },
+        {
+          "step": 9,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 9,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 10,
+          "kind": "cue",
+          "text": "Баярлаа!"
+        }
+      ]
+    },
+    "home": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Үүдэн."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Үүдэн хаана байна?"
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Үүдэн нээ."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Үүдэн хаа."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Эндэ һуу."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Энэ хаана байна?"
+        },
+        {
+          "step": 6,
+          "kind": "accepted-answer",
+          "text": "Энэ эндэ байна."
+        },
+        {
+          "step": 6,
+          "kind": "accepted-answer",
+          "text": "Эндэ байна."
+        },
+        {
+          "step": 7,
+          "kind": "cue",
+          "text": "Ши хаанаш?"
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "Би гэртээ."
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "Гэртээ."
+        },
+        {
+          "step": 8,
+          "kind": "cue",
+          "text": "Һайн даа."
+        }
+      ]
+    },
+    "meet": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Мэндэ!"
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Мэндэ!"
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Мэндэ!"
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Амар мэндэ!"
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Һайн байнаш?"
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Һайн байнаб."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Ши мүнөө хаанаш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би гэртээ."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би эндэ байнаб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Ши ойлгонош?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Би ойлгоноб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Би ойлгоногүйб."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Баяртай!"
+        },
+        {
+          "step": 6,
+          "kind": "accepted-answer",
+          "text": "Баяртай!"
+        },
+        {
+          "step": 7,
+          "kind": "cue",
+          "text": "Баяртай!"
+        }
+      ]
+    },
+    "morning": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Мүнөөдэр."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Уһан хаана байна?"
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Эдеэлээ гүш?"
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Сай уухаш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, уухаб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Мүнөөдэр ямар байнаш?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Һайн байнаб."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Һайн."
+        }
+      ]
+    },
+    "food": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Хилээмэн."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Мяхан."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Һүн хаана байна?"
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Мяхан хаана байна?"
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Юу уухаш?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Һү уухаб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Сай уухаб."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Эдеэлэ."
+        }
+      ]
+    },
+    "family": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Эжы."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Аба."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Үхибүүн."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Эжы хаана байна?"
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Аба хаана байна?"
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Эжы хаана байна?"
+        },
+        {
+          "step": 6,
+          "kind": "accepted-answer",
+          "text": "Эжы эндэ байна."
+        },
+        {
+          "step": 6,
+          "kind": "accepted-answer",
+          "text": "Эндэ байна."
+        },
+        {
+          "step": 7,
+          "kind": "cue",
+          "text": "Манай бүлэ."
+        }
+      ]
+    },
+    "body": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Нюдэн."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Шэхэн."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Хамар."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Хамараа харуулыш."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Гараа харуулыш."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Нюдэн хаана байна?"
+        },
+        {
+          "step": 7,
+          "kind": "cue",
+          "text": "Энэ юу бэ?"
+        },
+        {
+          "step": 7,
+          "kind": "accepted-answer",
+          "text": "нюдэн"
+        },
+        {
+          "step": 8,
+          "kind": "cue",
+          "text": "Һайн."
+        }
+      ]
+    },
+    "language": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Ойлгоноб."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Ши ойлгонош?"
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, ойлгоноб."
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Үгы, ойлгоногүйб."
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 2,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Дахин хэлэ."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Ааляар хэлэ."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Ойлгонош?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Ойлгоноб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Ойлгоногүйб."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Буряадаар хэлэ."
+        }
+      ]
+    },
+    "street": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Газаа."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Харгы."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Газаа гара."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Ши хаашаа ябанаш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би гэртээ ябанаб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би магазин ябанаб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Харгы хаана байна?"
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Ябая."
+        }
+      ]
+    },
+    "shop": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Магазин."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Хилээмэн хаана байна?"
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Һүн хаана байна?"
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Юу абахаш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Хилээмэ абахаб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Һү абахаб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би хилээмэ абахаб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Хилээмэ аба."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Баярлаа."
+        }
+      ]
+    },
+    "weather": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Хүйтэн."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Дулаан."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Бороо."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Саһан."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Газаа хүйтэн гү?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Газаа гарая."
+        }
+      ]
+    },
+    "work": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Ажал."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Бэшэнэб."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Мүнөөдэр ажалланаш гү?"
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, ажалланаб."
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Үгы, ажалланагүйб."
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Юу хэнэбши?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Бэшэнэб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Би бэшэнэб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Бэшэ."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Ажал дүүрээ."
+        }
+      ]
+    },
+    "phone": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Дуудана."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Намда бэшэ."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Хүлеэ."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Ши намайе дууланаш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, дууланаб."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы, дууланагүйб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Ойлгонош?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Ойлгоноб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Ойлгоногүйб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Баяртай."
+        }
+      ]
+    },
+    "evening": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Үдэшэ."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Эсээб."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Амар."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Эсээ гүш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, эсээб."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Юу хэхэш?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Амархаб."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Би амархаб."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Һайнаар амараарай."
+        }
+      ]
+    },
+    "guests": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Мэндэ!"
+        },
+        {
+          "step": 1,
+          "kind": "accepted-answer",
+          "text": "Мэндэ!"
+        },
+        {
+          "step": 1,
+          "kind": "accepted-answer",
+          "text": "Амар мэндэ!"
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Эндэ һуу."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Сай уухаш?"
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Тиимэ, уухаб."
+        },
+        {
+          "step": 3,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Эдеэлээ гүш?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Хүлеэ."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Һуугты."
+        }
+      ]
+    },
+    "clothes": {
+      "status": "needs-native-review",
+      "items": [
+        {
+          "step": 1,
+          "kind": "cue",
+          "text": "Газаа хүйтэн."
+        },
+        {
+          "step": 2,
+          "kind": "cue",
+          "text": "Энэ."
+        },
+        {
+          "step": 3,
+          "kind": "cue",
+          "text": "Энэ аба."
+        },
+        {
+          "step": 4,
+          "kind": "cue",
+          "text": "Газаа хүйтэн гү?"
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 4,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 5,
+          "kind": "cue",
+          "text": "Газаа ябахаш гү?"
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Тиимэ."
+        },
+        {
+          "step": 5,
+          "kind": "accepted-answer",
+          "text": "Үгы."
+        },
+        {
+          "step": 6,
+          "kind": "cue",
+          "text": "Ябая."
+        }
+      ]
+    }
+  }
+}
