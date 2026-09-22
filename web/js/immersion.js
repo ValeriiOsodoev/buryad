@@ -21,6 +21,7 @@ async function initImmersion(){
  const audioAssets=new Map((audioManifest.recordingQueue||[]).filter(x=>x.status==='verified'&&x.natural).map(x=>[x.text,x]));
  const state={scene:0,step:0,help:0,correct:0,helpUses:0,russianUses:0,startedAt:performance.now()};
  const completedScenes=()=>data.scenes.filter(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed===true;}catch{return false;}});
+ const firstIncomplete=data.scenes.findIndex(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed!==true;}catch{return true;}});state.scene=firstIncomplete>=0?firstIncomplete:0;
  const immersionImage=$('#immersionImage'), immersionListen=$('#immersionListen'), immersionRecord=$('#immersionRecord'), immersionStop=$('#immersionStop'), immersionReplay=$('#immersionReplay');
  let shadowRecorder=null,shadowChunks=[],shadowUrl=null;
  const sceneList=$('#immersionScenes'), title=$('#immersionTitle'), subtitle=$('#immersionSubtitle'), cue=$('#immersionCue'), visual=$('#immersionVisual'), choices=$('#immersionChoices'), answer=$('#immersionAnswer'), check=$('#immersionCheck'), next=$('#immersionNext'), help=$('#immersionHelp'), helpBox=$('#immersionHelpBox'), meta=$('#immersionMeta'), vocab=$('#immersionVocab');
@@ -29,8 +30,9 @@ async function initImmersion(){
  function step(){return scene().steps[state.step];}
  function renderScenes(){
   const completed=new Set(completedScenes().map(s=>s.id));
-  sceneList.innerHTML=data.scenes.map((s,i)=>`<button type="button" class="immersion-scene ${i===state.scene?'active':''} ${completed.has(s.id)?'done':''}" data-scene="${i}"><span>${completed.has(s.id)?'✓':s.emoji}</span><strong>${esc(s.title)}</strong><small>${esc(s.subtitle)}</small></button>`).join('');
-  sceneList.querySelectorAll('[data-scene]').forEach(b=>b.onclick=()=>{state.scene=Number(b.dataset.scene);state.step=0;state.help=0;state.correct=0;render();});
+  sceneList.innerHTML=`<div class="scene-picker-head"><span class="tag">Путь сцен</span><small>${completed.size} / ${data.scenes.length} пройдено</small></div><select id="immersionSceneSelect" aria-label="Выбрать бытовую сцену">${data.scenes.map((s,i)=>`<option value="${i}" ${i===state.scene?'selected':''}>${completed.has(s.id)?'✓ ':''}${i+1}. ${esc(s.title)}</option>`).join('')}</select><p>Сайт открыл следующую рекомендуемую сцену. Выбрать другую можно здесь.</p>`;
+  const select=sceneList.querySelector('#immersionSceneSelect');
+  select.onchange=()=>{state.scene=Number(select.value);state.step=0;state.help=0;state.correct=0;state.helpUses=0;state.russianUses=0;state.startedAt=performance.now();render();};
  }
  function renderVocab(){
   vocab.innerHTML=scene().newWords.map(w=>{const s=vocabState(w.id);return `<div class="immersion-word"><span>${w.visual}</span><div><strong>${esc(w.bxr)}</strong><small>${s.state==='unseen'?'новое':s.state==='seen'?'видел':s.state==='recognized'?'узнаю':s.state==='active'?'говорю':'автоматически'}</small></div></div>`;}).join('');
