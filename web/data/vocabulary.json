@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "states": [
     "unseen",
     "seen",
@@ -474,6 +474,186 @@
       "pos": "adjective",
       "domain": "color",
       "visual": "⚫",
+      "quality": "sourced"
+    },
+    {
+      "id": "morning",
+      "bxr": "үглөө",
+      "ru": "утро",
+      "pos": "noun",
+      "domain": "time",
+      "visual": "🌅",
+      "quality": "sourced"
+    },
+    {
+      "id": "evening",
+      "bxr": "үдэшэ",
+      "ru": "вечер",
+      "pos": "noun",
+      "domain": "time",
+      "visual": "🌆",
+      "quality": "sourced"
+    },
+    {
+      "id": "night",
+      "bxr": "һүни",
+      "ru": "ночь",
+      "pos": "noun",
+      "domain": "time",
+      "visual": "🌙",
+      "quality": "sourced"
+    },
+    {
+      "id": "yesterday",
+      "bxr": "үсэгэлдэр",
+      "ru": "вчера",
+      "pos": "adverb",
+      "domain": "time",
+      "visual": "↩️",
+      "quality": "sourced"
+    },
+    {
+      "id": "road",
+      "bxr": "харгы",
+      "ru": "дорога",
+      "pos": "noun",
+      "domain": "movement",
+      "visual": "🛣️",
+      "quality": "sourced"
+    },
+    {
+      "id": "car",
+      "bxr": "машина",
+      "ru": "машина",
+      "pos": "noun",
+      "domain": "movement",
+      "visual": "🚗",
+      "quality": "sourced"
+    },
+    {
+      "id": "shop",
+      "bxr": "магазин",
+      "ru": "магазин",
+      "pos": "noun",
+      "domain": "place",
+      "visual": "🏪",
+      "quality": "sourced"
+    },
+    {
+      "id": "outside",
+      "bxr": "газаа",
+      "ru": "на улице / снаружи",
+      "pos": "adverb",
+      "domain": "place",
+      "visual": "🌲",
+      "quality": "sourced"
+    },
+    {
+      "id": "cold",
+      "bxr": "хүйтэн",
+      "ru": "холодный / холодно",
+      "pos": "adjective",
+      "domain": "weather",
+      "visual": "❄️",
+      "quality": "sourced"
+    },
+    {
+      "id": "warm",
+      "bxr": "дулаан",
+      "ru": "тёплый / тепло",
+      "pos": "adjective",
+      "domain": "weather",
+      "visual": "☀️",
+      "quality": "sourced"
+    },
+    {
+      "id": "rain",
+      "bxr": "бороо",
+      "ru": "дождь",
+      "pos": "noun",
+      "domain": "weather",
+      "visual": "🌧️",
+      "quality": "sourced"
+    },
+    {
+      "id": "snow",
+      "bxr": "саһан",
+      "ru": "снег",
+      "pos": "noun",
+      "domain": "weather",
+      "visual": "🌨️",
+      "quality": "sourced"
+    },
+    {
+      "id": "work",
+      "bxr": "ажал",
+      "ru": "работа",
+      "pos": "noun",
+      "domain": "work",
+      "visual": "💼",
+      "quality": "sourced"
+    },
+    {
+      "id": "work-verb",
+      "bxr": "ажаллаха",
+      "ru": "работать",
+      "pos": "verb",
+      "domain": "work",
+      "visual": "🧑‍💻",
+      "quality": "sourced"
+    },
+    {
+      "id": "call",
+      "bxr": "дуудаха",
+      "ru": "звонить / звать",
+      "pos": "verb",
+      "domain": "phone",
+      "visual": "📞",
+      "quality": "sourced"
+    },
+    {
+      "id": "write",
+      "bxr": "бэшэхэ",
+      "ru": "писать",
+      "pos": "verb",
+      "domain": "phone",
+      "visual": "✍️",
+      "quality": "sourced"
+    },
+    {
+      "id": "help",
+      "bxr": "туһалха",
+      "ru": "помогать",
+      "pos": "verb",
+      "domain": "social",
+      "visual": "🤝",
+      "quality": "sourced"
+    },
+    {
+      "id": "wait",
+      "bxr": "хүлеэхэ",
+      "ru": "ждать",
+      "pos": "verb",
+      "domain": "core",
+      "visual": "⏳",
+      "quality": "sourced"
+    },
+    {
+      "id": "tired",
+      "bxr": "эсэхэ",
+      "ru": "уставать",
+      "pos": "verb",
+      "domain": "state",
+      "visual": "😮‍💨",
+      "quality": "sourced"
+    },
+    {
+      "id": "rest",
+      "bxr": "амарха",
+      "ru": "отдыхать",
+      "pos": "verb",
+      "domain": "state",
+      "visual": "🛋️",
       "quality": "sourced"
     }
   ]
