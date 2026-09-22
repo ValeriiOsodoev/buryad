@@ -53,6 +53,20 @@
       </aside>
     </section>
 
+    <section class="panel assessment-panel" id="assessment">
+      <div class="section-head compact-head">
+        <div><span>Старт</span><h2>Где ты сейчас</h2></div>
+        <p>Пять простых бытовых реплик. Никаких баллов и экзамена — только стартовая точка, чтобы через несколько недель увидеть реальный сдвиг.</p>
+      </div>
+      <article class="assessment-card">
+        <div class="assessment-meta"><span class="tag">Скажи вслух → напиши</span><span id="assessmentCounter">1 / 5</span></div>
+        <h3 id="assessmentPrompt">Загрузка…</h3>
+        <input id="assessmentAnswer" autocomplete="off" spellcheck="false" placeholder="Ответ по-бурятски">
+        <p id="assessmentFeedback" role="status" aria-live="polite"></p>
+        <div class="assessment-actions"><button class="primary" id="assessmentCheck" type="button">Проверить</button><button class="primary hidden" id="assessmentNext" type="button">Дальше →</button></div>
+      </article>
+    </section>
+
     <section class="immersion-panel" id="immersion">
       <div class="immersion-head">
         <div>
@@ -442,6 +456,7 @@
   <script type="module" src="/assets/js/speaking.js"></script>
   <script type="module" src="/assets/js/daily.js"></script>
   <script type="module" src="/assets/js/immersion.js"></script>
+  <script type="module" src="/assets/js/assessment.js"></script>
   <script type="module" src="/assets/js/vocabulary.js"></script>
   <script type="module" src="/assets/js/progression.js"></script>
   <script type="module" src="/assets/js/app.js"></script>
