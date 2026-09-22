@@ -139,7 +139,7 @@ XP и бессодержательные streak-механики не являю
 
 ### P1 — словарная система
 - [x] отдельный vocabulary dataset
-- [ ] 150–250 единиц starter core
+- [x] 150–250 единиц starter core
 - [x] semantic domains
 - [x] SRS по состояниям recognized/active/automatic
 - [x] экран «Мои слова»
