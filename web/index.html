@@ -11,14 +11,15 @@
   <link rel="stylesheet" href="/assets/css/speaking.css">
 </head>
 <body>
-  <a class="skip-link" href="#course">К курсу</a>
+  <a class="skip-link" href="#daily">К сегодняшней практике</a>
 
   <header class="topbar" aria-label="Основная навигация">
     <a class="brand" href="#home" aria-label="Buryad, на главную">BURYAД<span>β</span></a>
     <nav class="desktop-nav">
-      <a href="#immersion">Жить</a>
-      <a href="#daily">Сегодня</a>
-      <a href="#progress">Прогресс</a>
+      <a href="#home" data-nav-view="home">Главная</a>
+      <a href="#daily" data-nav-view="today">Сегодня</a>
+      <a href="#immersion" data-nav-view="immersion">Сцены</a>
+      <a href="#progress" data-nav-view="progress">Прогресс</a>
       <details class="library-menu">
         <summary>Библиотека</summary>
         <div>
@@ -39,16 +40,18 @@
     <section class="home-shell" id="home">
       <div class="home-copy">
         <div class="eyebrow">Буряад хэлэн · возвращение языка</div>
+        <div class="home-kicker">Один понятный путь. 20–30 минут в день.</div>
         <h1>Живи на языке.</h1>
-        <p>Не зубри перевод. Смотри, слушай, действуй и отвечай по-бурятски в обычных жизненных ситуациях.</p>
+        <p>Каждый день сайт сам ведёт тебя: живая ситуация → несколько слов → разговор → повторение. Не нужно выбирать, что учить.</p>
       </div>
       <aside class="today-card" aria-label="Сегодняшняя тренировка">
         <div>
-          <span class="tag">Сегодня · одна живая сцена</span>
-          <strong id="todayTitle">Начни с обычной жизни</strong>
-          <p id="todaySubtitle">Несколько новых слов внутри знакомого контекста.</p>
+          <span class="tag">Твой следующий шаг</span>
+          <strong id="todayTitle">Сегодняшняя практика</strong>
+          <p id="todaySubtitle">Начни с первого шага — дальше сайт поведёт сам.</p>
         </div>
-        <a class="primary primary-large" href="#immersion">Начать сцену <span aria-hidden="true">→</span></a>
+        <a class="primary primary-large" id="heroPrimaryAction" href="#daily">Начать сегодня <span aria-hidden="true">→</span></a>
+        <a class="hero-secondary-link" href="#assessment">Определить стартовый уровень</a>
         <div class="today-meta" id="heroStats">0 освоено · начни первую сессию</div>
       </aside>
     </section>
@@ -108,8 +111,8 @@
       </div>
       <div class="daily-overview">
         <div>
-          <span class="tag">Ежедневный ритуал · 25–30 минут</span>
-          <strong id="dailySummary">0 из 4 этапов</strong>
+          <span class="tag">Сегодня · 20–30 минут</span>
+          <strong id="dailySummary">Готовим твою практику</strong>
           <p id="dailyContext">Собираем сегодняшнюю практику…</p>
         </div>
         <button class="text-button" id="dailyReset" type="button">Начать круг заново</button>
