@@ -8,7 +8,8 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1] / "web/images"
 WIDTHS = (480, 960, 1440)
 
-\ndef main():
+
+def main():
     if not ROOT.exists():
         print("No generated images yet.")
         return
@@ -20,12 +21,18 @@ WIDTHS = (480, 960, 1440)
                     continue
                 height = round(im.height * width / im.width)
                 resized = im.resize((width, height), Image.Resampling.LANCZOS)
-                resized.save(\n                    src.with_name(f"{src.stem}-{width}.webp"),\n                    "WEBP",\n                    quality=84,\n                    method=6,\n                )
-                try:
-                    resized.save(src.with_name(f"{src.stem}-{width}.avif"),"AVIF",quality=70)
-                except Exception:
-                    pass
+                resized.save(
+                    src.with_name(f"{src.stem}-{width}.webp"),
+                    "WEBP",
+                    quality=84,
+                    method=6,
+                )
+                with suppress(Exception):
+                    resized.save(
+                        src.with_name(f"{src.stem}-{width}.avif"), "AVIF", quality=70
+                    )
                 print(src, width)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()

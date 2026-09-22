@@ -18,6 +18,7 @@ from openai import OpenAI
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "web/data/image-manifest.json"
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--force", action="store_true")
@@ -33,13 +34,16 @@ def main():
         if target.exists() and not args.force:
             print(f"[{i}/{len(assets)}] skip {target}")
             continue
-        target.parent.mkdir(parents=True,exist_ok=True)
+        target.parent.mkdir(parents=True, exist_ok=True)
         prompt = asset["prompt"] + " Composition optimized for a 4:3 learning card."
-        result = client.images.generate(\n            model="gpt-image-2", prompt=prompt, size="1536x1024", quality="medium"\n        )
+        result = client.images.generate(
+            model="gpt-image-2", prompt=prompt, size="1536x1024", quality="medium"
+        )
         raw = base64.b64decode(result.data[0].b64_json)
         png = target.with_suffix(".png")
         png.write_bytes(raw)
         print(f"[{i}/{len(assets)}] wrote {png}")
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()

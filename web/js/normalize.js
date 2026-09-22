@@ -13,7 +13,8 @@ export function normalizeBuryat(value) {
 
 export function answerMatches(value, accepted) {
   const candidate = normalizeBuryat(value);
-  return accepted.some((item) => normalizeBuryat(item) === candidate);
+  const answers = Array.isArray(accepted) ? accepted : [accepted];
+  return answers.some((item) => typeof item === 'string' && normalizeBuryat(item) === candidate);
 }
 
 export function similarity(a, b) {
