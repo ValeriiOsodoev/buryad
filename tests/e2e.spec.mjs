@@ -273,3 +273,20 @@ test.describe('master-apprentice immersion', () => {
     await context.close();
   });
 });
+
+
+test.describe('master apprentice immersion', () => {
+  test('mobile starts from a contextual living scene', async ({browser}) => {
+    const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page = await context.newPage();
+    await page.goto(baseURL, {waitUntil:'networkidle'});
+    await page.locator('#immersion').scrollIntoViewIfNeeded();
+    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(3);
+    await expect(page.locator('#immersionTitle')).toContainText('Пьём чай');
+    await expect(page.locator('#immersionCue')).toContainText('Сай');
+    await expect(page.locator('#immersionVocab .immersion-word')).toHaveCount(3);
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/mobile-390-immersion.png', fullPage:true});
+    await context.close();
+  });
+});
