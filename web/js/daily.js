@@ -50,6 +50,7 @@ async function initDaily(){
   const mastered=masteredCourse(course,progress);
 
   const stages=[
+    {id:'live',title:'Пожить на языке',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй и отвечай без перевода',cta:'Начать сцену'},
     {id:'live',title:'Пожить на бурятском',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй, отвечай',cta:'Начать сцену'},
     {id:'review',title:'Разбудить язык',minutes:5,target:'#course',detail:due?`${due} повторов уже ждут тебя`:'Повтори несколько знакомых фраз',cta:'Повторить'},
     {id:'speak',title:'Поговорить',minutes:6,target:'#speaking',detail:'Один бытовой сценарий вслух, без подсказок',cta:'Говорить'},
