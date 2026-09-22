@@ -180,3 +180,14 @@ XP и бессодержательные streak-механики не являю
 
 ## Definition of Done для базовой версии
 Пользователь может открыть сайт каждый день и без выбора методики пройти 20–30 минут практики. Он регулярно видит и слышит знакомую бытовую ситуацию, осваивает несколько новых слов без обязательного перевода, выполняет действия, самостоятельно отвечает, встречает слова повторно в других сценах и видит рост recognized/active vocabulary. Старые учебные разделы не мешают этому пути.
+
+
+## External completion gates
+
+The implementation intentionally stops short of pretending these are complete without real inputs:
+
+1. **Native language review** — `web/data/immersion-review.json` contains every cue and accepted answer that must be reviewed by a competent Buryat speaker. Do not mark scenes linguistically verified before that review.
+2. **Generated art** — `web/data/image-manifest.json` + `Generate immersion visuals` workflow are ready. Actual assets require the repository secret `OPENAI_API_KEY` and a manual workflow run, followed by visual QA.
+3. **Native audio** — `/recording` + `web/data/native-audio-queue.json` + `scripts/bind_native_audio.py` are ready. Actual slow/natural variants require recordings from a native speaker.
+
+These gates are data acquisition, not unfinished learner-flow code.
