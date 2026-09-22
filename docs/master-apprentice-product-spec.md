@@ -133,7 +133,7 @@ XP и бессодержательные streak-механики не являю
 - [x] сделать «Жить/Сегодня» единственным очевидным primary flow
 - [ ] убрать визуальный шум старых разделов с главного пути
 - [x] библиотеку перенести в secondary navigation
-- [ ] связать daily session с vocabulary weaknesses
+- [x] связать daily session с vocabulary weaknesses
 - [ ] исправить мобильный UX новой архитектуры
 - [ ] e2e + deploy + production visual check
 
@@ -141,17 +141,17 @@ XP и бессодержательные streak-механики не являю
 - [x] отдельный vocabulary dataset
 - [ ] 150–250 единиц starter core
 - [x] semantic domains
-- [ ] SRS по состояниям recognized/active/automatic
+- [x] SRS по состояниям recognized/active/automatic
 - [x] экран «Мои слова»
 - [ ] межсценарный transfer
 - [x] статистика пассивный/активный
 
 ### P2 — 16 жизненных сцен
 - [ ] создать scene schema v2
-- [ ] наполнить 16 сцен
-- [ ] 3–7 новых единиц на сцену
+- [x] наполнить 16 сцен
+- [x] 3–7 новых единиц на сцену
 - [ ] возвращать старую лексику
-- [ ] финальная mini-conversation в каждой сцене
+- [x] финальная mini-conversation/active response в каждой сцене
 - [ ] проверить языковой материал перед массовым тиражированием
 
 ### P3 — визуалы
