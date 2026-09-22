@@ -11,6 +11,7 @@ function touchWord(word,event){
  if(event==='active')s.active=Number(s.active||0)+1;
  s.state=s.active>=3?'automatic':s.active>=1?'active':s.recognized>=2?'recognized':'seen';
  localStorage.setItem(vocabKey(word.id),JSON.stringify(s));
+ document.dispatchEvent(new CustomEvent('buryad:vocabulary-change',{detail:{id:word.id,state:s.state}}));
 }
 
 async function initImmersion(){
