@@ -305,3 +305,38 @@ test.describe('primary mobile learning path', () => {
     await context.close();
   });
 });
+
+
+test.describe('focused user flow', () => {
+  test('new learner sees one clear path instead of every tool at once', async ({browser}) => {
+    const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true});
+    const page=await context.newPage();
+    await page.goto(baseURL,{waitUntil:'networkidle'});
+    await expect(page.locator('#home')).toBeVisible();
+    await expect(page.locator('#daily')).toBeVisible();
+    await expect(page.locator('#immersion')).toBeHidden();
+    await expect(page.locator('#course')).toBeHidden();
+    await expect(page.locator('#speaking')).toBeHidden();
+    await expect(page.locator('.mobile-nav a')).toHaveCount(4);
+    await expect(page.locator('#heroPrimaryAction')).toContainText('Начать первую сцену');
+    await page.locator('#heroPrimaryAction').click();
+    await expect(page.locator('#immersion')).toBeVisible();
+    await expect(page.locator('#daily')).toBeHidden();
+    await assertNoHorizontalOverflow(page);
+    await page.screenshot({path:'visual-artifacts/mobile-390-focused-flow.png',fullPage:true});
+    await context.close();
+  });
+
+  test('desktop library stays hidden until explicitly opened', async ({browser}) => {
+    const context=await browser.newContext({viewport:{width:1440,height:900}});
+    const page=await context.newPage();
+    await page.goto(baseURL,{waitUntil:'networkidle'});
+    await expect(page.locator('#course')).toBeHidden();
+    await page.locator('.library-menu summary').click();
+    await page.locator('.library-menu a[href="#course"]').click();
+    await expect(page.locator('#course')).toBeVisible();
+    await expect(page.locator('#immersion')).toBeHidden();
+    await assertNoHorizontalOverflow(page);
+    await context.close();
+  });
+});
