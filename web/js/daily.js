@@ -43,14 +43,21 @@ async function initDaily(){
   if(!root)return;
   const course=await fetch('/assets/data/course.json').then(r=>r.json());
   const progress=progressFromStorage();
+  let vocabulary=[];
+  try{vocabulary=await fetch('/assets/data/vocabulary.json').then(r=>r.json()).then(x=>x.items||[]);}catch{}
   const saved=dailyState();
   const totalPhrases=flattenCourse(course).length;
   const due=dueCount(progress);
   const weak=weakCount(progress);
   const mastered=masteredCourse(course,progress);
 
+  const vocabRank={unseen:0,seen:1,recognized:2,active:3,automatic:4};
+  const vocabState=(id)=>{try{return JSON.parse(localStorage.getItem(`buryad.vocab.${id}`)||'{"state":"unseen"}');}catch{return {state:'unseen'};}};
+  const weakVocab=vocabulary.map(item=>({...item,learning:vocabState(item.id)})).filter(item=>['seen','recognized','active'].includes(item.learning.state));
+  const weakLabel=weakVocab.length?`${weakVocab.slice(0,3).map(x=>x.bxr).join(' · ')}${weakVocab.length>3?' …':''}`:'первые слова появятся после сцены';
   const stages=[
     {id:'live',title:'Пожить на языке',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй и отвечай без перевода',cta:'Начать сцену'},
+    {id:'words',title:'Вернуть слова',minutes:4,target:'#my-words',detail:`Слабые сейчас: ${weakLabel}`,cta:'Мои слова'},
     {id:'live',title:'Пожить на бурятском',minutes:10,target:'#immersion',detail:'Одна бытовая сцена: смотри, действуй, отвечай',cta:'Начать сцену'},
     {id:'review',title:'Разбудить язык',minutes:5,target:'#course',detail:due?`${due} повторов уже ждут тебя`:'Повтори несколько знакомых фраз',cta:'Повторить'},
     {id:'speak',title:'Поговорить',minutes:6,target:'#speaking',detail:'Один бытовой сценарий вслух, без подсказок',cta:'Говорить'},
