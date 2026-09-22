@@ -2,7 +2,8 @@ const primaryViews={
   home:['home','daily'],
   today:['daily'],
   immersion:['immersion'],
-  progress:['my-words','progress','challenge'],
+  progress:['my-words','progress'],
+  challenge:['challenge'],
   assessment:['assessment']
 };
 const libraryIds=['course','path','speaking','train','core','verbs','video'];
@@ -13,7 +14,8 @@ function routeTarget(){
   if(hash==='daily')return 'today';
   if(hash==='immersion')return 'immersion';
   if(hash==='my-words')return 'my-words';
-  if(['progress','challenge'].includes(hash))return 'progress';
+  if(hash==='challenge')return 'challenge';
+  if(hash==='progress')return 'progress';
   if(hash==='assessment')return 'assessment';
   if(libraryIds.includes(hash))return hash;
   return 'home';
