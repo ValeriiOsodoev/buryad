@@ -131,7 +131,7 @@ XP и бессодержательные streak-механики не являю
 - [x] vocabulary state prototype
 - [x] 3 starter scenes
 - [x] сделать «Жить/Сегодня» единственным очевидным primary flow
-- [ ] убрать визуальный шум старых разделов с главного пути
+- [x] убрать визуальный шум старых разделов с главного пути
 - [x] библиотеку перенести в secondary navigation
 - [x] связать daily session с vocabulary weaknesses
 - [ ] исправить мобильный UX новой архитектуры
@@ -147,10 +147,10 @@ XP и бессодержательные streak-механики не являю
 - [x] статистика пассивный/активный
 
 ### P2 — 16 жизненных сцен
-- [ ] создать scene schema v2
+- [x] создать scene schema v2
 - [x] наполнить 16 сцен
 - [x] 3–7 новых единиц на сцену
-- [ ] возвращать старую лексику
+- [x] возвращать старую лексику
 - [x] финальная mini-conversation/active response в каждой сцене
 - [ ] проверить языковой материал перед массовым тиражированием
 
@@ -158,8 +158,8 @@ XP и бессодержательные streak-механики не являю
 - [x] image manifest
 - [x] единый art direction
 - [ ] GPT Image assets
-- [ ] responsive WebP/AVIF pipeline
-- [ ] alt/accessibility
+- [x] responsive WebP/AVIF pipeline
+- [x] alt/accessibility
 - [ ] визуальная проверка каждой сцены
 
 ### P4 — аудио носителя
