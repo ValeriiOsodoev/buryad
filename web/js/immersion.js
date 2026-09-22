@@ -17,7 +17,7 @@ function touchWord(word,event){
 async function initImmersion(){
  const root=$('#immersion'); if(!root)return;
  const data=await fetch('/assets/data/immersion.json').then(r=>r.json());
- const state={scene:0,step:0,help:0,correct:0};
+ const state={scene:0,step:0,help:0,correct:0,helpUses:0,russianUses:0,startedAt:performance.now()};
  const completedScenes=()=>data.scenes.filter(s=>{try{return JSON.parse(localStorage.getItem(`buryad.immersion.${s.id}`)||'{}').completed===true;}catch{return false;}});
  const sceneList=$('#immersionScenes'), title=$('#immersionTitle'), subtitle=$('#immersionSubtitle'), cue=$('#immersionCue'), visual=$('#immersionVisual'), choices=$('#immersionChoices'), answer=$('#immersionAnswer'), check=$('#immersionCheck'), next=$('#immersionNext'), help=$('#immersionHelp'), helpBox=$('#immersionHelpBox'), meta=$('#immersionMeta'), vocab=$('#immersionVocab');
 
@@ -51,8 +51,8 @@ async function initImmersion(){
  help.onclick=()=>{
   const st=step();const hints=st.help||[];if(!hints.length)return;
   helpBox.classList.remove('hidden');
-  if(state.help===0){helpBox.textContent=hints[0]||'Посмотри на ситуацию ещё раз.';state.help=1;help.textContent='Показать по-русски';}
-  else {helpBox.textContent=hints[1]||hints[0]||'';state.help=2;help.textContent='Перевод показан';}
+  if(state.help===0){state.helpUses++;helpBox.textContent=hints[0]||'Посмотри на ситуацию ещё раз.';state.help=1;help.textContent='Показать по-русски';}
+  else {state.russianUses++;helpBox.textContent=hints[1]||hints[0]||'';state.help=2;help.textContent='Перевод показан';}
  };
  check.onclick=()=>{
   const st=step(),value=answer.value.trim();if(!value)return;
@@ -64,7 +64,8 @@ async function initImmersion(){
  next.onclick=()=>{
   answer.disabled=false;$('#immersionFeedback').className='immersion-feedback hidden';$('#immersionFeedback').innerHTML='';
   if(state.step<scene().steps.length-1){state.step++;render();return;}
-  localStorage.setItem(`buryad.immersion.${scene().id}`,JSON.stringify({completed:true,score:state.correct,updatedAt:new Date().toISOString()}));
+  const elapsedSeconds=Math.round((performance.now()-state.startedAt)/1000);
+  localStorage.setItem(`buryad.immersion.${scene().id}`,JSON.stringify({completed:true,score:state.correct,helpUses:state.helpUses,russianUses:state.russianUses,noRussian:state.russianUses===0,elapsedSeconds,updatedAt:new Date().toISOString()}));
   document.dispatchEvent(new CustomEvent('buryad:daily-complete',{detail:{stage:'live'}}));
   cue.textContent='Сцена завершена.';visual.textContent='🌄';choices.innerHTML='';answer.classList.add('hidden');check.classList.add('hidden');next.classList.add('hidden');help.classList.add('hidden');helpBox.classList.remove('hidden');helpBox.textContent='Завтра эта же лексика вернётся в другой ситуации.';
  };
