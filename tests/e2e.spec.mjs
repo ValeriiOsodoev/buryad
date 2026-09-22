@@ -260,7 +260,7 @@ test.describe('master-apprentice immersion', () => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
     await page.goto(`${baseURL}/#immersion`,{waitUntil:'networkidle'});
-    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
+    await expect(page.locator('#immersionSceneSelect option')).toHaveCount(16);
     await expect(page.locator('#immersionCue')).toHaveText('Сай.');
     await expect(page.locator('#immersionHelpBox')).toBeHidden();
     await page.locator('#immersionHelp').click();
@@ -277,7 +277,7 @@ test.describe('master apprentice immersion', () => {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true});
     const page = await context.newPage();
     await page.goto(`${baseURL}/#immersion`, {waitUntil:'networkidle'});
-    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
+    await expect(page.locator('#immersionSceneSelect option')).toHaveCount(16);
     await expect(page.locator('#immersionTitle')).toContainText('Пьём чай');
     await expect(page.locator('#immersionCue')).toContainText('Сай');
     await expect(page.locator('#immersionVocab .immersion-word')).toHaveCount(3);
@@ -298,7 +298,7 @@ test.describe('primary mobile learning path', () => {
       await assertNoHorizontalOverflow(page);
     }
     await page.goto(baseURL+'/#immersion',{waitUntil:'networkidle'});
-    await expect(page.locator('#immersionScenes .immersion-scene')).toHaveCount(16);
+    await expect(page.locator('#immersionSceneSelect option')).toHaveCount(16);
     await page.goto(baseURL+'/#daily',{waitUntil:'networkidle'});
     await expect(page.locator('#dailySteps .daily-step')).toHaveCount(4);
     await page.screenshot({path:'visual-artifacts/mobile-390-primary-flow.png',fullPage:true});
