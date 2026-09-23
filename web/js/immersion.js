@@ -77,10 +77,22 @@ async function initImmersion() {
       render();
     };
   }
+  function wordVisual(word) {
+    const asset = imageAssets.get(`word-${word.id}`);
+    if (!asset) return `<span class="immersion-word-emoji">${esc(word.visual)}</span>`;
+    return `<img class="immersion-word-image" src="${esc(asset.path)}" alt="${esc(asset.alt || word.ru || word.bxr)}" loading="lazy">`;
+  }
+  function choiceVisual(item) {
+    const word = scene().newWords.find(w => w.bxr === item.label);
+    if (!word) return `<span class="immersion-choice-emoji">${esc(item.v)}</span>`;
+    const asset = imageAssets.get(`word-${word.id}`);
+    if (!asset) return `<span class="immersion-choice-emoji">${esc(item.v)}</span>`;
+    return `<img class="immersion-choice-image" src="${esc(asset.path)}" alt="" loading="lazy">`;
+  }
   function renderVocab() {
     vocab.innerHTML = scene().newWords.map(w => {
       const labels = {unseen:'новое', seen:'видел', recognized:'узнаю', active:'говорю', automatic:'автоматически'};
-      return `<div class="immersion-word"><span>${esc(w.visual)}</span><div><strong>${esc(w.bxr)}</strong><small>${labels[vocabState(w.id).state] || 'новое'}</small></div></div>`;
+      return `<div class="immersion-word">${wordVisual(w)}<div><strong>${esc(w.bxr)}</strong><small>${labels[vocabState(w.id).state] || 'новое'}</small></div></div>`;
     }).join('');
   }
   function render() {
@@ -145,7 +157,7 @@ async function initImmersion() {
     }
     s.newWords.forEach(w => { if (st.cue.toLowerCase().includes(w.bxr.toLowerCase())) touchWord(w, 'seen'); });
     if (st.type === 'choose') {
-      choices.innerHTML = (st.visuals || []).map((x, i) => `<button type="button" class="immersion-choice" data-choice="${i}"><span>${esc(x.v)}</span><small>${esc(x.label || '')}</small></button>`).join('');
+      choices.innerHTML = (st.visuals || []).map((x, i) => `<button type="button" class="immersion-choice" data-choice="${i}">${choiceVisual(x)}<small>${esc(x.label || '')}</small></button>`).join('');
       choices.querySelectorAll('[data-choice]').forEach(button => { button.onclick = () => {
         if (state.answered) return;
         const item = st.visuals[Number(button.dataset.choice)];
