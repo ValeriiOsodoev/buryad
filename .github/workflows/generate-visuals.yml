@@ -1,12 +1,20 @@
 name: Generate immersion visuals
 
 on:
+  push:
+    paths:
+      - ".github/image-generation.json"
   workflow_dispatch:
     inputs:
-      limit:
-        description: "How many manifest assets to generate (0 = all)"
+      asset_ids:
+        description: "Comma-separated manifest asset IDs; empty means all"
         required: false
-        default: "0"
+        default: ""
+      force:
+        description: "Regenerate assets that already exist"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -20,12 +28,37 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements-tools.txt
-      - name: Generate GPT Image assets
+
+      - name: Require OpenAI image key
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python scripts/generate_immersion_images.py --limit "${{ inputs.limit }}"
+        run: : "${OPENAI_API_KEY:?Add repository secret OPENAI_API_KEY}"
+
+      - name: Generate configured batch
+        if: github.event_name == 'push'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_immersion_images.py --config .github/image-generation.json
+
+      - name: Generate manually selected assets
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ASSET_IDS: ${{ inputs.asset_ids }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          if [[ -n "$ASSET_IDS" ]]; then
+            args+=(--ids "$ASSET_IDS")
+          fi
+          if [[ "$FORCE" == "true" ]]; then
+            args+=(--force)
+          fi
+          python scripts/generate_immersion_images.py "${args[@]}"
+
       - name: Build responsive image derivatives
         run: python scripts/optimize_immersion_images.py
+
       - name: Commit generated assets
         run: |
           git config user.name "github-actions[bot]"
