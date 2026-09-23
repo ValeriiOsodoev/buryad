@@ -32,7 +32,8 @@ jobs:
       - name: Require OpenAI image key
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: : "${OPENAI_API_KEY:?Add repository secret OPENAI_API_KEY}"
+        run: |
+          : "${OPENAI_API_KEY:?Add repository secret OPENAI_API_KEY}"
 
       - name: Generate configured batch
         if: github.event_name == 'push'
