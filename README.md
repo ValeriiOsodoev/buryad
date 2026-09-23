@@ -37,12 +37,10 @@ BURYAD_ISSUES_TOKEN
 
 ## Visual asset generation
 
-The learner-facing app never receives an OpenAI API key. Immersion visuals are generated offline from `web/data/image-manifest.json` and deployed as static assets.
+Visuals are generated interactively in ChatGPT and committed as static assets.
+The learner-facing app never receives an OpenAI API key, and the repository
+does not trigger paid OpenAI API image generation.
 
-```bash
-python -m pip install -r requirements-tools.txt
-export OPENAI_API_KEY=...
-python scripts/generate_immersion_images.py --limit 3
-```
-
-The current image model configured by the pipeline is `gpt-image-2`. Review generated teaching images before committing them: the depicted object/action must be unambiguous and there must be no text inside the image.
+The source of truth for required visuals remains `web/data/image-manifest.json`.
+Each approved image is saved under `web/images/`, optimized, committed, and
+then deployed through the normal CI/CD pipeline.
